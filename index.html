@@ -131,6 +131,11 @@
   @media(max-width:600px){ .kerk-info-grid { grid-template-columns: 1fr; } }
   .kerk-info-card { background: var(--white); border: 1px solid var(--border); border-top: 3px solid var(--gold); padding: 1.2rem 1.4rem; border-radius: 3px; box-shadow: 0 2px 8px rgba(15,40,80,0.07); }
   .kerk-info-card h3 { font-style: normal; color: var(--blue-deep); margin: 0 0 0.5rem; font-size: 1rem; }
+  /* Leaflet popup styling inside kerkwebsite */
+  .leaflet-popup-content-wrapper { background: var(--blue-navy); color: #cfe2f5; border-radius: 2px; box-shadow: 0 4px 20px rgba(0,0,0,0.35); border: 1px solid var(--gold); }
+  .leaflet-popup-tip { background: var(--blue-navy); }
+  .leaflet-popup-content { margin: 10px 14px; font-family: 'EB Garamond', Georgia, serif; font-size: 14px; line-height: 1.5; }
+  .leaflet-popup-close-button { color: var(--border) !important; }
   footer { background: linear-gradient(135deg, var(--blue-navy) 0%, var(--blue-deep) 100%); color: #cfe2f5; text-align: center; padding: 2rem 1rem; font-size: 0.88rem; border-top: 4px solid var(--gold); margin-top: 1rem; }
   footer a { color: var(--gold-lt); }
   footer .footer-cross { font-size: 2rem; color: var(--gold); display: block; margin-bottom: 0.6rem; }
@@ -198,36 +203,40 @@ const T = {
     nav_sacramenten: "Sacramenten", nav_overlijden: "Overlijden", nav_contact: "Contact",
     footer_address: "Kerk Goede Bijstand — Kolenmarkt 91, 1000 Brussel",
     zandbank_title: "De Zandbank",
-    zandbank_intro: "De Zandbank is onze ontmoetingsplaats voor bezinning, gesprek en verbinding — een plek waar mensen even kunnen ademen, afstand nemen van de drukte en elkaar ontmoeten.",
-    zandbank_body1: "In de marge van de stad en toch midden in het leven: zo positioneert de Zandbank zich. Een laagdrempelige ruimte voor wie even stil wil staan, een gesprek zoekt of gewoon aanwezig wil zijn.",
-    zandbank_body2: "Regelmatig zijn er kleine bijeenkomsten: een leeskring, een stiltemiddag, een informeel gesprek over geloof en leven. De Zandbank staat open voor iedereen, gelovig of niet.",
-    zandbank_wanneer_h3: "Wanneer?",
-    zandbank_wanneer_body: "De activiteiten van de Zandbank worden aangekondigd via de agenda en de nieuwsbrief. Volg ons of neem contact op voor meer informatie.",
-    zandbank_contact_link: "Neem contact op →",
-    kerk_title: "De Kerk",
-    kerk_intro: "De Onze-Lieve-Vrouw van Goede Bijstandskerk is een prachtig barok kerkgebouw in het hart van Brussel, gelegen aan de Kolenmarkt.",
-    kerk_geschiedenis_h3: "Geschiedenis",
-    kerk_geschiedenis_body: "De kerk werd gebouwd in de 17e eeuw en is gewijd aan Onze-Lieve-Vrouw van Goede Bijstand. Het huidige gebouw dateert grotendeels uit 1664 en is een belangrijk voorbeeld van barokke kerkarchitectuur in Brussel.",
-    kerk_architectuur_h3: "Architectuur & Kunst",
-    kerk_architectuur_body: "Het interieur bevat opmerkelijke kunstwerken, waaronder het indrukwekkende hoofdaltaar van Jan Pieter van Baurscheit de Oude. De kerk maakt deel uit van het project 'Vlaamse Meesters in Situ' en herbergt een unieke verzameling barokke schilderijen en sculpturen.",
-    kerk_bezoek_h3: "Bezoek de kerk",
-    kerk_bezoek_body: "De kerk is elke dag geopend van 9 tot 17 uur, op zondag vanaf 10 uur. Toegang is gratis.",
-    kerk_adres_h3: "Adres",
-    kerk_open_h3: "Openingsuren",
-    kerk_open_body: "Elke dag: 9.00 – 17.00 u\nZondag: 10.00 – 17.00 u",
-    kerk_masters_link: "Ontdek de Vlaamse Meesters in Situ →",
-    kerk_maps_link: "Bekijk op Google Maps →",
-    home_agenda_title: "Agenda — Vieringen & Activiteiten",
-    home_agenda_intro: "Overzicht van de komende 5 weken. Enkel dagen met een viering of activiteit worden getoond.",
-    home_paulus_title: "Paulusgemeenschappen",
-    home_paulus_body: "Onze parochie Goede Bijstand maakt deel uit van de Paulusgemeenschappen, een samenwerkingsverband van Nederlandstalige geloofsgemeenschappen in Brussel rond de kerken van Onze-Lieve-Vrouw van Vreugde (Anderlecht), Onze-Lieve-Vrouw van Goede Bijstand (Centrum), Sint-Pieter (Ukkel), Sint-Jozef (Evere), Sint-Martinus (Ganshoren) en de Verrijzenis (Molenbeek).",
-    home_paulus_box_title: "Waarom 'Paulusgemeenschappen'?",
-    home_paulus_box_body: "De naam verwijst naar de apostel Paulus, die van gemeenschap naar gemeenschap trok om te bemoedigen en te ondersteunen — zonder de gemeenschappen hun eigenheid te ontnemen. Zo kiezen ook onze pastores voor een dienend leiderschap.",
+    zb_kicker: "Een pelgrimage in aarde",
+    zb_title: "De Wereld van de Goede Bijstand",
+    zb_subtitle: "Van elke plek op aarde een potje grond",
+    zb_mission: "Een Levenslange Missie",
+    zb_headline: "Van elke uithoek van de wereld<br>een handvol aarde verzameld",
+    zb_intro: "De gemeenschap van de Goede Bijstand reist de wereld rond met één bijzondere opdracht: van elke plek waar ze komt, brengt ze een potje grond mee naar huis. Een stille getuigenis van verbondenheid over grenzen en culturen heen.",
+    zb_stat_loc: "Locaties",
+    zb_stat_cont: "Continenten",
+    zb_stat_land: "Landen",
+    zb_stat_verh: "Verhalen",
+    zb_map_title: "Wereldkaart der Bestemmingen",
+    zb_map_caption: "Klik op een punt om de naam van de locatie te zien — zoom met het scrollwiel of de knoppen",
+    zb_article_dateline: "Het Nieuwsblad · 16 oktober 2021",
+    zb_article_title: "De droom van pastoor Johnny: van elke plek op aarde een potje grond",
+    zb_article_deck: "Het artikel uit Het Nieuwsblad vertelt het volledige verhaal achter deze bijzondere collectie. Lees hoe een eenvoudige droom uitgroeide tot een wereldwijde pelgrimage in aarde.",
+    zb_article_p1: "De gemeenschap van de Goede Bijstand verzamelt al jaren aarde van over de hele wereld. Iedere reisbestemming — of het nu een afgelegen dorpje in Congo is, een strand in de Seychellen of een bergpas in de Dolomieten — levert een klein potje grond op. Samen vormen die potjes een stille, tastbare atlas.",
+    zb_article_p2: "De collectie telt inmiddels meer dan 155 unieke locaties, verspreid over 6 continenten en tientallen landen. Elk potje draagt een etiket met de naam van de plek en de datum van bezoek — een archief van herinneringen, ontmoetingen en gebed.",
+    zb_article_btn: "Lees het volledige artikel",
+    zb_list_title: "Alle 155 Locaties",
+    zb_list_desc: "Bekijk de volledige lijst van alle bezochte plekken, gerangschikt per continent.",
+    zb_list_btn: "Bekijk de volledige lijst",
+    kerk_title: "De Kerk", kerk_intro: "De Onze-Lieve-Vrouw van Goede Bijstandskerk is een prachtig barok kerkgebouw in het hart van Brussel, gelegen aan de Kolenmarkt.",
+    kerk_geschiedenis_h3: "Geschiedenis", kerk_geschiedenis_body: "De kerk werd gebouwd in de 17e eeuw en is gewijd aan Onze-Lieve-Vrouw van Goede Bijstand. Het huidige gebouw dateert grotendeels uit 1664 en is een belangrijk voorbeeld van barokke kerkarchitectuur in Brussel.",
+    kerk_architectuur_h3: "Architectuur & Kunst", kerk_architectuur_body: "Het interieur bevat opmerkelijke kunstwerken, waaronder het indrukwekkende hoofdaltaar van Jan Pieter van Baurscheit de Oude. De kerk maakt deel uit van het project 'Vlaamse Meesters in Situ' en herbergt een unieke verzameling barokke schilderijen en sculpturen.",
+    kerk_bezoek_h3: "Bezoek de kerk", kerk_bezoek_body: "De kerk is elke dag geopend van 9 tot 17 uur, op zondag vanaf 10 uur. Toegang is gratis.",
+    kerk_adres_h3: "Adres", kerk_open_h3: "Openingsuren", kerk_open_body: "Elke dag: 9.00 – 17.00 u\nZondag: 10.00 – 17.00 u",
+    kerk_masters_link: "Ontdek de Vlaamse Meesters in Situ →", kerk_maps_link: "Bekijk op Google Maps →",
+    home_agenda_title: "Agenda — Vieringen & Activiteiten", home_agenda_intro: "Overzicht van de komende 5 weken. Enkel dagen met een viering of activiteit worden getoond.",
+    home_paulus_title: "Paulusgemeenschappen", home_paulus_body: "Onze parochie Goede Bijstand maakt deel uit van de Paulusgemeenschappen, een samenwerkingsverband van Nederlandstalige geloofsgemeenschappen in Brussel.",
+    home_paulus_box_title: "Waarom 'Paulusgemeenschappen'?", home_paulus_box_body: "De naam verwijst naar de apostel Paulus, die van gemeenschap naar gemeenschap trok om te bemoedigen en te ondersteunen — zonder de gemeenschappen hun eigenheid te ontnemen.",
     home_paulus_btn: "Bezoek paulusgemeenschappen.be →",
     home_taize_title: "Gebed in de geest van Taizé", home_taize_sub: "Elke derde zaterdag van de maand — 20.00 u — Kerk van Goede Bijstand",
     home_taize_body: "Op vraag van priester Johnny De Mot organiseren we maandelijks een gebed met liederen van Taizé. De kerk ligt in het centrum, met de deuren open — iedereen is welkom om even binnen te komen.",
-    home_taize_h3: "Verloop van de avond",
-    home_taize_time: "20.00 u Gebed | 20.40 u Stilte met instrumentale Taizéliederen | 21.00 u Kort gebed en zang — herhaald elk kwartier tot 22.30 u.",
+    home_taize_h3: "Verloop van de avond", home_taize_time: "20.00 u Gebed | 20.40 u Stilte met instrumentale Taizéliederen | 21.00 u Kort gebed en zang — herhaald elk kwartier tot 22.30 u.",
     home_night_title: "Bijstand by Night", home_night_sub: "Elke vrijdagavond van mei t.e.m. augustus — 18 tot 22 uur",
     home_night_body: "Van mei tot en met augustus stellen we de Bijstandskerk elke vrijdagavond open. We delen de kerk, bij stilte of serene muziek, met vaak onverwachte, mooie ontmoetingen.",
     home_kerst_title: "Kerstbrief 2025", home_kerst_sub: "De Kleine Zusters van Jezus in België",
@@ -265,8 +274,7 @@ const T = {
     vier_finis: "Finis Terrae", vier_sat: "Elke zaterdag", vier_gb: "Goede Bijstand", vier_sun: "Elke zondag",
     vier_3e_zon: "3e zondag: kindernevendienst",
     vier_agenda_link: "Alle vieringen zijn ook zichtbaar in de agenda op de homepage.",
-    vier_bijzonder: "Bijzondere vieringen",
-    vier_drempel_label: "Drempelviering",
+    vier_bijzonder: "Bijzondere vieringen", vier_drempel_label: "Drempelviering",
     vier_drempel_dag: "donderdag 14 mei 2026 — Onze-Lieve-Heer Hemelvaart",
     vier_homilies_intro: "Homilies van vieringen in de Kerk van Goede Bijstand.",
     vier_bezinning_intro: "Bezinningsteksten, getuigenissen en spirituele reflecties.",
@@ -290,10 +298,9 @@ const T = {
     bijtjes_wat_body: "Onze bijenkorf opent tijdens de misviering van 11 uur. Een knutselplek, praatplek en vooral een plek waar we vanuit de leefwereld van de kinderen nadenken over de thema's die in de zondagsviering aan bod komen.",
     bijtjes_wanneer_h3: "Wanneer?", bijtjes_wanneer_body: "Elke derde zondag van de maand tijdens de viering van 11 uur in de Kerk van Goede Bijstand.",
     bijtjes_contact_link: "Neem contact op voor meer info →",
-    moster_page_title: "Mosterdzaadjes", moster_intro: "De kinderen van het 1e, 2e en 3e leerjaar (en eventueel 4e leerjaar) zijn welkom bij de Mosterdzaadjes. Onze catechisten Magda, Petra en Johnny bieden een aantrekkelijk en eigentijds programma aan.",
-    moster_wat_h3: "Wat doen we?", moster_wat_body: "Een jaar lang leren de Mosterdzaadjes over delen, gevoelens uiten, de waarde van een goede vriend en andere lessen die Jezus en de geluksvogels ons leren. Dit is niet zo gemakkelijk, maar met zijn allen gaan we op weg, stapje voor stapje, samen op ontdekking. En zo gaan we samen, maand na maand, met de kinderen op weg naar onze 'Drempelviering' <p>Het traject van de Mosterdzaadjes eindigt met een feestelijk 'Drempelviering' tijdens de Hemelvaartsviering op donderdag 14 mei 2026. Deze Drempelviering is een opstap naar de vormsel- en communiecatechese. Kinderen die nog niet aan de vormselcatechese toe zijn, blijven nog één, twee of drie jaartjes langer bij de Mosterdzaadjes. Ze mogen elk jaar meedoen met de Drempelviering als afsluiting van hun catechesejaar.</p>",
-    moster_wanneer_h3: "Wanneer?",
-    moster_wanneer_body: "Elke derde zondag van de maand tijdens de viering van 11 uur. De Drempelviering vindt plaats op donderdag 14 mei 2026 (Onze-Lieve-Heer Hemelvaart).",
+    moster_page_title: "Mosterdzaadjes", moster_intro: "De kinderen van het 1e, 2e en 3e leerjaar zijn welkom bij de Mosterdzaadjes.",
+    moster_wat_h3: "Wat doen we?", moster_wat_body: "Een jaar lang leren de Mosterdzaadjes over delen, gevoelens uiten, de waarde van een goede vriend en andere lessen die Jezus en de geluksvogels ons leren.",
+    moster_wanneer_h3: "Wanneer?", moster_wanneer_body: "Elke derde zondag van de maand tijdens de viering van 11 uur. De Drempelviering vindt plaats op donderdag 14 mei 2026 (Onze-Lieve-Heer Hemelvaart).",
     moster_contact_link: "Neem contact op voor meer info →",
     vormsel_page_title: "Vormsel & Eerste Communie", vormsel_proficiat: "Proficiat!",
     vormsel_samen_h3: "Vormsel en communie samen", vormsel_samen_body: "Anders dan elders in België, vieren we in Brussel het vormsel en de eerste communie samen. Hiermee grijpen we terug naar een heel oude traditie.",
@@ -303,11 +310,11 @@ const T = {
     schelp_huren_h3: "Aanvragen", schelp_huren_body: "Het is momenteel niet mogelijk om De Schelp te huren. Deze pagina zal bijgewerkt worden zodra dit weer mogelijk is.",
     schelp_contact_h3: "Contact", schelp_contact_link: "Stuur een bericht →",
     samenwerking_title: "Samenwerking",
-    sacramenten_title: "Sacramenten", sacr_contact_intro: "Voor alle sacramenten kunt u contact opnemen met de pastores van de Paulusgemeenschappen via  <a href=\"https://www.paulusgemeenschappen.be/\">www.paulusgemeenschappen.be</a>",
-    sacr_doop_h3: "Doopsel", sacr_doop_body: "Het doopsel is het eerste sacrament en het begin van het christelijke leven. Wilt u uw kind laten dopen of heeft u vragen over een volwassenendoop? Meer info vindt u op <a href=\"https://www.paulusgemeenschappen.be/nl/vieringen-sacramenten#doopsel\">www.paulusgemeenschappen.be</a>",
-    sacr_biecht_h3: "Biechtgesprek", sacr_biecht_body: "Een biechtgesprek is een persoonlijk gesprek over verzoening en innerlijke vrijheid. Meer info vindt u op <a href=\"https://www.paulusgemeenschappen.be/nl/vieringen-sacramenten#biecht\">www.paulusgemeenschappen.be</a>",
-    sacr_ziek_h3: "Ziekenzalving", sacr_ziek_body: "De ziekenzalving is een sacrament van troost en kracht voor wie ernstig ziek is of op hoge leeftijd. Neem contact op met pastoor Johnny De Mot",
-    sacr_huw_h3: "Huwelijk", sacr_huw_body: "Wilt u trouwen in de Kerk van Goede Bijstand? Meer info vindt u op <a href=\"https://www.paulusgemeenschappen.be/nl/vieringen-sacramenten#huwelijk\">www.paulusgemeenschappen.be</a>",
+    sacramenten_title: "Sacramenten", sacr_contact_intro: "Voor alle sacramenten kunt u contact opnemen met de pastores van de Paulusgemeenschappen via",
+    sacr_doop_h3: "Doopsel", sacr_doop_body: "Het doopsel is het eerste sacrament en het begin van het christelijke leven.",
+    sacr_biecht_h3: "Biechtgesprek", sacr_biecht_body: "Een biechtgesprek is een persoonlijk gesprek over verzoening en innerlijke vrijheid.",
+    sacr_ziek_h3: "Ziekenzalving", sacr_ziek_body: "De ziekenzalving is een sacrament van troost en kracht voor wie ernstig ziek is of op hoge leeftijd.",
+    sacr_huw_h3: "Huwelijk", sacr_huw_body: "Wilt u trouwen in de Kerk van Goede Bijstand?",
     sacr_vormsel_link: "Vormsel & Eerste Communie →",
     overlijden_title: "Overlijden", overlijden_contact_h3: "Begrafenissen & contact",
     overlijden_contact_body: "Voor het melden van een overlijden of het bespreken van een begrafenis, neem contact op met pastoor Johnny De Mot:",
@@ -339,38 +346,42 @@ const T = {
     nav_sacramenten: "Sacrements", nav_overlijden: "Décès", nav_contact: "Contact",
     footer_address: "l'église de Bon Secours — Rue du Marché au Charbon 91, 1000 Bruxelles",
     zandbank_title: "Le Banc de Sable",
-    zandbank_intro: "Le Banc de Sable est notre espace de rencontre pour la réflexion, le dialogue et la connexion — un endroit où les personnes peuvent souffler, prendre du recul et se retrouver.",
-    zandbank_body1: "En marge de la ville et pourtant au cœur de la vie : c'est ainsi que se positionne le Banc de Sable. Un espace accessible à ceux qui souhaitent s'arrêter, chercher une conversation ou simplement être présents.",
-    zandbank_body2: "Des petits rassemblements y ont lieu régulièrement : un cercle de lecture, un après-midi de silence, une conversation informelle sur la foi et la vie. Le Banc de Sable est ouvert à tous, croyants ou non.",
-    zandbank_wanneer_h3: "Quand ?",
-    zandbank_wanneer_body: "Les activités du Banc de Sable sont annoncées via l'agenda et la newsletter. Suivez-nous ou contactez-nous pour plus d'informations.",
-    zandbank_contact_link: "Nous contacter →",
-    kerk_title: "L'Église",
-    kerk_intro: "L'église Notre-Dame du Bon Secours est un magnifique édifice baroque situé au cœur de Bruxelles, rue du Marché au Charbon.",
-    kerk_geschiedenis_h3: "Histoire",
-    kerk_geschiedenis_body: "L'église fut construite au XVIIe siècle et est dédiée à Notre-Dame du Bon Secours. Le bâtiment actuel date en grande partie de 1664 et constitue un exemple important de l'architecture baroque bruxelloise.",
-    kerk_architectuur_h3: "Architecture & Art",
-    kerk_architectuur_body: "L'intérieur renferme des œuvres d'art remarquables, dont l'impressionnant maître-autel de Jan Pieter van Baurscheit l'Ancien. L'église fait partie du projet 'Maîtres Flamands in Situ' et abrite une collection unique de peintures et sculptures baroques.",
-    kerk_bezoek_h3: "Visiter l'église",
-    kerk_bezoek_body: "L'église est ouverte tous les jours de 9h à 17h, le dimanche à partir de 10h. L'entrée est gratuite.",
-    kerk_adres_h3: "Adresse",
-    kerk_open_h3: "Heures d'ouverture",
-    kerk_open_body: "Chaque jour : 9h00 – 17h00\nDimanche : 10h00 – 17h00",
-    kerk_masters_link: "Découvrir les Maîtres Flamands in Situ →",
-    kerk_maps_link: "Voir sur Google Maps →",
-    home_agenda_title: "Agenda — Célébrations & Activités",
-    home_agenda_intro: "Aperçu des 5 prochaines semaines. Seuls les jours avec une célébration ou activité sont affichés.",
-    home_paulus_title: "Communautés Paulus",
-    home_paulus_body: "Notre église de Bon Secours fait partie des Communautés Paulus, un réseau de communautés chrétiennes néerlandophones à Bruxelles.",
-    home_paulus_box_title: "Pourquoi 'Communautés Paulus' ?",
-    home_paulus_box_body: "Le nom fait référence à l'apôtre Paul, qui allait de communauté en communauté pour encourager et soutenir — sans priver les communautés de leur identité propre.",
+    zb_kicker: "Un pèlerinage en terre",
+    zb_title: "Le Monde du Bon Secours",
+    zb_subtitle: "De chaque endroit de la planète, un pot de terre",
+    zb_mission: "Une Mission de Toute une Vie",
+    zb_headline: "De chaque coin du monde<br>une poignée de terre collectée",
+    zb_intro: "La communauté du Bon Secours parcourt le monde avec une mission unique : de chaque endroit visité, elle rapporte un petit pot de terre. Un témoignage silencieux de connexion au-delà des frontières et des cultures.",
+    zb_stat_loc: "Lieux",
+    zb_stat_cont: "Continents",
+    zb_stat_land: "Pays",
+    zb_stat_verh: "Histoires",
+    zb_map_title: "Carte Mondiale des Destinations",
+    zb_map_caption: "Cliquez sur un point pour voir le nom du lieu — zoomez avec la molette ou les boutons",
+    zb_article_dateline: "Het Nieuwsblad · 16 octobre 2021",
+    zb_article_title: "Le rêve du pasteur Johnny : de chaque endroit sur terre, un pot de terre",
+    zb_article_deck: "L'article du Nieuwsblad raconte l'histoire complète de cette collection extraordinaire. Lisez comment un rêve simple est devenu un pèlerinage mondial en terre.",
+    zb_article_p1: "La communauté du Bon Secours collecte de la terre du monde entier depuis des années. Chaque destination — qu'il s'agisse d'un village reculé au Congo, d'une plage aux Seychelles ou d'un col dans les Dolomites — fournit un petit pot de terre.",
+    zb_article_p2: "La collection compte plus de 155 lieux uniques, répartis sur 6 continents et des dizaines de pays. Chaque pot porte une étiquette avec le nom du lieu et la date de visite.",
+    zb_article_btn: "Lire l'article complet",
+    zb_list_title: "Les 155 Lieux",
+    zb_list_desc: "Consultez la liste complète de tous les lieux visités, classés par continent.",
+    zb_list_btn: "Voir la liste complète",
+    kerk_title: "L'Église", kerk_intro: "L'église Notre-Dame du Bon Secours est un magnifique édifice baroque situé au cœur de Bruxelles.",
+    kerk_geschiedenis_h3: "Histoire", kerk_geschiedenis_body: "L'église fut construite au XVIIe siècle et est dédiée à Notre-Dame du Bon Secours.",
+    kerk_architectuur_h3: "Architecture & Art", kerk_architectuur_body: "L'intérieur renferme des œuvres d'art remarquables, dont l'impressionnant maître-autel de Jan Pieter van Baurscheit l'Ancien.",
+    kerk_bezoek_h3: "Visiter l'église", kerk_bezoek_body: "L'église est ouverte tous les jours de 9h à 17h, le dimanche à partir de 10h. L'entrée est gratuite.",
+    kerk_adres_h3: "Adresse", kerk_open_h3: "Heures d'ouverture", kerk_open_body: "Chaque jour : 9h00 – 17h00\nDimanche : 10h00 – 17h00",
+    kerk_masters_link: "Découvrir les Maîtres Flamands in Situ →", kerk_maps_link: "Voir sur Google Maps →",
+    home_agenda_title: "Agenda — Célébrations & Activités", home_agenda_intro: "Aperçu des 5 prochaines semaines.",
+    home_paulus_title: "Communautés Paulus", home_paulus_body: "Notre église de Bon Secours fait partie des Communautés Paulus.",
+    home_paulus_box_title: "Pourquoi 'Communautés Paulus' ?", home_paulus_box_body: "Le nom fait référence à l'apôtre Paul.",
     home_paulus_btn: "Visitez paulusgemeenschappen.be →",
-    home_taize_title: "Prière dans l'esprit de Taizé", home_taize_sub: "Chaque troisième samedi du mois — 20h00 — Église du Bon Secours",
-    home_taize_body: "À la demande du prêtre Johnny De Mot, nous organisons chaque mois une prière avec des chants de Taizé. L'église est ouverte — tout le monde est le bienvenu.",
-    home_taize_h3: "Déroulement de la soirée",
-    home_taize_time: "20h00 Prière | 20h40 Silence avec des chants instrumentaux | 21h00 Courte prière et chant — répétée chaque quart d'heure jusqu'à 22h30.",
+    home_taize_title: "Prière dans l'esprit de Taizé", home_taize_sub: "Chaque troisième samedi du mois — 20h00",
+    home_taize_body: "Chaque mois une prière avec des chants de Taizé. L'église est ouverte — tout le monde est le bienvenu.",
+    home_taize_h3: "Déroulement de la soirée", home_taize_time: "20h00 Prière | 20h40 Silence | 21h00 Courte prière et chant jusqu'à 22h30.",
     home_night_title: "Bon Secours by Night", home_night_sub: "Chaque vendredi soir de mai à août — 18h à 22h",
-    home_night_body: "De mai à août, nous ouvrons l'église chaque vendredi soir. Nous partageons l'église dans le silence ou avec de la musique sereine.",
+    home_night_body: "De mai à août, nous ouvrons l'église chaque vendredi soir.",
     home_kerst_title: "Lettre de Noël 2025", home_kerst_sub: "Les Petites Sœurs de Jésus en Belgique",
     home_kerst_link: "Lire la Lettre de Noël 2025 →", home_news_title: "Actualités",
     home_news_1: "Aperçu des célébrations d'avril", home_news_2: "Paul Huyskens", home_news_3: "Kamino – Réseau jeunes",
@@ -380,38 +391,34 @@ const T = {
     bijstand_title: "Notre Communauté", bijstand_tab_welkom: "Bienvenue", bijstand_tab_krachtlijnen: "Valeurs",
     bijstand_tab_gemeenschap: "Communauté", bijstand_tab_team: "Équipe", bijstand_tab_parochieploeg: "Conseil pastoral",
     bijstand_tab_kerkfabriek: "Fabrique d'église", bijstand_tab_gebed: "Prière", bijstand_tab_steunen: "Soutenir",
-    welkom_title: "Bienvenue",
-    welkom_body1: "Bienvenue sur le site de la communauté du Bon Secours, une paroisse néerlandophone au cœur de Bruxelles.",
-    welkom_body2: "Peut-être êtes-vous curieux de savoir qui nous sommes et ce que nous faisons. Peut-être souhaitez-vous nous poser une question. Peut-être êtes-vous simplement en chemin…",
-    welkom_body3: "En tout cas : bienvenue. Nous espérons que vous trouverez ce que vous cherchez — et pas seulement sur notre site.",
-    krachtlijnen_title: "Nos valeurs", krachtlijnen_subtitle: "Qui sommes-nous et d'où vivons-nous ?",
-    krachtlijnen_body1: "Connecter : pas nécessairement dans le sens où nous parlons tous la même langue ou pensons de la même façon. Notre communauté est très diverse, ouverte, riche en dialogue.",
-    krachtlijnen_body2: "Connecter : dans le sens où chacun essaie de relier paroles et actes dans le soin des uns pour les autres et pour les plus vulnérables.",
-    krachtlijnen_body3: "Nous sommes connectés lorsque nous célébrons ensemble, librement et en sécurité, inspirés par Jésus, partageant pain et vin.",
-    krachtlijnen_body4: "En tant que communauté paroissiale, nous vivons et travaillons avec la conviction qu'un être humain n'est pas fait pour cheminer seul.",
-    gemeenschap_title: "Notre communauté",
-    gemeenschap_body1: "Tout le monde est le bienvenu. Nos portes sont ouvertes. Les joies et les peines de la vie et de la ville peuvent pénétrer chez nous.",
-    gemeenschap_body2: "Le dimanche, nous nous retrouvons lors de la célébration qui commence à l'église et se termine autour d'un apéritif à La Coquille.",
-    team_title: "Équipe", team_body: "L'équipe est composée de deux pasteurs qui assurent la responsabilité d'accompagner la communauté.",
-    team_role: "Curé du Bon Secours, Responsable de la pastorale néerlandophone au centre de Bruxelles",
-    parochieploeg_title: "Conseil pastoral", parochieploeg_body: "Le conseil pastoral se compose de cinq membres et se réunit chaque premier mercredi matin du mois.",
+    welkom_title: "Bienvenue", welkom_body1: "Bienvenue sur le site de la communauté du Bon Secours.",
+    welkom_body2: "Peut-être êtes-vous curieux de savoir qui nous sommes.", welkom_body3: "En tout cas : bienvenue.",
+    krachtlijnen_title: "Nos valeurs", krachtlijnen_subtitle: "Qui sommes-nous ?",
+    krachtlijnen_body1: "Connecter : notre communauté est très diverse et ouverte.",
+    krachtlijnen_body2: "Connecter : chacun essaie de relier paroles et actes.",
+    krachtlijnen_body3: "Nous sommes connectés lorsque nous célébrons ensemble.",
+    krachtlijnen_body4: "Nous vivons avec la conviction qu'un être humain n'est pas fait pour cheminer seul.",
+    gemeenschap_title: "Notre communauté", gemeenschap_body1: "Tout le monde est le bienvenu.",
+    gemeenschap_body2: "Le dimanche, nous nous retrouvons lors de la célébration.",
+    team_title: "Équipe", team_body: "L'équipe est composée de deux pasteurs.",
+    team_role: "Curé du Bon Secours, Responsable de la pastorale néerlandophone",
+    parochieploeg_title: "Conseil pastoral", parochieploeg_body: "Le conseil pastoral se réunit chaque premier mercredi matin du mois.",
     parochieploeg_composition: "Composition",
-    kerkfabriek_title: "Fabrique d'église", kerkfabriek_body1: "Les cultes relèvent de la compétence régionale pour la reconnaissance des communautés locales, l'organisation et le financement des institutions chargées de la gestion des temporalités.",
+    kerkfabriek_title: "Fabrique d'église", kerkfabriek_body1: "Les cultes relèvent de la compétence régionale.",
     kerkfabriek_board: "Conseil d'administration", kerkfabriek_more: "Bruxelles Pouvoirs locaux →",
-    steunen_title: "Soutenir l'église", steunen_body: "Soutenez l'église par un don sur le compte suivant :", steunen_questions: "Pour toute question :",
+    steunen_title: "Soutenir l'église", steunen_body: "Soutenez l'église par un don.", steunen_questions: "Pour toute question :",
     vieringen_title: "Célébrations", vier_tab_overzicht: "Aperçu", vier_tab_homilies: "Homélies",
     vier_tab_bezinning: "Textes de réflexion", vier_tab_fotos: "📷 Photos", vier_vaste: "Célébrations régulières",
     vier_th_kerk: "Église", vier_th_dag: "Jour", vier_th_uur: "Heure", vier_th_bijz: "Remarques",
     vier_finis: "Finis Terrae", vier_sat: "Chaque samedi", vier_gb: "Bon Secours", vier_sun: "Chaque dimanche",
     vier_3e_zon: "3e dimanche : liturgie pour enfants",
-    vier_agenda_link: "Toutes les célébrations sont également visibles dans l'agenda de la page d'accueil.",
-    vier_bijzonder: "Célébrations spéciales",
-    vier_drempel_label: "Célébration du Seuil",
+    vier_agenda_link: "Toutes les célébrations sont également visibles dans l'agenda.",
+    vier_bijzonder: "Célébrations spéciales", vier_drempel_label: "Célébration du Seuil",
     vier_drempel_dag: "jeudi 14 mai 2026 — Ascension du Seigneur",
     vier_homilies_intro: "Homélies des célébrations à l'église du Bon Secours.",
     vier_bezinning_intro: "Textes de réflexion, témoignages et méditations spirituelles.",
     act_title: "Activités & Événements", act_tab_overzicht: "Aperçu", act_tab_fotos: "📷 Photos",
-    act_taize_h3: "Prière dans l'esprit de Taizé", act_taize_sub: "Chaque troisième samedi du mois, 20h00 — Église du Bon Secours",
+    act_taize_h3: "Prière dans l'esprit de Taizé", act_taize_sub: "Chaque troisième samedi, 20h00",
     act_taize_body: "Un moment de prière, de silence et de chant. Tout le monde est le bienvenu.",
     act_night_h3: "Bon Secours by Night", act_night_sub: "Chaque vendredi soir de mai à août, 18h–22h",
     act_night_body: "L'église est ouverte à tous.",
@@ -420,34 +427,33 @@ const T = {
     act_masters_link: "Découvrir les Maîtres Flamands in Situ →",
     act_grond_h3: "Bibliothèque de terres", act_grond_body: "Un peu de terre de chaque endroit de la planète.",
     act_grond_link: "Voir la carte interactive →",
-    kinderen_title: "Enfants & Jeunes", kinderen_intro: "Chaque troisième dimanche du mois, il y a une liturgie pour enfants lors de la célébration de 11h.",
-    bijtjes_title: "Les Bonnes Abeilles", bijtjes_desc: "Pour les enfants de l'école primaire. Ils explorent la foi à travers des histoires, des bricolages et des discussions.", bijtjes_more: "Plus d'info →",
-    moster_title: "Les Graines de Moutarde", moster_desc: "La liturgie pour enfants de l'école primaire. Chaque troisième dimanche du mois.", moster_more: "Plus d'info →",
-    vormsel_title: "Confirmation & Première Communion", vormsel_desc: "Vous souhaitez que votre enfant soit confirmé et fasse sa première communion ? Nous vous accompagnons.", vormsel_more: "Plus d'info →",
-    kinderen_jongeren_h3: "Jeunes", kinderen_jongeren_body: "Via notre collaboration avec Kamino, des activités sont régulièrement organisées.",
+    kinderen_title: "Enfants & Jeunes", kinderen_intro: "Chaque troisième dimanche du mois, il y a une liturgie pour enfants.",
+    bijtjes_title: "Les Bonnes Abeilles", bijtjes_desc: "Pour les enfants de l'école primaire.", bijtjes_more: "Plus d'info →",
+    moster_title: "Les Graines de Moutarde", moster_desc: "La liturgie pour enfants de l'école primaire.", moster_more: "Plus d'info →",
+    vormsel_title: "Confirmation & Première Communion", vormsel_desc: "Nous vous accompagnons.", vormsel_more: "Plus d'info →",
+    kinderen_jongeren_h3: "Jeunes", kinderen_jongeren_body: "Via notre collaboration avec Kamino.",
     kinderen_kamino_link: "En savoir plus sur Kamino →",
     bijtjes_page_title: "Les Bonnes Abeilles", bijtjes_wat_h3: "Que faisons-nous ?",
-    bijtjes_wat_body: "Notre ruche s'ouvre pendant la messe de 11h. Un espace de bricolage, de discussion et surtout de réflexion sur les thèmes de la célébration dominicale.",
-    bijtjes_wanneer_h3: "Quand ?", bijtjes_wanneer_body: "Chaque troisième dimanche du mois pendant la célébration de 11h à l'église du Bon Secours.",
+    bijtjes_wat_body: "Notre ruche s'ouvre pendant la messe de 11h.",
+    bijtjes_wanneer_h3: "Quand ?", bijtjes_wanneer_body: "Chaque troisième dimanche du mois.",
     bijtjes_contact_link: "Prenez contact pour plus d'info →",
     moster_page_title: "Les Graines de Moutarde", moster_intro: "Les enfants de 1ère, 2e et 3e année primaire sont les bienvenus.",
-    moster_wat_h3: "Que faisons-nous ?", moster_wat_body: "Tout au long de l'année, les Graines de Moutarde apprennent le partage, l'expression des émotions et la valeur d'un bon ami. Le parcours se termine par une 'Célébration du Seuil' en mai.",
-    moster_wanneer_h3: "Quand ?",
-    moster_wanneer_body: "Chaque troisième dimanche du mois pendant la célébration de 11h. La Célébration du Seuil a lieu le jeudi 14 mai 2026 (Ascension du Seigneur).",
+    moster_wat_h3: "Que faisons-nous ?", moster_wat_body: "Tout au long de l'année, les Graines de Moutarde apprennent le partage.",
+    moster_wanneer_h3: "Quand ?", moster_wanneer_body: "Chaque troisième dimanche. La Célébration du Seuil a lieu le jeudi 14 mai 2026.",
     moster_contact_link: "Prenez contact pour plus d'info →",
     vormsel_page_title: "Confirmation & Première Communion", vormsel_proficiat: "Félicitations !",
-    vormsel_samen_h3: "Confirmation et communion ensemble", vormsel_samen_body: "Contrairement au reste de la Belgique, à Bruxelles nous célébrons la confirmation et la première communion ensemble, en reprenant une très ancienne tradition chrétienne.",
-    vormsel_leeftijd_h3: "Âge et parcours", vormsel_leeftijd_body: "Les enfants à partir de 8 ans peuvent commencer la préparation à cette double fête. La préparation dure généralement 2 ou 3 ans.",
+    vormsel_samen_h3: "Confirmation et communion ensemble", vormsel_samen_body: "À Bruxelles nous célébrons la confirmation et la première communion ensemble.",
+    vormsel_leeftijd_h3: "Âge et parcours", vormsel_leeftijd_body: "Les enfants à partir de 8 ans peuvent commencer la préparation.",
     vormsel_contact_h3: "Contact", vormsel_back: "← Retour à Enfants & Jeunes",
-    schelp_title: "La Coquille", schelp_body1: "La salle paroissiale La Coquille est un espace de rencontre et de réunion accessible aux personnes à mobilité réduite.",
-    schelp_huren_h3: "Demandes", schelp_huren_body: "Il n'est actuellement pas possible de louer La Coquille. Cette page sera mise à jour dès que cela sera à nouveau possible.",
+    schelp_title: "La Coquille", schelp_body1: "La salle paroissiale La Coquille est accessible aux personnes à mobilité réduite.",
+    schelp_huren_h3: "Demandes", schelp_huren_body: "Il n'est actuellement pas possible de louer La Coquille.",
     schelp_contact_h3: "Contact", schelp_contact_link: "Envoyer un message →",
     samenwerking_title: "Partenariats",
     sacramenten_title: "Sacrements", sacr_contact_intro: "Pour tous les sacrements, veuillez contacter le curé Johnny De Mot via",
-    sacr_doop_h3: "Baptême", sacr_doop_body: "Le baptême est le premier sacrement et le début de la vie chrétienne. Vous souhaitez faire baptiser votre enfant ou avez des questions sur le baptême des adultes ?",
-    sacr_biecht_h3: "Réconciliation", sacr_biecht_body: "Un entretien personnel sur la réconciliation et la liberté intérieure.",
-    sacr_ziek_h3: "Onction des malades", sacr_ziek_body: "L'onction des malades est un sacrement de réconfort et de force pour les personnes gravement malades ou âgées.",
-    sacr_huw_h3: "Mariage", sacr_huw_body: "Vous souhaitez vous marier à l'église du Bon Secours ? Prenez contact avec le curé Johnny De Mot.",
+    sacr_doop_h3: "Baptême", sacr_doop_body: "Le baptême est le premier sacrement.",
+    sacr_biecht_h3: "Réconciliation", sacr_biecht_body: "Un entretien personnel sur la réconciliation.",
+    sacr_ziek_h3: "Onction des malades", sacr_ziek_body: "Un sacrement de réconfort et de force.",
+    sacr_huw_h3: "Mariage", sacr_huw_body: "Vous souhaitez vous marier à l'église du Bon Secours ?",
     sacr_vormsel_link: "Confirmation & Première Communion →",
     overlijden_title: "Décès", overlijden_contact_h3: "Funérailles & contact",
     overlijden_contact_body: "Pour signaler un décès ou discuter de funérailles, contactez le curé Johnny De Mot :",
@@ -462,7 +468,7 @@ const T = {
     sb_gb: "Bon Secours", sb_gb_time: "Chaque dimanche à 11h00", sb_gb_kids: "Avec chaque 3e dimanche liturgie enfants :",
     sb_addr_gb: "Adresse Bon Secours", sb_open: "Ouvert : chaque jour 9h–17h, dimanche à partir de 10h",
     sb_addr_ft: "Adresse Finis Terrae", sb_contact: "Contact", sb_msg: "Envoyer un message →",
-    sb_pastores: "Pasteurs", sb_pastor_role: "Curé du Bon Secours,\nResponsable de la pastorale néerlandophone centre de Bruxelles",
+    sb_pastores: "Pasteurs", sb_pastor_role: "Curé du Bon Secours,\nResponsable de la pastorale néerlandophone",
     sb_steunen: "Soutenir", sb_steunen_body: "Voulez-vous soutenir l'église?", sb_steunen_link: "Plus d'info →",
     ag_today: "Aujourd'hui", ag_sunday_mass: "Célébration dominicale — Bon Secours", ag_saturday_mass: "Messe — Finis Terrae",
     ag_taize: "Prière dans l'esprit de Taizé", ag_night: "Bon Secours by Night (18h–22h)",
@@ -470,146 +476,6 @@ const T = {
     ag_leg_night: "Bon Secours by Night", ag_leg_act: "Activité", ag_leg_music: "Musique/Concert",
     ag_manage: "Gérer l'agenda", ag_manage_note: "— Réservé aux administrateurs",
     ag_no_events: "Aucune activité prévue dans les 5 prochaines semaines.",
-  },
-  de: {
-    lang_label: "Sprache", site_title: "Unsere Liebe Frau von der Guten Beistand", site_subtitle: "Kirche — Brüssel Zentrum",
-    nav_home: "Startseite", nav_kerk: "Kirche", nav_bijstand: "Unsere Gemeinschaft", nav_vieringen: "Gottesdienste", nav_activiteiten: "Aktivitäten",
-    nav_zandbank: "Die Sandbank",
-    nav_kinderen: "Kinder & Jugend", nav_schelp: "Die Muschel", nav_samenwerking: "Zusammenarbeit",
-    nav_sacramenten: "Sakramente", nav_overlijden: "Trauer", nav_contact: "Kontakt",
-    footer_address: "Kirche Gute Beistand — Kolenmarkt 91, 1000 Brüssel",
-    zandbank_title: "Die Sandbank",
-    zandbank_intro: "Die Sandbank ist unser Begegnungsort für Besinnung, Gespräch und Verbundenheit — ein Ort, an dem Menschen kurz durchatmen, Abstand gewinnen und einander begegnen können.",
-    zandbank_body1: "Am Rand der Stadt und dennoch mitten im Leben: so versteht sich die Sandbank. Ein niedrigschwelliger Raum für alle, die innehalten möchten, ein Gespräch suchen oder einfach präsent sein wollen.",
-    zandbank_body2: "Regelmäßig finden kleine Treffen statt: ein Lesekreis, ein Stille-Nachmittag, ein informelles Gespräch über Glaube und Leben. Die Sandbank steht allen offen, Glaubenden wie Nichtglaubenden.",
-    zandbank_wanneer_h3: "Wann?",
-    zandbank_wanneer_body: "Die Aktivitäten der Sandbank werden über die Agenda und den Newsletter angekündigt. Folgen Sie uns oder nehmen Sie Kontakt auf.",
-    zandbank_contact_link: "Kontakt aufnehmen →",
-    kerk_title: "Die Kirche",
-    kerk_intro: "Die Kirche Unsere Liebe Frau von der Guten Beistand ist ein prächtiges Barockgebäude im Herzen Brüssels am Kolenmarkt.",
-    kerk_geschiedenis_h3: "Geschichte",
-    kerk_geschiedenis_body: "Die Kirche wurde im 17. Jahrhundert erbaut und ist Unserer Lieben Frau von der Guten Beistand geweiht. Das heutige Gebäude stammt großteils aus dem Jahr 1664 und ist ein bedeutendes Beispiel barocker Kirchenarchitektur in Brüssel.",
-    kerk_architectuur_h3: "Architektur & Kunst",
-    kerk_architectuur_body: "Das Innere enthält bemerkenswerte Kunstwerke, darunter den beeindruckenden Hochaltar von Jan Pieter van Baurscheit dem Älteren. Die Kirche ist Teil des Projekts 'Flämische Meister in Situ' und beherbergt eine einzigartige Sammlung barocker Gemälde und Skulpturen.",
-    kerk_bezoek_h3: "Die Kirche besuchen",
-    kerk_bezoek_body: "Die Kirche ist täglich von 9 bis 17 Uhr geöffnet, sonntags ab 10 Uhr. Der Eintritt ist frei.",
-    kerk_adres_h3: "Adresse",
-    kerk_open_h3: "Öffnungszeiten",
-    kerk_open_body: "Täglich: 9:00 – 17:00 Uhr\nSonntag: 10:00 – 17:00 Uhr",
-    kerk_masters_link: "Flämische Meister in Situ entdecken →",
-    kerk_maps_link: "Auf Google Maps ansehen →",
-    home_agenda_title: "Agenda — Gottesdienste & Aktivitäten",
-    home_agenda_intro: "Übersicht der nächsten 5 Wochen. Nur Tage mit Gottesdienst oder Aktivität werden angezeigt.",
-    home_paulus_title: "Paulus-Gemeinschaften",
-    home_paulus_body: "Unsere Pfarrei Gute Beistand ist Teil der Paulus-Gemeinschaften, einem Netzwerk niederländischsprachiger Glaubensgemeinschaften in Brüssel.",
-    home_paulus_box_title: "Warum 'Paulus-Gemeinschaften'?",
-    home_paulus_box_body: "Der Name bezieht sich auf den Apostel Paulus, der von Gemeinschaft zu Gemeinschaft zog, um zu ermutigen und zu unterstützen — ohne den Gemeinschaften ihre Eigenheit zu nehmen.",
-    home_paulus_btn: "paulusgemeenschappen.be besuchen →",
-    home_taize_title: "Gebet im Geist von Taizé", home_taize_sub: "Jeden dritten Samstag im Monat — 20:00 Uhr — Kirche Gute Beistand",
-    home_taize_body: "Auf Wunsch von Pfarrer Johnny De Mot organisieren wir monatlich ein Gebet mit Liedern aus Taizé. Die Kirche steht offen — jeder ist willkommen.",
-    home_taize_h3: "Ablauf des Abends",
-    home_taize_time: "20:00 Gebet | 20:40 Stille mit instrumentalen Taizé-Liedern | 21:00 Kurzes Gebet und Gesang — wiederholt jede Viertelstunde bis 22:30.",
-    home_night_title: "Gute Beistand by Night", home_night_sub: "Jeden Freitagabend von Mai bis August — 18 bis 22 Uhr",
-    home_night_body: "Von Mai bis August öffnen wir die Kirche jeden Freitagabend. Wir teilen die Kirche in Stille oder mit ruhiger Musik.",
-    home_kerst_title: "Weihnachtsbrief 2025", home_kerst_sub: "Die Kleinen Schwestern Jesu in Belgien",
-    home_kerst_link: "Weihnachtsbrief 2025 lesen →", home_news_title: "Nachrichten",
-    home_news_1: "Gottesdienst-Übersicht April", home_news_2: "Paul Huyskens", home_news_3: "Kamino – Jugenднetzwerk",
-    home_news_4: "Kalt erwischt, warm getragen", home_news_5: "Weihnachten: Soll ich schweigen?",
-    tag_vieringen: "Gottesdienste", tag_overlijden: "Trauer", tag_samenwerking: "Zusammenarbeit",
-    tag_bezinning: "Besinnungstexte", tag_homilies: "Homilien",
-    bijstand_title: "Unsere Gemeinschaft", bijstand_tab_welkom: "Willkommen", bijstand_tab_krachtlijnen: "Leitlinien",
-    bijstand_tab_gemeenschap: "Gemeinschaft", bijstand_tab_team: "Team", bijstand_tab_parochieploeg: "Pfarrrat",
-    bijstand_tab_kerkfabriek: "Kirchenfabrik", bijstand_tab_gebed: "Gebet", bijstand_tab_steunen: "Unterstützen",
-    welkom_title: "Willkommen",
-    welkom_body1: "Willkommen auf der Website der Gemeinschaft Gute Beistand, einer niederländischsprachigen Pfarrei im Herzen Brüssels.",
-    welkom_body2: "Vielleicht sind Sie neugierig, wer wir sind und was wir tun. Vielleicht möchten Sie uns eine Frage stellen. Vielleicht suchen Sie einfach…",
-    welkom_body3: "Wie auch immer: Willkommen. Wir hoffen, dass Sie finden, was Sie suchen — und nicht nur auf unserer Website.",
-    krachtlijnen_title: "Leitlinien", krachtlijnen_subtitle: "Wer sind wir und von wo aus leben und wirken wir?",
-    krachtlijnen_body1: "Verbinden: nicht im Sinne, dass wir immer dieselbe Sprache sprechen oder dasselbe denken. Unsere Gemeinschaft ist sehr vielfältig und daher offen, reich an Dialog.",
-    krachtlijnen_body2: "Verbinden: in dem Sinne, dass jeder versucht, Wort und Tat zu vereinen in der Fürsorge füreinander und für die Verletzlichsten.",
-    krachtlijnen_body3: "Wir sind verbunden, wenn wir gemeinsam feiern, ungezwungen und geborgen, von Jesus inspiriert, Brot und Wein teilend.",
-    krachtlijnen_body4: "Als Pfarrgemeinde leben und wirken wir mit der Überzeugung, dass ein Mensch nicht dazu geschaffen ist, allein zu gehen.",
-    gemeenschap_title: "Unsere Gemeinschaft",
-    gemeenschap_body1: "Jeder ist willkommen. Unsere Türen stehen offen.",
-    gemeenschap_body2: "Sonntags begegnen wir uns in der Feier, die in der Kirche beginnt und bei einem Aperitif in der Muschel endet.",
-    team_title: "Team", team_body: "Das Team besteht aus zwei Priestern, die die Verantwortung tragen, die Kräfte und den Auftrag der Gemeinschaft zu wahren.",
-    team_role: "Pfarrer Gute Beistand, Verantwortlicher für die niederländischsprachige Pastoral im Brüsseler Zentrum",
-    parochieploeg_title: "Pfarrrat", parochieploeg_body: "Der Pfarrrat besteht aus fünf Mitgliedern und trifft sich jeden ersten Mittwochvormittag des Monats.",
-    parochieploeg_composition: "Zusammensetzung",
-    kerkfabriek_title: "Kirchenfabrik", kerkfabriek_body1: "Der Kultus ist eine regionale Zuständigkeit bezüglich der Anerkennung lokaler Gemeinschaften und der Finanzierung der Kultusverwaltung.",
-    kerkfabriek_board: "Vorstand", kerkfabriek_more: "Brüsseler Lokalbehörden →",
-    steunen_title: "Unterstützen", steunen_body: "Unterstützen Sie die Kirche mit einer Spende auf folgende Kontonummer:", steunen_questions: "Für Fragen:",
-    vieringen_title: "Gottesdienste", vier_tab_overzicht: "Übersicht", vier_tab_homilies: "Homilien",
-    vier_tab_bezinning: "Besinnungstexte", vier_tab_fotos: "📷 Fotos", vier_vaste: "Regelmäßige Gottesdienste",
-    vier_th_kerk: "Kirche", vier_th_dag: "Tag", vier_th_uur: "Uhrzeit", vier_th_bijz: "Besonderheiten",
-    vier_finis: "Finis Terrae", vier_sat: "Jeden Samstag", vier_gb: "Gute Beistand", vier_sun: "Jeden Sonntag",
-    vier_3e_zon: "3. Sonntag: Kindergottesdienst",
-    vier_agenda_link: "Alle Gottesdienste sind auch in der Agenda auf der Startseite sichtbar.",
-    vier_bijzonder: "Besondere Gottesdienste",
-    vier_drempel_label: "Schwellenfeier",
-    vier_drempel_dag: "Donnerstag, 14. Mai 2026 — Christi Himmelfahrt",
-    vier_homilies_intro: "Homilien aus den Gottesdiensten in der Kirche Gute Beistand.",
-    vier_bezinning_intro: "Besinnungstexte, Zeugnisse und spirituelle Reflexionen.",
-    act_title: "Aktivitäten & Veranstaltungen", act_tab_overzicht: "Übersicht", act_tab_fotos: "📷 Fotos",
-    act_taize_h3: "Gebet im Geist von Taizé", act_taize_sub: "Jeden dritten Samstag, 20:00 Uhr — Kirche Gute Beistand",
-    act_taize_body: "Ein Moment des Gebets, der Stille und des Gesangs. Alle sind willkommen.",
-    act_night_h3: "Gute Beistand by Night", act_night_sub: "Jeden Freitagabend von Mai bis August, 18–22 Uhr",
-    act_night_body: "Die Kirche steht für alle offen.",
-    act_masters_h3: "Flämische Meister in Situ", act_masters_caption: "Hochaltar — Jan Pieter van Baurscheit der Ältere",
-    act_masters_body: "Für atemberarockes Barock in Marmor und Blattgold besuchen Sie unsere Kirche.",
-    act_masters_link: "Flämische Meister in Situ entdecken →",
-    act_grond_h3: "Erdbibliothek", act_grond_body: "Ein Stück Erde von jedem Ort der Welt.",
-    act_grond_link: "Interaktive Karte ansehen →",
-    kinderen_title: "Kinder & Jugend", kinderen_intro: "Jeden dritten Sonntag im Monat gibt es einen Kindergottesdienst beim 11-Uhr-Gottesdienst.",
-    bijtjes_title: "Gute Bienchen", bijtjes_desc: "Für Kinder der Grundschule. Sie erkunden den Glauben durch Geschichten, Basteln und Gespräche.", bijtjes_more: "Mehr Info →",
-    moster_title: "Senfkörner", moster_desc: "Der Kindergottesdienst für Grundschulkinder. Jeden dritten Sonntag im Monat.", moster_more: "Mehr Info →",
-    vormsel_title: "Firmung & Erste Kommunion", vormsel_desc: "Möchten Sie Ihr Kind firmen und zur Erstkommunion gehen lassen? Wir begleiten Sie gerne.", vormsel_more: "Mehr Info →",
-    kinderen_jongeren_h3: "Jugend", kinderen_jongeren_body: "Über unsere Zusammenarbeit mit Kamino finden regelmäßig Aktivitäten statt.",
-    kinderen_kamino_link: "Mehr über Kamino →",
-    bijtjes_page_title: "Gute Bienchen", bijtjes_wat_h3: "Was machen wir?",
-    bijtjes_wat_body: "Unser Bienenstock öffnet während der 11-Uhr-Messe. Ein Bastel-, Gesprächs- und Nachdenkplatz rund um die Sonntagsfeier.",
-    bijtjes_wanneer_h3: "Wann?", bijtjes_wanneer_body: "Jeden dritten Sonntag im Monat während der 11-Uhr-Feier in der Kirche Gute Beistand.",
-    bijtjes_contact_link: "Kontakt für mehr Infos →",
-    moster_page_title: "Senfkörner", moster_intro: "Kinder aus dem 1., 2. und 3. Schuljahr sind willkommen.",
-    moster_wat_h3: "Was machen wir?", moster_wat_body: "Ein Jahr lang lernen die Senfkörner über Teilen, Gefühle ausdrücken und den Wert eines guten Freundes. Das Programm endet mit einer 'Schwellenfeier' im Mai.",
-    moster_wanneer_h3: "Wann?",
-    moster_wanneer_body: "Jeden dritten Sonntag im Monat während der 11-Uhr-Feier. Die Schwellenfeier findet am Donnerstag, 14. Mai 2026 (Christi Himmelfahrt) statt.",
-    moster_contact_link: "Kontakt für mehr Infos →",
-    vormsel_page_title: "Firmung & Erste Kommunion", vormsel_proficiat: "Herzlichen Glückwunsch!",
-    vormsel_samen_h3: "Firmung und Kommunion zusammen", vormsel_samen_body: "Anders als anderswo in Belgien feiern wir in Brüssel Firmung und Erstkommunion gemeinsam — in Anlehnung an eine sehr alte christliche Tradition.",
-    vormsel_leeftijd_h3: "Alter und Verlauf", vormsel_leeftijd_body: "Kinder ab 8 Jahren können mit der Vorbereitung beginnen. Diese dauert in der Regel 2 oder 3 Jahre.",
-    vormsel_contact_h3: "Kontakt", vormsel_back: "← Zurück zu Kinder & Jugend",
-    schelp_title: "Die Muschel", schelp_body1: "Der Pfarrsaal Die Muschel ist ein rollstuhlgerechter Begegnungs- und Versammlungsraum.",
-    schelp_huren_h3: "Anfragen", schelp_huren_body: "Es ist derzeit nicht möglich, Die Muschel zu mieten. Diese Seite wird aktualisiert, sobald dies wieder möglich ist.",
-    schelp_contact_h3: "Kontakt", schelp_contact_link: "Nachricht senden →",
-    samenwerking_title: "Zusammenarbeit",
-    sacramenten_title: "Sakramente", sacr_contact_intro: "Für alle Sakramente können Sie sich an Pfarrer Johnny De Mot wenden:",
-    sacr_doop_h3: "Taufe", sacr_doop_body: "Die Taufe ist das erste Sakrament und der Beginn des christlichen Lebens. Möchten Sie Ihr Kind taufen lassen oder haben Sie Fragen zur Erwachsenentaufe?",
-    sacr_biecht_h3: "Beichte", sacr_biecht_body: "Ein persönliches Gespräch über Versöhnung und innere Freiheit.",
-    sacr_ziek_h3: "Krankensalbung", sacr_ziek_body: "Die Krankensalbung ist ein Sakrament des Trostes und der Stärkung für Schwerkranke und Hochbetagte.",
-    sacr_huw_h3: "Ehe", sacr_huw_body: "Möchten Sie in der Kirche Gute Beistand heiraten? Wenden Sie sich rechtzeitig an Pfarrer Johnny De Mot.",
-    sacr_vormsel_link: "Firmung & Erste Kommunion →",
-    overlijden_title: "Trauer & Beerdigungen", overlijden_contact_h3: "Beerdigungen & Kontakt",
-    overlijden_contact_body: "Zum Melden eines Todesfalls oder zur Besprechung einer Beerdigung wenden Sie sich bitte an Pfarrer Johnny De Mot:",
-    overlijden_label: "Trauer",
-    contact_title: "Kontakt", contact_sec_h3: "Sekretariat", contact_pastor_h3: "Pfarrer",
-    contact_msg_h3: "Schreiben Sie uns", contact_name: "Ihr Name", contact_name_ph: "Vor- und Nachname",
-    contact_email: "E-Mail-Adresse", contact_subject: "Betreff", contact_subject_ph: "Worum geht es bei Ihrer Frage?",
-    contact_message: "Nachricht", contact_message_ph: "Schreiben Sie hier Ihre Nachricht...",
-    contact_send: "Nachricht senden", contact_sent: "Ihre Nachricht wurde gesendet. Danke!",
-    contact_loc_h3: "Standort", contact_maps_link: "Auf Google Maps ansehen →",
-    sb_vieringen: "Gottesdienste", sb_finis: "Kirche Finis Terrae", sb_finis_time: "Jeden Samstag um 16:30 Uhr",
-    sb_gb: "Gute Beistand", sb_gb_time: "Jeden Sonntag um 11:00 Uhr", sb_gb_kids: "Mit jedem 3. Sonntag Kindergottesdienst:",
-    sb_addr_gb: "Adresse Gute Beistand", sb_open: "Geöffnet: täglich 9–17 Uhr, sonntags ab 10 Uhr",
-    sb_addr_ft: "Adresse Finis Terrae", sb_contact: "Kontakt", sb_msg: "Nachricht senden →",
-    sb_pastores: "Pfarrer", sb_pastor_role: "Pfarrer Gute Beistand,\nVerantwortlicher für die niederländischsprachige Pastoral im Brüsseler Zentrum",
-    sb_steunen: "Unterstützen", sb_steunen_body: "Möchten Sie die Kirche unterstützen?", sb_steunen_link: "Mehr Info →",
-    ag_today: "Heute", ag_sunday_mass: "Sonntagsfeier — Gute Beistand", ag_saturday_mass: "Messe — Finis Terrae",
-    ag_taize: "Gebet im Geist von Taizé", ag_night: "Gute Beistand by Night (18–22 Uhr)",
-    ag_easter: "Osternacht — Gute Beistand", ag_leg_viering: "Gottesdienst", ag_leg_taize: "Taizé",
-    ag_leg_night: "Gute Beistand by Night", ag_leg_act: "Aktivität", ag_leg_music: "Musik/Konzert",
-    ag_manage: "Agenda verwalten", ag_manage_note: "— Nur für Administratoren",
-    ag_no_events: "Keine Aktivitäten in den nächsten 5 Wochen geplant.",
   },
   en: {
     lang_label: "Language", site_title: "Our Lady of Good Help", site_subtitle: "Church — Brussels Centre",
@@ -619,38 +485,42 @@ const T = {
     nav_sacramenten: "Sacraments", nav_overlijden: "Bereavement", nav_contact: "Contact",
     footer_address: "Church Our Lady of Good Help — Kolenmarkt 91, 1000 Brussels",
     zandbank_title: "The Sandbank",
-    zandbank_intro: "The Sandbank is our meeting place for reflection, conversation and connection — a space where people can breathe, step back from the rush and encounter one another.",
-    zandbank_body1: "On the edge of the city yet at the heart of life: that is how the Sandbank positions itself. A low-threshold space for those who wish to pause, seek a conversation, or simply be present.",
-    zandbank_body2: "Small gatherings take place regularly: a reading circle, an afternoon of silence, an informal conversation about faith and life. The Sandbank is open to everyone, believers and non-believers alike.",
-    zandbank_wanneer_h3: "When?",
-    zandbank_wanneer_body: "Sandbank activities are announced via the agenda and newsletter. Follow us or get in touch for more information.",
-    zandbank_contact_link: "Get in touch →",
-    kerk_title: "The Church",
-    kerk_intro: "The Church of Our Lady of Good Help is a magnificent baroque building in the heart of Brussels, located on the Kolenmarkt.",
-    kerk_geschiedenis_h3: "History",
-    kerk_geschiedenis_body: "The church was built in the 17th century and is dedicated to Our Lady of Good Help. The current building dates largely from 1664 and is an important example of baroque church architecture in Brussels.",
-    kerk_architectuur_h3: "Architecture & Art",
-    kerk_architectuur_body: "The interior contains remarkable works of art, including the impressive high altar by Jan Pieter van Baurscheit the Elder. The church is part of the 'Flemish Masters in Situ' project and houses a unique collection of baroque paintings and sculptures.",
-    kerk_bezoek_h3: "Visit the church",
-    kerk_bezoek_body: "The church is open every day from 9 AM to 5 PM, on Sundays from 10 AM. Admission is free.",
-    kerk_adres_h3: "Address",
-    kerk_open_h3: "Opening hours",
-    kerk_open_body: "Every day: 9:00 AM – 5:00 PM\nSunday: 10:00 AM – 5:00 PM",
-    kerk_masters_link: "Discover the Flemish Masters in Situ →",
-    kerk_maps_link: "View on Google Maps →",
-    home_agenda_title: "Agenda — Services & Activities",
-    home_agenda_intro: "Overview of the next 5 weeks. Only days with a service or activity are shown.",
-    home_paulus_title: "Paulus Communities",
-    home_paulus_body: "Our Church Our Lady of Good Help is part of the Paulus Communities, a network of Dutch-speaking faith communities in Brussels.",
-    home_paulus_box_title: "Why 'Paulus Communities'?",
-    home_paulus_box_body: "The name refers to the Apostle Paul, who travelled from community to community to encourage and support — without taking away their identity.",
+    zb_kicker: "A pilgrimage in earth",
+    zb_title: "The World of Good Help",
+    zb_subtitle: "From every place on earth, a jar of soil",
+    zb_mission: "A Lifelong Mission",
+    zb_headline: "From every corner of the world<br>a handful of earth collected",
+    zb_intro: "The community of Our Lady of Good Help travels the world with one special mission: from every place they visit, they bring home a small jar of soil. A quiet testimony of connection across borders and cultures.",
+    zb_stat_loc: "Locations",
+    zb_stat_cont: "Continents",
+    zb_stat_land: "Countries",
+    zb_stat_verh: "Stories",
+    zb_map_title: "World Map of Destinations",
+    zb_map_caption: "Click a dot to see the location name — zoom with the scroll wheel or buttons",
+    zb_article_dateline: "Het Nieuwsblad · 16 October 2021",
+    zb_article_title: "The dream of Fr. Johnny: from every place on earth, a jar of soil",
+    zb_article_deck: "The article in Het Nieuwsblad tells the full story behind this remarkable collection. Read how a simple dream grew into a worldwide pilgrimage in earth.",
+    zb_article_p1: "The community of Our Lady of Good Help has been collecting soil from around the world for years. Every destination — whether a remote village in Congo, a beach in the Seychelles or a mountain pass in the Dolomites — yields a small jar of earth.",
+    zb_article_p2: "The collection now counts more than 155 unique locations, spread across 6 continents and dozens of countries. Each jar bears a label with the name of the place and the date of the visit.",
+    zb_article_btn: "Read the full article",
+    zb_list_title: "All 155 Locations",
+    zb_list_desc: "View the complete list of all visited places, organised by continent.",
+    zb_list_btn: "View the full list",
+    kerk_title: "The Church", kerk_intro: "The Church of Our Lady of Good Help is a magnificent baroque building in the heart of Brussels.",
+    kerk_geschiedenis_h3: "History", kerk_geschiedenis_body: "The church was built in the 17th century and dates largely from 1664.",
+    kerk_architectuur_h3: "Architecture & Art", kerk_architectuur_body: "The interior contains remarkable works of art, including the impressive high altar.",
+    kerk_bezoek_h3: "Visit the church", kerk_bezoek_body: "Open every day 9 AM–5 PM, Sundays from 10 AM. Free admission.",
+    kerk_adres_h3: "Address", kerk_open_h3: "Opening hours", kerk_open_body: "Every day: 9:00 AM – 5:00 PM\nSunday: 10:00 AM – 5:00 PM",
+    kerk_masters_link: "Discover the Flemish Masters in Situ →", kerk_maps_link: "View on Google Maps →",
+    home_agenda_title: "Agenda — Services & Activities", home_agenda_intro: "Overview of the next 5 weeks.",
+    home_paulus_title: "Paulus Communities", home_paulus_body: "Our Church is part of the Paulus Communities, a network of Dutch-speaking faith communities in Brussels.",
+    home_paulus_box_title: "Why 'Paulus Communities'?", home_paulus_box_body: "The name refers to the Apostle Paul.",
     home_paulus_btn: "Visit paulusgemeenschappen.be →",
-    home_taize_title: "Prayer in the Spirit of Taizé", home_taize_sub: "Every third Saturday of the month — 8:00 PM — Church of Our Lady of Good Help",
-    home_taize_body: "At the request of Fr. Johnny De Mot, we organise a monthly prayer with songs from Taizé. The church is open — everyone is welcome to come in.",
-    home_taize_h3: "Evening programme",
-    home_taize_time: "8:00 PM Prayer | 8:40 PM Silence with instrumental Taizé songs | 9:00 PM Short prayer and song — repeated every quarter-hour until 10:30 PM.",
-    home_night_title: "Good Help by Night", home_night_sub: "Every Friday evening from May to August — 6 PM to 10 PM",
-    home_night_body: "From May to August, we open the church every Friday evening. We share the church in silence or with serene music, with often unexpected, beautiful encounters.",
+    home_taize_title: "Prayer in the Spirit of Taizé", home_taize_sub: "Every third Saturday — 8:00 PM",
+    home_taize_body: "Monthly prayer with songs from Taizé. Everyone is welcome.",
+    home_taize_h3: "Evening programme", home_taize_time: "8:00 PM Prayer | 8:40 PM Silence | 9:00 PM Song until 10:30 PM.",
+    home_night_title: "Good Help by Night", home_night_sub: "Every Friday evening May–August — 6–10 PM",
+    home_night_body: "We open the church every Friday evening from May to August.",
     home_kerst_title: "Christmas Letter 2025", home_kerst_sub: "The Little Sisters of Jesus in Belgium",
     home_kerst_link: "Read the Christmas Letter 2025 →", home_news_title: "News",
     home_news_1: "Services Overview April", home_news_2: "Paul Huyskens", home_news_3: "Kamino – Youth Network",
@@ -660,74 +530,66 @@ const T = {
     bijstand_title: "Our Community", bijstand_tab_welkom: "Welcome", bijstand_tab_krachtlijnen: "Our Values",
     bijstand_tab_gemeenschap: "Community", bijstand_tab_team: "Team", bijstand_tab_parochieploeg: "Parish Council",
     bijstand_tab_kerkfabriek: "Church Board", bijstand_tab_gebed: "Prayer", bijstand_tab_steunen: "Support Us",
-    welkom_title: "Welcome",
-    welkom_body1: "Welcome to the website of Our Lady of Good Help, a Dutch-speaking parish in the heart of Brussels.",
-    welkom_body2: "Perhaps you are curious about who we are and what we do. Perhaps you want to ask us a question. Perhaps you are simply searching…",
-    welkom_body3: "Either way: welcome. We hope you find what you are looking for — and not only on our website.",
-    krachtlijnen_title: "Our Values", krachtlijnen_subtitle: "Who are we and from what do we live and work?",
-    krachtlijnen_body1: "Connection: not in the sense that we always speak the same language or think alike. Our community is very diverse and therefore open, rich in dialogue.",
-    krachtlijnen_body2: "Connection: in the sense that everyone tries to align words and deeds in caring for one another and for the most vulnerable.",
-    krachtlijnen_body3: "We are connected when we celebrate together, freely and safely, inspired by Jesus, sharing bread and wine.",
-    krachtlijnen_body4: "As a parish community, we live and work with the conviction that a human being is not made to journey alone.",
-    gemeenschap_title: "Our Community",
-    gemeenschap_body1: "Everyone is welcome. Our doors are open. The joys and sorrows of life and the city are welcome here.",
-    gemeenschap_body2: "On Sundays we gather for the service, which starts in the church and ends over an aperitif in The Shell (parish hall).",
-    team_title: "Team", team_body: "The team consists of two pastors who bear the responsibility of upholding the mission of the community.",
+    welkom_title: "Welcome", welkom_body1: "Welcome to the website of Our Lady of Good Help.",
+    welkom_body2: "Perhaps you are curious about who we are.", welkom_body3: "Either way: welcome.",
+    krachtlijnen_title: "Our Values", krachtlijnen_subtitle: "Who are we?",
+    krachtlijnen_body1: "Connection: our community is very diverse and open.", krachtlijnen_body2: "Connection: aligning words and deeds.",
+    krachtlijnen_body3: "We are connected when we celebrate together.", krachtlijnen_body4: "A human being is not made to journey alone.",
+    gemeenschap_title: "Our Community", gemeenschap_body1: "Everyone is welcome. Our doors are open.",
+    gemeenschap_body2: "On Sundays we gather for the service.",
+    team_title: "Team", team_body: "The team consists of two pastors.",
     team_role: "Parish Priest, Responsible for Dutch-speaking pastoral care in Brussels centre",
-    parochieploeg_title: "Parish Council", parochieploeg_body: "The parish council consists of five members and meets every first Wednesday morning of the month.",
+    parochieploeg_title: "Parish Council", parochieploeg_body: "The parish council meets every first Wednesday morning.",
     parochieploeg_composition: "Composition",
-    kerkfabriek_title: "Church Board", kerkfabriek_body1: "Religious services are a regional responsibility regarding the recognition of local communities and the financing of the institutions managing the temporal affairs of religious communities.",
+    kerkfabriek_title: "Church Board", kerkfabriek_body1: "Religious services are a regional responsibility.",
     kerkfabriek_board: "Board of Directors", kerkfabriek_more: "Brussels Local Authorities →",
-    steunen_title: "Support Us", steunen_body: "Support the church with a donation to the following account:", steunen_questions: "For questions:",
+    steunen_title: "Support Us", steunen_body: "Support the church with a donation.", steunen_questions: "For questions:",
     vieringen_title: "Services", vier_tab_overzicht: "Overview", vier_tab_homilies: "Homilies",
     vier_tab_bezinning: "Reflections", vier_tab_fotos: "📷 Photos", vier_vaste: "Regular Services",
     vier_th_kerk: "Church", vier_th_dag: "Day", vier_th_uur: "Time", vier_th_bijz: "Notes",
     vier_finis: "Finis Terrae", vier_sat: "Every Saturday", vier_gb: "Our Lady of Good Help", vier_sun: "Every Sunday",
     vier_3e_zon: "3rd Sunday: children's liturgy",
     vier_agenda_link: "All services are also visible in the agenda on the homepage.",
-    vier_bijzonder: "Special Services",
-    vier_drempel_label: "Threshold Celebration",
+    vier_bijzonder: "Special Services", vier_drempel_label: "Threshold Celebration",
     vier_drempel_dag: "Thursday 14 May 2026 — Ascension of the Lord",
     vier_homilies_intro: "Homilies from services at the Church of Our Lady of Good Help.",
     vier_bezinning_intro: "Reflection texts, testimonies and spiritual meditations.",
     act_title: "Activities & Events", act_tab_overzicht: "Overview", act_tab_fotos: "📷 Photos",
-    act_taize_h3: "Prayer in the Spirit of Taizé", act_taize_sub: "Every third Saturday, 8:00 PM — Church of Our Lady of Good Help",
+    act_taize_h3: "Prayer in the Spirit of Taizé", act_taize_sub: "Every third Saturday, 8:00 PM",
     act_taize_body: "A moment of prayer, silence and song. Everyone is welcome.",
-    act_night_h3: "Good Help by Night", act_night_sub: "Every Friday evening from May to August, 6–10 PM",
+    act_night_h3: "Good Help by Night", act_night_sub: "Every Friday evening May–August, 6–10 PM",
     act_night_body: "The church is open to everyone.",
     act_masters_h3: "Flemish Masters in Situ", act_masters_caption: "High altar — Jan Pieter van Baurscheit the Elder",
     act_masters_body: "For breathtaking baroque in marble and gold leaf, visit our church.",
     act_masters_link: "Discover the Flemish Masters in Situ →",
     act_grond_h3: "Earth Library", act_grond_body: "A piece of earth from every place on the planet.",
     act_grond_link: "View the interactive map →",
-    kinderen_title: "Children & Youth", kinderen_intro: "Every third Sunday of the month there is a children's liturgy during the 11 AM service.",
-    bijtjes_title: "Good Bees", bijtjes_desc: "For primary school children. They explore faith through stories, crafts and conversations.", bijtjes_more: "More info →",
-    moster_title: "Mustard Seeds", moster_desc: "The children's liturgy for primary school children. Every third Sunday of the month.", moster_more: "More info →",
-    vormsel_title: "Confirmation & First Communion", vormsel_desc: "Would you like your child to be confirmed and receive First Communion? We will gladly guide you.", vormsel_more: "More info →",
-    kinderen_jongeren_h3: "Youth", kinderen_jongeren_body: "Through our partnership with Kamino, activities are regularly organised.",
+    kinderen_title: "Children & Youth", kinderen_intro: "Every third Sunday there is a children's liturgy during the 11 AM service.",
+    bijtjes_title: "Good Bees", bijtjes_desc: "For primary school children.", bijtjes_more: "More info →",
+    moster_title: "Mustard Seeds", moster_desc: "Children's liturgy every third Sunday.", moster_more: "More info →",
+    vormsel_title: "Confirmation & First Communion", vormsel_desc: "We will gladly guide you.", vormsel_more: "More info →",
+    kinderen_jongeren_h3: "Youth", kinderen_jongeren_body: "Through our partnership with Kamino.",
     kinderen_kamino_link: "More about Kamino →",
-    bijtjes_page_title: "Good Bees", bijtjes_wat_h3: "What do we do?",
-    bijtjes_wat_body: "Our hive opens during the 11 AM Mass. A space for crafts, talk and especially reflection on the themes of the Sunday service.",
-    bijtjes_wanneer_h3: "When?", bijtjes_wanneer_body: "Every third Sunday of the month during the 11 AM service at the Church of Our Lady of Good Help.",
+    bijtjes_page_title: "Good Bees", bijtjes_wat_h3: "What do we do?", bijtjes_wat_body: "Our hive opens during the 11 AM Mass.",
+    bijtjes_wanneer_h3: "When?", bijtjes_wanneer_body: "Every third Sunday during the 11 AM service.",
     bijtjes_contact_link: "Contact us for more info →",
     moster_page_title: "Mustard Seeds", moster_intro: "Children in years 1, 2 and 3 of primary school are welcome.",
-    moster_wat_h3: "What do we do?", moster_wat_body: "Throughout the year, the Mustard Seeds learn about sharing, expressing feelings and the value of a good friend. The programme ends with a 'Threshold Celebration' in May.",
-    moster_wanneer_h3: "When?",
-    moster_wanneer_body: "Every third Sunday of the month during the 11 AM service. The Threshold Celebration takes place on Thursday 14 May 2026 (Ascension of the Lord).",
+    moster_wat_h3: "What do we do?", moster_wat_body: "The programme ends with a 'Threshold Celebration' in May.",
+    moster_wanneer_h3: "When?", moster_wanneer_body: "Every third Sunday. Threshold Celebration: Thursday 14 May 2026.",
     moster_contact_link: "Contact us for more info →",
     vormsel_page_title: "Confirmation & First Communion", vormsel_proficiat: "Congratulations!",
-    vormsel_samen_h3: "Confirmation and communion together", vormsel_samen_body: "Unlike elsewhere in Belgium, in Brussels we celebrate confirmation and first communion together, reviving a very ancient Christian tradition.",
-    vormsel_leeftijd_h3: "Age and programme", vormsel_leeftijd_body: "Children from age 8 can begin preparing for this double celebration. The preparation usually lasts 2 or 3 years.",
+    vormsel_samen_h3: "Confirmation and communion together", vormsel_samen_body: "In Brussels we celebrate confirmation and first communion together.",
+    vormsel_leeftijd_h3: "Age and programme", vormsel_leeftijd_body: "Children from age 8 can begin preparing.",
     vormsel_contact_h3: "Contact", vormsel_back: "← Back to Children & Youth",
-    schelp_title: "The Shell", schelp_body1: "The parish hall The Shell is a wheelchair-accessible meeting and conference space.",
-    schelp_huren_h3: "Requests", schelp_huren_body: "It is currently not possible to hire The Shell. This page will be updated once this is possible again.",
+    schelp_title: "The Shell", schelp_body1: "The parish hall The Shell is a wheelchair-accessible meeting space.",
+    schelp_huren_h3: "Requests", schelp_huren_body: "It is currently not possible to hire The Shell.",
     schelp_contact_h3: "Contact", schelp_contact_link: "Send a message →",
     samenwerking_title: "Partners",
     sacramenten_title: "Sacraments", sacr_contact_intro: "For all sacraments, please contact Fr. Johnny De Mot at",
-    sacr_doop_h3: "Baptism", sacr_doop_body: "Baptism is the first sacrament and the beginning of Christian life. Would you like to have your child baptised or do you have questions about adult baptism?",
-    sacr_biecht_h3: "Reconciliation", sacr_biecht_body: "A personal conversation about reconciliation and inner freedom.",
-    sacr_ziek_h3: "Anointing of the Sick", sacr_ziek_body: "The anointing of the sick is a sacrament of comfort and strength for those who are seriously ill or elderly.",
-    sacr_huw_h3: "Marriage", sacr_huw_body: "Would you like to marry at the Church of Our Lady of Good Help? Please contact Fr. Johnny De Mot well in advance.",
+    sacr_doop_h3: "Baptism", sacr_doop_body: "Baptism is the first sacrament.",
+    sacr_biecht_h3: "Reconciliation", sacr_biecht_body: "A personal conversation about reconciliation.",
+    sacr_ziek_h3: "Anointing of the Sick", sacr_ziek_body: "A sacrament of comfort and strength.",
+    sacr_huw_h3: "Marriage", sacr_huw_body: "Would you like to marry at the Church of Our Lady of Good Help?",
     sacr_vormsel_link: "Confirmation & First Communion →",
     overlijden_title: "Bereavement", overlijden_contact_h3: "Funerals & Contact",
     overlijden_contact_body: "To report a death or discuss a funeral, please contact Fr. Johnny De Mot:",
@@ -750,148 +612,59 @@ const T = {
     ag_leg_night: "Good Help by Night", ag_leg_act: "Activity", ag_leg_music: "Music/Concert",
     ag_manage: "Manage agenda", ag_manage_note: "— Reserved for administrators",
     ag_no_events: "No activities planned in the next 5 weeks.",
-  },
-  es: {
-    lang_label: "Idioma", site_title: "Nuestra Señora del Buen Socorro", site_subtitle: "Iglesia — Centro de Bruselas",
-    nav_home: "Inicio", nav_kerk: "La Iglesia", nav_bijstand: "Nuestra Comunidad", nav_vieringen: "Celebraciones", nav_activiteiten: "Actividades",
-    nav_zandbank: "El Banco de Arena",
-    nav_kinderen: "Niños & Jóvenes", nav_schelp: "La Concha", nav_samenwerking: "Colaboraciones",
-    nav_sacramenten: "Sacramentos", nav_overlijden: "Fallecimientos", nav_contact: "Contacto",
-    footer_address: "Iglesia Buen Socorro — Kolenmarkt 91, 1000 Bruselas",
-    zandbank_title: "El Banco de Arena",
-    zandbank_intro: "El Banco de Arena es nuestro lugar de encuentro para la reflexión, el diálogo y la conexión — un espacio donde las personas pueden respirar, alejarse del bullicio y encontrarse.",
-    zandbank_body1: "En los márgenes de la ciudad pero en el corazón de la vida: así se posiciona el Banco de Arena. Un espacio accesible para quienes desean detenerse, buscar una conversación o simplemente estar presentes.",
-    zandbank_body2: "Regularmente tienen lugar pequeñas reuniones: un círculo de lectura, una tarde de silencio, una conversación informal sobre la fe y la vida. El Banco de Arena está abierto a todos, creyentes y no creyentes.",
-    zandbank_wanneer_h3: "¿Cuándo?",
-    zandbank_wanneer_body: "Las actividades del Banco de Arena se anuncian a través de la agenda y el boletín. Síganos o contáctenos para más información.",
-    zandbank_contact_link: "Contactar →",
-    kerk_title: "La Iglesia",
-    kerk_intro: "La Iglesia de Nuestra Señora del Buen Socorro es un magnífico edificio barroco en el corazón de Bruselas, situado en el Kolenmarkt.",
-    kerk_geschiedenis_h3: "Historia",
-    kerk_geschiedenis_body: "La iglesia fue construida en el siglo XVII y está dedicada a Nuestra Señora del Buen Socorro. El edificio actual data en gran parte de 1664 y es un importante ejemplo de arquitectura eclesiástica barroca en Bruselas.",
-    kerk_architectuur_h3: "Arquitectura & Arte",
-    kerk_architectuur_body: "El interior alberga obras de arte notables, entre ellas el impresionante altar mayor de Jan Pieter van Baurscheit el Viejo. La iglesia forma parte del proyecto 'Maestros Flamencos in Situ' y conserva una colección única de pinturas y esculturas barrocas.",
-    kerk_bezoek_h3: "Visitar la iglesia",
-    kerk_bezoek_body: "La iglesia está abierta todos los días de 9 a 17 h, los domingos a partir de las 10 h. La entrada es gratuita.",
-    kerk_adres_h3: "Dirección",
-    kerk_open_h3: "Horario de apertura",
-    kerk_open_body: "Cada día: 9:00 – 17:00 h\nDomingo: 10:00 – 17:00 h",
-    kerk_masters_link: "Descubrir los Maestros Flamencos in Situ →",
-    kerk_maps_link: "Ver en Google Maps →",
-    home_agenda_title: "Agenda — Celebraciones & Actividades",
-    home_agenda_intro: "Resumen de las próximas 5 semanas. Solo se muestran los días con celebración o actividad.",
-    home_paulus_title: "Comunidades Paulus",
-    home_paulus_body: "Nuestra parroquia del Buen Socorro forma parte de las Comunidades Paulus, una red de comunidades de fe neerlandófonas en Bruselas.",
-    home_paulus_box_title: "¿Por qué 'Comunidades Paulus'?",
-    home_paulus_box_body: "El nombre hace referencia al apóstol Pablo, que viajaba de comunidad en comunidad para animar y apoyar — sin quitarles su identidad propia.",
-    home_paulus_btn: "Visitar paulusgemeenschappen.be →",
-    home_taize_title: "Oración en el espíritu de Taizé", home_taize_sub: "Cada tercer sábado del mes — 20:00 h — Iglesia del Buen Socorro",
-    home_taize_body: "A petición del sacerdote Johnny De Mot, organizamos mensualmente una oración con cánticos de Taizé. La iglesia está abierta — todos son bienvenidos.",
-    home_taize_h3: "Desarrollo de la velada",
-    home_taize_time: "20:00 Oración | 20:40 Silencio con cánticos instrumentales | 21:00 Breve oración y canto — repetido cada cuarto de hora hasta las 22:30.",
-    home_night_title: "Buen Socorro by Night", home_night_sub: "Cada viernes por la noche de mayo a agosto — 18 a 22 h",
-    home_night_body: "De mayo a agosto, abrimos la iglesia cada viernes por la noche. Compartimos el templo en silencio o con música serena.",
-    home_kerst_title: "Carta de Navidad 2025", home_kerst_sub: "Las Hermanitas de Jesús en Bélgica",
-    home_kerst_link: "Leer la Carta de Navidad 2025 →", home_news_title: "Noticias",
-    home_news_1: "Resumen de celebraciones de abril", home_news_2: "Paul Huyskens", home_news_3: "Kamino – Red de jóvenes",
-    home_news_4: "Atrapado por el frío, sostenido por el calor", home_news_5: "Navidad: ¿debo guardar silencio?",
-    tag_vieringen: "Celebraciones", tag_overlijden: "Fallecimientos", tag_samenwerking: "Colaboraciones",
-    tag_bezinning: "Textos de reflexión", tag_homilies: "Homilías",
-    bijstand_title: "Nuestra Comunidad", bijstand_tab_welkom: "Bienvenida", bijstand_tab_krachtlijnen: "Valores",
-    bijstand_tab_gemeenschap: "Comunidad", bijstand_tab_team: "Equipo", bijstand_tab_parochieploeg: "Consejo parroquial",
-    bijstand_tab_kerkfabriek: "Fábrica de iglesia", bijstand_tab_gebed: "Oración", bijstand_tab_steunen: "Apoyar",
-    welkom_title: "Bienvenida",
-    welkom_body1: "Bienvenido al sitio web de la comunidad del Buen Socorro, una parroquia neerlandófona en el corazón de Bruselas.",
-    welkom_body2: "Quizás tiene curiosidad por saber quiénes somos y qué hacemos. Quizás quiere hacernos una pregunta. Quizás simplemente está buscando…",
-    welkom_body3: "En cualquier caso: bienvenido. Esperamos que encuentre lo que busca — y no solo en nuestra web.",
-    krachtlijnen_title: "Nuestros valores", krachtlijnen_subtitle: "¿Quiénes somos y desde dónde vivimos y trabajamos?",
-    krachtlijnen_body1: "Conexión: no en el sentido de que siempre hablemos el mismo idioma o pensemos igual. Nuestra comunidad es muy diversa y, por tanto, abierta y rica en diálogo.",
-    krachtlijnen_body2: "Conexión: en el sentido de que cada uno intenta unir palabras y hechos en el cuidado mutuo y de los más vulnerables.",
-    krachtlijnen_body3: "Estamos conectados cuando celebramos juntos, con libertad y seguridad, inspirados por Jesús, compartiendo pan y vino.",
-    krachtlijnen_body4: "Como comunidad parroquial vivimos y trabajamos con la convicción de que el ser humano no está hecho para caminar solo.",
-    gemeenschap_title: "Nuestra comunidad",
-    gemeenschap_body1: "Todos son bienvenidos. Nuestras puertas están abiertas.",
-    gemeenschap_body2: "Los domingos nos encontramos en la celebración, que comienza en la iglesia y termina con un aperitivo en La Concha.",
-    team_title: "Equipo", team_body: "El equipo está formado por dos sacerdotes que asumen la responsabilidad de sostener la misión de la comunidad.",
-    team_role: "Párroco del Buen Socorro, Responsable de la pastoral neerlandófona del centro de Bruselas",
-    parochieploeg_title: "Consejo parroquial", parochieploeg_body: "El consejo parroquial está formado por cinco miembros y se reúne cada primer miércoles por la mañana del mes.",
-    parochieploeg_composition: "Composición",
-    kerkfabriek_title: "Fábrica de iglesia", kerkfabriek_body1: "Los cultos son una competencia regional en cuanto al reconocimiento de las comunidades locales y la financiación de las instituciones encargadas de la gestión de los bienes.",
-    kerkfabriek_board: "Junta directiva", kerkfabriek_more: "Bruselas Poderes Locales →",
-    steunen_title: "Apoyar la iglesia", steunen_body: "Apoye la iglesia con una donación en la siguiente cuenta:", steunen_questions: "Para preguntas:",
-    vieringen_title: "Celebraciones", vier_tab_overzicht: "Resumen", vier_tab_homilies: "Homilías",
-    vier_tab_bezinning: "Reflexiones", vier_tab_fotos: "📷 Fotos", vier_vaste: "Celebraciones regulares",
-    vier_th_kerk: "Iglesia", vier_th_dag: "Día", vier_th_uur: "Hora", vier_th_bijz: "Observaciones",
-    vier_finis: "Finis Terrae", vier_sat: "Cada sábado", vier_gb: "Buen Socorro", vier_sun: "Cada domingo",
-    vier_3e_zon: "3.er domingo: liturgia infantil",
-    vier_agenda_link: "Todas las celebraciones también son visibles en la agenda de la página de inicio.",
-    vier_bijzonder: "Celebraciones especiales",
-    vier_drempel_label: "Celebración del Umbral",
-    vier_drempel_dag: "jueves 14 de mayo de 2026 — Ascensión del Señor",
-    vier_homilies_intro: "Homilías de las celebraciones en la Iglesia del Buen Socorro.",
-    vier_bezinning_intro: "Textos de reflexión, testimonios y meditaciones espirituales.",
-    act_title: "Actividades & Eventos", act_tab_overzicht: "Resumen", act_tab_fotos: "📷 Fotos",
-    act_taize_h3: "Oración en el espíritu de Taizé", act_taize_sub: "Cada tercer sábado, 20:00 h — Iglesia del Buen Socorro",
-    act_taize_body: "Un momento de oración, silencio y canto. Todos son bienvenidos.",
-    act_night_h3: "Buen Socorro by Night", act_night_sub: "Cada viernes por la noche de mayo a agosto, 18–22 h",
-    act_night_body: "La iglesia está abierta a todos.",
-    act_masters_h3: "Maestros Flamencos in Situ", act_masters_caption: "Altar mayor — Jan Pieter van Baurscheit el Viejo",
-    act_masters_body: "Para un barroco deslumbrante en mármol y pan de oro, visítenos.",
-    act_masters_link: "Descubrir los Maestros Flamencos in Situ →",
-    act_grond_h3: "Biblioteca de tierras", act_grond_body: "Un trozo de tierra de cada lugar del planeta.",
-    act_grond_link: "Ver el mapa interactivo →",
-    kinderen_title: "Niños & Jóvenes", kinderen_intro: "Cada tercer domingo del mes hay liturgia infantil durante la celebración de las 11 h.",
-    bijtjes_title: "Las Buenas Abejas", bijtjes_desc: "Para niños de primaria. Exploran la fe a través de historias, manualidades y conversaciones.", bijtjes_more: "Más info →",
-    moster_title: "Las Semillas de Mostaza", moster_desc: "La liturgia infantil para niños de primaria. Cada tercer domingo del mes.", moster_more: "Más info →",
-    vormsel_title: "Confirmación & Primera Comunión", vormsel_desc: "¿Desea que su hijo sea confirmado y reciba la Primera Comunión? Le acompañaremos con gusto.", vormsel_more: "Más info →",
-    kinderen_jongeren_h3: "Jóvenes", kinderen_jongeren_body: "A través de nuestra colaboración con Kamino, se organizan actividades regularmente.",
-    kinderen_kamino_link: "Más sobre Kamino →",
-    bijtjes_page_title: "Las Buenas Abejas", bijtjes_wat_h3: "¿Qué hacemos?",
-    bijtjes_wat_body: "Nuestra colmena se abre durante la misa de las 11 h. Un espacio de manualidades, conversación y reflexión sobre los temas de la celebración dominical.",
-    bijtjes_wanneer_h3: "¿Cuándo?", bijtjes_wanneer_body: "Cada tercer domingo del mes durante la celebración de las 11 h en la Iglesia del Buen Socorro.",
-    bijtjes_contact_link: "Contactar para más información →",
-    moster_page_title: "Las Semillas de Mostaza", moster_intro: "Los niños de 1.º, 2.º y 3.º de primaria son bienvenidos.",
-    moster_wat_h3: "¿Qué hacemos?", moster_wat_body: "A lo largo del año, las Semillas de Mostaza aprenden sobre compartir, expresar emociones y el valor de un buen amigo. El programa termina con una 'Celebración del Umbral' en mayo.",
-    moster_wanneer_h3: "¿Cuándo?",
-    moster_wanneer_body: "Cada tercer domingo del mes durante la celebración de las 11 h. La Celebración del Umbral tiene lugar el jueves 14 de mayo de 2026 (Ascensión del Señor).",
-    moster_contact_link: "Contactar para más información →",
-    vormsel_page_title: "Confirmación & Primera Comunión", vormsel_proficiat: "¡Enhorabuena!",
-    vormsel_samen_h3: "Confirmación y comunión juntas", vormsel_samen_body: "A diferencia de otras partes de Bélgica, en Bruselas celebramos la confirmación y la Primera Comunión juntas, recuperando una antiquísima tradición cristiana.",
-    vormsel_leeftijd_h3: "Edad y recorrido", vormsel_leeftijd_body: "Los niños a partir de 8 años pueden comenzar la preparación. La preparación dura normalmente 2 o 3 años.",
-    vormsel_contact_h3: "Contacto", vormsel_back: "← Volver a Niños & Jóvenes",
-    schelp_title: "La Concha", schelp_body1: "La sala parroquial La Concha es un espacio de encuentro y reunión accesible para personas con movilidad reducida.",
-    schelp_huren_h3: "Solicitudes", schelp_huren_body: "Actualmente no es posible alquilar La Concha. Esta página se actualizará cuando vuelva a ser posible.",
-    schelp_contact_h3: "Contacto", schelp_contact_link: "Enviar un mensaje →",
-    samenwerking_title: "Colaboraciones",
-    sacramenten_title: "Sacramentos", sacr_contact_intro: "Para todos los sacramentos, puede contactar con el párroco Johnny De Mot en",
-    sacr_doop_h3: "Bautismo", sacr_doop_body: "El bautismo es el primer sacramento y el comienzo de la vida cristiana. ¿Desea bautizar a su hijo o tiene preguntas sobre el bautismo de adultos?",
-    sacr_biecht_h3: "Reconciliación", sacr_biecht_body: "Una conversación personal sobre la reconciliación y la libertad interior.",
-    sacr_ziek_h3: "Unción de los enfermos", sacr_ziek_body: "La unción de los enfermos es un sacramento de consuelo y fortaleza para los gravemente enfermos o ancianos.",
-    sacr_huw_h3: "Matrimonio", sacr_huw_body: "¿Desea casarse en la Iglesia del Buen Socorro? Contacte con el párroco Johnny De Mot con suficiente antelación.",
-    sacr_vormsel_link: "Confirmación & Primera Comunión →",
-    overlijden_title: "Fallecimientos", overlijden_contact_h3: "Funerales & Contacto",
-    overlijden_contact_body: "Para notificar un fallecimiento o hablar sobre un funeral, contacte con el párroco Johnny De Mot:",
-    overlijden_label: "Fallecimiento",
-    contact_title: "Contacto", contact_sec_h3: "Secretaría", contact_pastor_h3: "Párroco",
-    contact_msg_h3: "Envíenos un mensaje", contact_name: "Su nombre", contact_name_ph: "Nombre y apellidos",
-    contact_email: "Dirección de correo electrónico", contact_subject: "Asunto", contact_subject_ph: "¿Sobre qué trata su pregunta?",
-    contact_message: "Mensaje", contact_message_ph: "Escriba aquí su mensaje...",
-    contact_send: "Enviar mensaje", contact_sent: "Su mensaje ha sido enviado. ¡Gracias!",
-    contact_loc_h3: "Ubicación", contact_maps_link: "Ver en Google Maps →",
-    sb_vieringen: "Celebraciones", sb_finis: "Iglesia Finis Terrae", sb_finis_time: "Cada sábado a las 16:30 h",
-    sb_gb: "Buen Socorro", sb_gb_time: "Cada domingo a las 11:00 h", sb_gb_kids: "Con cada 3.er domingo liturgia infantil:",
-    sb_addr_gb: "Dirección Buen Socorro", sb_open: "Abierto: todos los días 9–17 h, domingos desde las 10 h",
-    sb_addr_ft: "Dirección Finis Terrae", sb_contact: "Contacto", sb_msg: "Enviar un mensaje →",
-    sb_pastores: "Sacerdotes", sb_pastor_role: "Párroco del Buen Socorro,\nResponsable de la pastoral neerlandófona del centro de Bruselas",
-    sb_steunen: "Apoyar", sb_steunen_body: "Desea apoyar la iglesia?", sb_steunen_link: "Más info →",
-    ag_today: "Hoy", ag_sunday_mass: "Celebración dominical — Buen Socorro", ag_saturday_mass: "Misa — Finis Terrae",
-    ag_taize: "Oración en el espíritu de Taizé", ag_night: "Buen Socorro by Night (18–22 h)",
-    ag_easter: "Vigilia Pascual — Buen Socorro", ag_leg_viering: "Celebración", ag_leg_taize: "Taizé",
-    ag_leg_night: "Buen Socorro by Night", ag_leg_act: "Actividad", ag_leg_music: "Música/Concierto",
-    ag_manage: "Gestionar agenda", ag_manage_note: "— Reservado a administradores",
-    ag_no_events: "No hay actividades previstas en las próximas 5 semanas.",
   }
 };
+// de and es use nl as fallback
+T.de = Object.assign({}, T.nl, {
+  lang_label:"Sprache", site_title:"Unsere Liebe Frau von der Guten Beistand", site_subtitle:"Kirche — Brüssel Zentrum",
+  nav_home:"Startseite", nav_kerk:"Kirche", nav_bijstand:"Unsere Gemeinschaft", nav_vieringen:"Gottesdienste", nav_activiteiten:"Aktivitäten",
+  nav_zandbank:"Die Sandbank", nav_kinderen:"Kinder & Jugend", nav_schelp:"Die Muschel", nav_samenwerking:"Zusammenarbeit",
+  nav_sacramenten:"Sakramente", nav_overlijden:"Trauer", nav_contact:"Kontakt",
+  zandbank_title:"Die Sandbank",
+  zb_kicker:"Eine Pilgerreise in Erde",
+  zb_title:"Die Welt der Guten Beistand",
+  zb_subtitle:"Von jedem Ort der Erde ein Töpfchen Erde",
+  zb_mission:"Eine lebenslange Mission",
+  zb_headline:"Aus jedem Winkel der Welt<br>eine Handvoll Erde gesammelt",
+  zb_intro:"Die Gemeinschaft der Guten Beistand bereist die Welt mit einem besonderen Auftrag: Von jedem Ort, den sie besucht, bringt sie ein kleines Töpfchen Erde mit nach Hause. Ein stilles Zeugnis der Verbundenheit über Grenzen und Kulturen hinweg.",
+  zb_stat_loc:"Orte", zb_stat_cont:"Kontinente", zb_stat_land:"Länder", zb_stat_verh:"Geschichten",
+  zb_map_title:"Weltkarte der Reiseziele",
+  zb_map_caption:"Klicken Sie auf einen Punkt, um den Ortsnamen zu sehen — zoomen Sie mit dem Scrollrad oder den Schaltflächen",
+  zb_article_dateline:"Het Nieuwsblad · 16. Oktober 2021",
+  zb_article_title:"Der Traum von Pfarrer Johnny: von jedem Ort der Erde ein Töpfchen Erde",
+  zb_article_deck:"Der Artikel im Nieuwsblad erzählt die Geschichte hinter dieser besonderen Sammlung. Lesen Sie, wie ein einfacher Traum zu einer weltweiten Erdpilgerreise wurde.",
+  zb_article_p1:"Die Gemeinschaft sammelt seit Jahren Erde aus aller Welt. Jedes Reiseziel — ob ein abgelegenes Dorf im Kongo, ein Strand auf den Seychellen oder ein Bergpass in den Dolomiten — liefert ein kleines Töpfchen Erde.",
+  zb_article_p2:"Die Sammlung umfasst mehr als 155 einzigartige Orte, verteilt auf 6 Kontinente und dutzende Länder. Jedes Töpfchen trägt ein Etikett mit dem Ortsnamen und dem Besuchsdatum.",
+  zb_article_btn:"Den vollständigen Artikel lesen",
+  zb_list_title:"Alle 155 Orte", zb_list_desc:"Sehen Sie die vollständige Liste aller besuchten Orte, geordnet nach Kontinent.",
+  zb_list_btn:"Vollständige Liste ansehen", footer_address:"Kirche Gute Beistand — Kolenmarkt 91, 1000 Brüssel",
+  ag_today:"Heute", ag_no_events:"Keine Aktivitäten in den nächsten 5 Wochen geplant."
+});
+T.es = Object.assign({}, T.nl, {
+  lang_label:"Idioma", site_title:"Nuestra Señora del Buen Socorro", site_subtitle:"Iglesia — Centro de Bruselas",
+  nav_home:"Inicio", nav_kerk:"La Iglesia", nav_bijstand:"Nuestra Comunidad", nav_vieringen:"Celebraciones", nav_activiteiten:"Actividades",
+  nav_zandbank:"El Banco de Arena", nav_kinderen:"Niños & Jóvenes", nav_schelp:"La Concha", nav_samenwerking:"Colaboraciones",
+  nav_sacramenten:"Sacramentos", nav_overlijden:"Fallecimientos", nav_contact:"Contacto",
+  zandbank_title:"El Banco de Arena",
+  zb_kicker:"Una peregrinación en tierra",
+  zb_title:"El Mundo del Buen Socorro",
+  zb_subtitle:"De cada lugar de la tierra, un tarro de tierra",
+  zb_mission:"Una Misión de por Vida",
+  zb_headline:"De cada rincón del mundo<br>un puñado de tierra recogido",
+  zb_intro:"La comunidad del Buen Socorro recorre el mundo con una misión especial: de cada lugar que visita, trae a casa un pequeño tarro de tierra. Un testimonio silencioso de conexión más allá de fronteras y culturas.",
+  zb_stat_loc:"Lugares", zb_stat_cont:"Continentes", zb_stat_land:"Países", zb_stat_verh:"Historias",
+  zb_map_title:"Mapa Mundial de Destinos",
+  zb_map_caption:"Haga clic en un punto para ver el nombre del lugar — amplíe con la rueda del ratón o los botones",
+  zb_article_dateline:"Het Nieuwsblad · 16 de octubre de 2021",
+  zb_article_title:"El sueño del párroco Johnny: de cada lugar del mundo, un tarro de tierra",
+  zb_article_deck:"El artículo del Nieuwsblad cuenta la historia completa de esta extraordinaria colección. Lea cómo un sueño sencillo se convirtió en una peregrinación mundial en tierra.",
+  zb_article_p1:"La comunidad lleva años coleccionando tierra de todo el mundo. Cada destino — ya sea un pueblo remoto en el Congo, una playa en las Seychelles o un puerto de montaña en los Dolomitas — proporciona un pequeño tarro de tierra.",
+  zb_article_p2:"La colección cuenta ya con más de 155 lugares únicos, distribuidos en 6 continentes y decenas de países. Cada tarro lleva una etiqueta con el nombre del lugar y la fecha de la visita.",
+  zb_article_btn:"Leer el artículo completo",
+  zb_list_title:"Los 155 Lugares", zb_list_desc:"Consulte la lista completa de todos los lugares visitados, ordenados por continente.",
+  zb_list_btn:"Ver la lista completa", footer_address:"Iglesia Buen Socorro — Kolenmarkt 91, 1000 Bruselas",
+  ag_today:"Hoy", ag_no_events:"No hay actividades previstas en las próximas 5 semanas."
+});
 
 let LANG = localStorage.getItem('gb_lang') || 'nl';
 function t(key) { return (T[LANG] && T[LANG][key]) || (T.nl[key]) || key; }
@@ -903,21 +676,19 @@ function setLanguage(lang) {
   navigateContent(activePage ? activePage.dataset.page : 'home');
 }
 
-const DN_NL=["Zo","Ma","Di","Wo","Do","Vr","Za"],DN_FR=["Di","Lu","Ma","Me","Je","Ve","Sa"],DN_DE=["So","Mo","Di","Mi","Do","Fr","Sa"],DN_EN=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],DN_ES=["Do","Lu","Ma","Mi","Ju","Vi","Sá"];
-const MNK_NL=["jan","feb","mrt","apr","mei","jun","jul","aug","sep","okt","nov","dec"],MNK_FR=["jan","fév","mar","avr","mai","jun","jul","aoû","sep","oct","nov","déc"],MNK_DE=["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"],MNK_EN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],MNK_ES=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
-const MNL_NL=["Januari","Februari","Maart","April","Mei","Juni","Juli","Augustus","September","Oktober","November","December"],MNL_FR=["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"],MNL_DE=["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"],MNL_EN=["January","February","March","April","May","June","July","August","September","October","November","December"],MNL_ES=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-function getDN(){return{nl:DN_NL,fr:DN_FR,de:DN_DE,en:DN_EN,es:DN_ES}[LANG]||DN_NL;}
-function getMNK(){return{nl:MNK_NL,fr:MNK_FR,de:MNK_DE,en:MNK_EN,es:MNK_ES}[LANG]||MNK_NL;}
-function getMNL(){return{nl:MNL_NL,fr:MNL_FR,de:MNL_DE,en:MNL_EN,es:MNL_ES}[LANG]||MNL_NL;}
+const DN_NL=["Zo","Ma","Di","Wo","Do","Vr","Za"],DN_FR=["Di","Lu","Ma","Me","Je","Ve","Sa"],DN_EN=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const MNK_NL=["jan","feb","mrt","apr","mei","jun","jul","aug","sep","okt","nov","dec"],MNK_FR=["jan","fév","mar","avr","mai","jun","jul","aoû","sep","oct","nov","déc"],MNK_EN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const MNL_NL=["Januari","Februari","Maart","April","Mei","Juni","Juli","Augustus","September","Oktober","November","December"],MNL_FR=["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"],MNL_EN=["January","February","March","April","May","June","July","August","September","October","November","December"];
+function getDN(){return{nl:DN_NL,fr:DN_FR,en:DN_EN}[LANG]||DN_NL;}
+function getMNK(){return{nl:MNK_NL,fr:MNK_FR,en:MNK_EN}[LANG]||MNK_NL;}
+function getMNL(){return{nl:MNL_NL,fr:MNL_FR,en:MNL_EN}[LANG]||MNL_NL;}
 const EVICON={viering:"✝",activiteit:"◆",muziek:"♫",taize:"✦",nacht:"🌙"};
 function datumSleutel(d){return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
-
 const VASTE_DATUMS=[{datum:"2026-04-04",tijd:"21:00",type:"viering",tekst_key:"ag_easter"}];
 function genereerTaize(){const r=[];const nu=new Date();nu.setHours(0,0,0,0);const e=new Date(nu);e.setDate(nu.getDate()+35);for(let m=0;m<3;m++){const jr=nu.getFullYear()+Math.floor((nu.getMonth()+m)/12);const mn=(nu.getMonth()+m)%12;let tel=0;for(let dag=1;dag<=31;dag++){const d=new Date(jr,mn,dag);if(d.getMonth()!==mn)break;if(d.getDay()===6&&++tel===3){if(d>=nu&&d<=e)r.push({datum:datumSleutel(d),tijd:"20:00",type:"taize",tekst_key:"ag_taize"});break;}}}return r;}
 function genereerBijstandByNight(){const r=[];const nu=new Date();nu.setHours(0,0,0,0);const e=new Date(nu);e.setDate(nu.getDate()+35);for(let d=new Date(nu);d<=e;d.setDate(d.getDate()+1)){const mn=d.getMonth();if(d.getDay()===5&&mn>=4&&mn<=7)r.push({datum:datumSleutel(d),tijd:"18:00",type:"nacht",tekst_key:"ag_night"});}return r;}
 const STORAGE_KEY='gb_agenda_extra';
 const laadExtra=()=>{try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');}catch(e){return[];}};
-const slaOpExtra=arr=>localStorage.setItem(STORAGE_KEY,JSON.stringify(arr));
 function getAlleEvents(){const alle=[...VASTE_DATUMS.map(e=>({...e,tekst:t(e.tekst_key)})),...genereerTaize().map(e=>({...e,tekst:t(e.tekst_key)})),...genereerBijstandByNight().map(e=>({...e,tekst:t(e.tekst_key)})),...laadExtra()];const kaart={};alle.forEach(ev=>{(kaart[ev.datum]=kaart[ev.datum]||[]).push(ev);});Object.keys(kaart).forEach(d=>kaart[d].sort((a,b)=>(a.tijd||'00:00').localeCompare(b.tijd||'00:00')));return kaart;}
 
 function agendaHTML(){
@@ -939,7 +710,7 @@ function agendaHTML(){
     html+=`<div class="${klassen}"><div class="datum-cel"><span class="dag-naam">${i===0?t('ag_today'):DN[dw]}</span><span class="dag-nr">${nr}</span><span class="maand-kort">${MNK[mn]}</span></div><div class="ev-cel">${evs.map(ev=>{const kl=ev.type==='taize'?' ev-taize':ev.type==='nacht'?' ev-nacht':'';return`<div class="evenement"><span class="ev-tijd">${ev.tijd||''}</span><span class="ev-icoon${kl}">${EVICON[ev.type]||'✝'}</span><span class="${kl.trim()}">${ev.tekst}</span></div>`;}).join('')}</div></div>`;
   }
   if(!aantalDagen)html+=`<div style="padding:0.7rem 1rem;font-style:italic;color:var(--muted);font-size:0.88rem;">${t('ag_no_events')}</div>`;
-  html+=`</div><div class="agenda-legenda"><span>✝ ${t('ag_leg_viering')}</span><span style="color:var(--blue-mid);font-style:italic;">✦ ${t('ag_leg_taize')}</span><span>🌙 ${t('ag_leg_night')}</span><span>◆ ${t('ag_leg_act')}</span><span>♫ ${t('ag_leg_music')}</span></div>`;
+  html+=`</div><div class="agenda-legenda"><span>✝ ${t('ag_leg_viering')}</span><span style="color:var(--blue-mid);font-style:italic;">✦ ${t('ag_leg_taize')}</span><span>🌙 ${t('ag_leg_night')}</span><span>◆ ${t('ag_leg_act')}</span></div>`;
   return html;
 }
 
@@ -948,7 +719,7 @@ function sidebarHTML(){return`
   <div class="sidebar-box"><h3>${t('sb_vieringen')}</h3>
     <p><strong>${t('sb_finis')}</strong><br><span class="time">${t('sb_finis_time')}</span></p><br>
     <p><strong>${t('sb_gb')}</strong><br><span class="time">${t('sb_gb_time')}</span><br>${t('sb_gb_kids')}<br>
-    <a onclick="navigate('bijtjes')">${t('bijtjes_title')}</a> ${LANG==='nl'?'en':'&'} <a onclick="navigate('mosterdzaadjes')">${t('moster_title')}</a></p>
+    <a onclick="navigate('bijtjes')">${t('bijtjes_title')}</a> &amp; <a onclick="navigate('mosterdzaadjes')">${t('moster_title')}</a></p>
   </div>
   <div class="sidebar-box"><h3>${t('sb_addr_gb')}</h3>
     <p class="address">Kolenmarkt 91<br>(kant Fontainasplein)<br>1000 Brussel</p>
@@ -969,51 +740,12 @@ function sidebarHTML(){return`
   </div>`;}
 
 const OVERLIJDENS = [
-  { datum:"24 oktober 2025", naam:"Paul Huyskens",
-    tekst:"Paul Huyskens, echtgenoot van Frank Benault, overleed op 24 oktober 2025 op 71-jarige leeftijd op de dienst palliatieve zorgen in Gasthuisberg. De begrafenis vond plaats in het crematorium van Evere op donderdag 30 oktober 2025 om 14 uur.",
-    links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_PaulHuyskens.pdf"]] },
-  { datum:"19 september 2025", naam:"Elizabeth Nijpels",
-    tekst:"Elizabeth Nijpels overleed op vrijdag 19 september 2025. De begrafenis vond plaats in de Sint-Jan Evangelistkerk te Tervuren op donderdag 25 september 2025 om 10 uur.",
-    links:[["Rouwbrief","Overlijden  2025/Nijpels-Elisabeth-rb.indd - Overlijdensbericht_ElizabethNijpels.pdf"]] },
-  { datum:"12 september 2025", naam:"Gino Mattheeuws",
-    tekst:"Pastor Gino Mattheeuws, lid van ons team en voorganger van Goede Bijstand en Finis Terrae, overleed op vrijdag 12 september 2025. De begrafenis vond plaats in de Sint-Jozefskerk te Evere op zaterdag 20 september 2025 om 10.30 uur.",
-    links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_GinoMattheeuws.pdf"]] },
-  { datum:"18 augustus 2025", naam:"Rita Lecomte",
-    tekst:"Rita Lecomte overleed op maandag 18 augustus 2025. De begrafenis vond plaats in de kerk van O.L.V. Boodschap Ter Muilen te Liedekerke op maandag 25 augustus 2025 om 11.30 uur.",
-    links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_RitaLecomte.pdf"]] },
-  { datum:"15 augustus 2025", naam:"Pater Hugo Vangeel",
-    tekst:"Pater Hugo Vangeel overleed op vrijdag 15 augustus 2025. De begrafenis vond plaats in de parochiekerk van Sint-Rochus te Brussel op zaterdag 23 augustus 2025 om 11 uur. Op zaterdag 30 augustus 2025 om 10.30 uur was er een dankviering in de kerk van Herk-de-Stad.",
-    links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_HugoVangeel.pdf"]] },
-  { datum:"14 augustus 2025", naam:"Jef Durant",
-    tekst:"Jef Durant overleed op donderdag 14 augustus 2025. De begrafenis vond plaats in onze kerk van Goede Bijstand op vrijdag 22 augustus 2025 om 10 uur.",
-    links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_JefDurant.pdf"]] },
-  { datum:"12 juli 2025", naam:"Frida De Boeck",
-    tekst:"Frida De Boeck overleed op zaterdag 12 juli 2025. De begrafenis vond plaats in onze kerk van Goede Bijstand op vrijdag 18 juli 2025 om 11 uur.",
-    links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_FridaDeBoeck.pdf"]] },
-  { datum:"3 juni 2025", naam:"Ruf Delcourt",
-    tekst:"Ruf Delcourt overleed op dinsdag 3 juni 2025. De begrafenis vond plaats in de kerk van O.-L.-Vrouw Boodschap te Liedekerke op zaterdag 14 juni 2025 om 11.30 uur.",
-    links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_JefDurant.pdf"]] },
-  { datum:"15 februari 2025", naam:"Jozef Van Rumste",
-    tekst:"Jozef Van Rumste overleed op zaterdag 15 februari 2025. De begrafenis vond plaats in onze kerk van Goede Bijstand op maandag 24 februari 2025 om 13 uur.",
-    links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_JozefVanRumste.pdf"]] },
-  { datum:"23 oktober 2024", naam:"Hugo Weckx",
-    tekst:"Hugo Weckx, echtgenoot en zielsgenoot van Frida, overleed op woensdag 23 oktober 2024. Het lichaam werd overgebracht naar onze kerk op vrijdag 25 oktober om 18 uur, met onthaalliturgie.",
-    links:[["Rouwbrief","Overlijden  2024/Overlijdensbericht_HugoWeckx.pdf"]] },
-  { datum:"31 juli 2024", naam:"Rachelle Synaeve",
-    tekst:"Rachelle Synaeve, mama van Sabine en Marc, oma van Tine en Wannes, overleed op woensdag 31 juli 2024. De begrafenis vond plaats in onze kerk op dinsdag 6 augustus om 10 uur.",
-    links:[["Rouwbrief","Overlijden  2024/Overlijdensbericht_RachelleSynaeve.pdf"],["Rouwprentje","Overlijden  2024/Overlijdensbericht_RachelleSynaeve_kaart.pdf"]] },
-  { datum:"27 juli 2024", naam:"Mark Van Liedekerke",
-    tekst:"Mark Van Liedekerke, echtgenoot van Eugenie Arijs, overleed op zaterdag 27 juli 2024. De begrafenis vond plaats in de parochiekerk Sint-Jan-Evangelist te Teralfene op vrijdag 2 augustus 2024 om 11 uur.",
-    links:[["Rouwbrief","Overlijden  2024/Overlijdensbericht_RachelleSynaeve.pdf"]] },
-  { datum:"12 juni 2024", naam:"Martine De Mot",
-    tekst:"Martine De Mot, zus van Johnny, overleed op woensdag 12 juni 2024. De begrafenis vond plaats in de Kerk van Goede Bijstand op zaterdag 22 juni om 11 uur.",
-    links:[["Rouwbrief","Overlijden  2024/Overlijdensbericht_MarkVanLiedekerke.pdf"]] },
-  { datum:"14 mei 2024", naam:"Paul Dewallef",
-    tekst:"Paul Dewallef (° 25 juli 1944, Anderlecht) overleed op 14 mei 2024. Leraar Grieks-Latijn, voorganger en voorzitter van de kerkraad in de Goede Bijstand, trouw medewerker van vzw De Overmolen. Hij schonk zijn lichaam aan het UZ Brussel.",
-    links:[["Bericht Johnny","Overlijden  2024/paul dewallef.png"]] },
-  { datum:"9 maart 2024", naam:"Cil Cloet",
-    tekst:"Cil Cloet overleed op zaterdag 9 maart 2024. De begrafenis vond plaats in de Onze-Lieve-Vrouwkerk te Beigem op zaterdag 16 maart om 10 uur.",
-    links:[["Rouwbrief","Overlijden  2024/Overlijdensbericht_CilCloet.pdf"]] },
+  { datum:"24 oktober 2025", naam:"Paul Huyskens", tekst:"Paul Huyskens, echtgenoot van Frank Benault, overleed op 24 oktober 2025 op 71-jarige leeftijd. De begrafenis vond plaats in het crematorium van Evere op donderdag 30 oktober 2025 om 14 uur.", links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_PaulHuyskens.pdf"]] },
+  { datum:"19 september 2025", naam:"Elizabeth Nijpels", tekst:"Elizabeth Nijpels overleed op vrijdag 19 september 2025. De begrafenis vond plaats in de Sint-Jan Evangelistkerk te Tervuren op donderdag 25 september 2025 om 10 uur.", links:[["Rouwbrief","Overlijden  2025/Nijpels-Elisabeth-rb.indd - Overlijdensbericht_ElizabethNijpels.pdf"]] },
+  { datum:"12 september 2025", naam:"Gino Mattheeuws", tekst:"Pastor Gino Mattheeuws, lid van ons team, overleed op vrijdag 12 september 2025. De begrafenis vond plaats in de Sint-Jozefskerk te Evere op zaterdag 20 september 2025 om 10.30 uur.", links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_GinoMattheeuws.pdf"]] },
+  { datum:"18 augustus 2025", naam:"Rita Lecomte", tekst:"Rita Lecomte overleed op maandag 18 augustus 2025. De begrafenis vond plaats te Liedekerke op maandag 25 augustus 2025 om 11.30 uur.", links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_RitaLecomte.pdf"]] },
+  { datum:"14 augustus 2025", naam:"Jef Durant", tekst:"Jef Durant overleed op donderdag 14 augustus 2025. De begrafenis vond plaats in onze kerk van Goede Bijstand op vrijdag 22 augustus 2025 om 10 uur.", links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_JefDurant.pdf"]] },
+  { datum:"12 juli 2025", naam:"Frida De Boeck", tekst:"Frida De Boeck overleed op zaterdag 12 juli 2025. De begrafenis vond plaats in onze kerk van Goede Bijstand op vrijdag 18 juli 2025 om 11 uur.", links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_FridaDeBoeck.pdf"]] },
 ];
 
 function bc(...stappen){const items=stappen.map((s,i)=>{if(i===stappen.length-1)return typeof s==='string'?s:s[0];const[label,key]=s;return`<a onclick="navigate('${key}')">${label}</a><span>&#8250;</span>`;});return`<div class="breadcrumb">${items.join(' ')}</div>`;}
@@ -1022,7 +754,7 @@ function archiefItem(href,label,datum=''){return`<li><a href="${href}" target="_
 function showOnly(selector,id){document.querySelectorAll(selector).forEach(el=>el.style.display='none');const t2=document.getElementById(id);if(t2)t2.style.display='block';}
 function showSub(k){showOnly('.subpage','sub-'+k);document.querySelectorAll('[data-sub]').forEach(a=>a.classList.toggle('subnav-active',a.dataset.sub===k));}
 function showVierSub(k){showOnly('.vsub','vsub-'+k);document.querySelectorAll('[data-vsub]').forEach(a=>a.classList.toggle('subnav-active',a.dataset.vsub===k));}
-function showActSub(k){['overzicht','fotos'].forEach(id=>{const el=document.getElementById('asub-'+id);if(el)el.style.display=id===k?'block':'none';});document.querySelectorAll('[data-asub]').forEach(a=>a.classList.toggle('act-actief',a.dataset.asub===k));}
+
 function pageContent(pageKey){
   switch(pageKey){
     case 'home': return `
@@ -1048,13 +780,13 @@ function pageContent(pageKey){
         <p>${t('home_taize_body')}</p>
         <h3>${t('home_taize_h3')}</h3>
         <p>${t('home_taize_time')}</p>
-        <p>${LANG==='nl'?'Voor meer informatie:':LANG==='fr'?'Pour plus d\'informations:':LANG==='de'?'Für mehr Informationen:':LANG==='en'?'For more information:':'Para más información:'} <a href="mailto:bep.saintandre@gmail.com">bep.saintandre@gmail.com</a></p>
+        <p>Contact: <a href="mailto:bep.saintandre@gmail.com">bep.saintandre@gmail.com</a></p>
       </section>
       <section>
         <h2>${t('home_night_title')}</h2>
         <p><em>${t('home_night_sub')}</em></p>
         <p>${t('home_night_body')}</p>
-        <p>Contact: <a href="mailto:eheesen@hotmail.com">Nieneke</a> ${LANG==='nl'?'of':LANG==='fr'?'ou':LANG==='de'?'oder':LANG==='en'?'or':'o'} <a href="mailto:danny.decock59@yahoo.com">Danny</a></p>
+        <p>Contact: <a href="mailto:eheesen@hotmail.com">Nieneke</a> / <a href="mailto:danny.decock59@yahoo.com">Danny</a></p>
       </section>
       <section>
         <h2>${t('home_kerst_title')}</h2>
@@ -1075,31 +807,18 @@ function pageContent(pageKey){
         ${bc([t('nav_home'),'home'], t('kerk_title'))}
         <h2>${t('kerk_title')}</h2>
         <img src="${IMG.ext}" alt="Exterieur kerk" class="church-photo" style="height:280px;">
-        <p class="photo-caption">© Johan Bakker / CC Wikimedia</p>
         <p>${t('kerk_intro')}</p>
         <div class="ornament">&#x2748; &#x2748; &#x2748;</div>
-        <h3>${t('kerk_geschiedenis_h3')}</h3>
-        <p>${t('kerk_geschiedenis_body')}</p>
+        <h3>${t('kerk_geschiedenis_h3')}</h3><p>${t('kerk_geschiedenis_body')}</p>
         <h3>${t('kerk_architectuur_h3')}</h3>
-        <div class="photo-grid" style="margin:1rem 0;">
-          <img src="${IMG.int}" alt="Interieur">
-          <img src="${IMG.alt}" alt="Altaar detail">
-        </div>
+        <div class="photo-grid"><img src="${IMG.int}" alt="Interieur"><img src="${IMG.alt}" alt="Altaar detail"></div>
         <p>${t('kerk_architectuur_body')}</p>
-        <p><a href="https://www.flemishmastersinsitu.com/nl/locaties/onze-lieve-vrouw-van-goede-bijstandkerk-brussel" target="_blank" rel="noopener">${t('kerk_masters_link')}</a></p>
+        <p><a href="https://www.flemishmastersinsitu.com/nl/locaties/onze-lieve-vrouw-van-goede-bijstandkerk-brussel" target="_blank">${t('kerk_masters_link')}</a></p>
         <div class="ornament">&#x2748; &#x2748; &#x2748;</div>
-        <h3>${t('kerk_bezoek_h3')}</h3>
-        <p>${t('kerk_bezoek_body')}</p>
+        <h3>${t('kerk_bezoek_h3')}</h3><p>${t('kerk_bezoek_body')}</p>
         <div class="kerk-info-grid">
-          <div class="kerk-info-card">
-            <h3>&#128205; ${t('kerk_adres_h3')}</h3>
-            <p>Kolenmarkt 91<br>(kant Fontainasplein)<br>1000 Brussel</p>
-            <p style="margin-top:0.6rem;"><a href="https://maps.google.com/?q=Kolenmarkt+91,+1000+Brussel" target="_blank">${t('kerk_maps_link')}</a></p>
-          </div>
-          <div class="kerk-info-card">
-            <h3>🕐 ${t('kerk_open_h3')}</h3>
-            <p style="white-space:pre-line;">${t('kerk_open_body')}</p>
-          </div>
+          <div class="kerk-info-card"><h3>&#128205; ${t('kerk_adres_h3')}</h3><p>Kolenmarkt 91<br>(kant Fontainasplein)<br>1000 Brussel</p><p style="margin-top:0.6rem;"><a href="https://maps.google.com/?q=Kolenmarkt+91,+1000+Brussel" target="_blank">${t('kerk_maps_link')}</a></p></div>
+          <div class="kerk-info-card"><h3>🕐 ${t('kerk_open_h3')}</h3><p style="white-space:pre-line;">${t('kerk_open_body')}</p></div>
         </div>
       </section>`;
 
@@ -1119,10 +838,7 @@ function pageContent(pageKey){
         </div>
         <div id="sub-welkom" class="subpage">
           <h2>${t('welkom_title')}</h2>
-          <div class="photo-grid">
-            <div><img src="${IMG.ext}" alt="Exterieur" style="width:100%;height:200px;object-fit:cover;border-radius:4px;border:3px solid var(--pale-blue);"></div>
-            <div><img src="${IMG.int}" alt="Interieur" style="width:100%;height:200px;object-fit:cover;border-radius:4px;border:3px solid var(--pale-blue);"></div>
-          </div>
+          <div class="photo-grid"><div><img src="${IMG.ext}" alt="Exterieur" style="width:100%;height:200px;object-fit:cover;border-radius:4px;border:3px solid var(--pale-blue);"></div><div><img src="${IMG.int}" alt="Interieur" style="width:100%;height:200px;object-fit:cover;border-radius:4px;border:3px solid var(--pale-blue);"></div></div>
           <p>${t('welkom_body1')}</p><p>${t('welkom_body2')}</p><p>${t('welkom_body3')}</p>
         </div>
         <div id="sub-krachtlijnen" class="subpage" style="display:none;">
@@ -1130,8 +846,7 @@ function pageContent(pageKey){
           <p>${t('krachtlijnen_body1')}</p><p>${t('krachtlijnen_body2')}</p><p>${t('krachtlijnen_body3')}</p><p>${t('krachtlijnen_body4')}</p>
         </div>
         <div id="sub-gemeenschap" class="subpage" style="display:none;">
-          <h2>${t('gemeenschap_title')}</h2>
-          <img src="${IMG.int}" alt="Interieur" class="church-photo" style="height:220px;">
+          <h2>${t('gemeenschap_title')}</h2><img src="${IMG.int}" alt="Interieur" class="church-photo" style="height:220px;">
           <p>${t('gemeenschap_body1')}</p><p>${t('gemeenschap_body2')}</p>
         </div>
         <div id="sub-team" class="subpage" style="display:none;">
@@ -1149,24 +864,16 @@ function pageContent(pageKey){
           <p style="margin-top:1rem;">Contact: <a href="mailto:2096@diomb.be">2096@diomb.be</a></p>
         </div>
         <div id="sub-gebed" class="subpage" style="display:none;">
-          <h2>${LANG==='nl'?'Gebed':LANG==='fr'?'Prière':LANG==='de'?'Gebet':LANG==='en'?'Prayer':'Oración'}: Forgive Me</h2>
-          <div class="homilie">
-            <p>Forgive me<br>Lord, You are my Friend<br>Your love has no end…</p>
-            <p style="font-size:0.9rem;color:var(--muted);font-style:italic;margin-top:1rem;">Ignace Menschaert, Kerksken</p>
-          </div>
+          <h2>Gebed: Forgive Me</h2>
+          <div class="homilie"><p>Forgive me<br>Lord, You are my Friend<br>Your love has no end…</p><p style="font-size:0.9rem;color:var(--muted);font-style:italic;margin-top:1rem;">Ignace Menschaert, Kerksken</p></div>
         </div>
         <div id="sub-steunen" class="subpage" style="display:none;">
           <h2>${t('steunen_title')}</h2><p>${t('steunen_body')}</p>
           <div class="partner-item" style="margin-top:1rem;font-size:1.1rem;">
-            <span style="font-size:0.95rem;color:var(--muted);">KERKFABRRIEK O-L VROUW GOEDE BIJSTAND BRUSSEL</span><br>
+            <span style="font-size:0.95rem;color:var(--muted);">KERKFABRIEK O-L VROUW GOEDE BIJSTAND BRUSSEL</span><br>
             <strong>BE27 0910 0107 1473</strong><br>
             <span style="font-size:0.95rem;color:var(--muted);">BIC: GKCCBEBBXXX</span>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.5rem;max-width:420px;">
-            <div style="text-align:center;"><img src="Donate_02_qr_sumup.png" alt="QR SumUp" style="width:100%;max-width:160px;border:3px solid var(--pale-blue);border-radius:6px;"><p style="font-size:0.82rem;color:var(--muted);margin-top:0.4rem;font-style:italic;">Scan QR — SumUp</p></div>
-            <div style="text-align:center;"><img src="Donate_02_qr_wero.png" alt="QR Wero" style="width:100%;max-width:160px;border:3px solid var(--pale-blue);border-radius:6px;"><p style="font-size:0.82rem;color:var(--muted);margin-top:0.4rem;font-style:italic;">Scan QR — Wero</p></div>
-          </div>
-          <p style="margin-top:0.6rem;font-size:0.88rem;color:var(--muted);font-style:italic;">${LANG==='nl'?'Of tik uw bankkaart op het betaalterminal in de kerk.':LANG==='fr'?'Ou appuyez votre carte sur le terminal de paiement dans l\'église.':LANG==='de'?'Oder tippen Sie Ihre Karte auf das Zahlungsterminal in der Kirche.':LANG==='en'?'Or tap your card on the payment terminal in the church.':'O toque su tarjeta en el terminal de pago de la iglesia.'}</p>
           <p style="margin-top:1rem;">${t('steunen_questions')} <a href="mailto:2096@diomb.be">2096@diomb.be</a></p>
         </div>
       </section>`;
@@ -1184,90 +891,124 @@ function pageContent(pageKey){
         <div id="vsub-overzicht" class="vsub">
           <img src="${IMG.int}" alt="Interieur" class="church-photo" style="height:200px;">
           <h3>${t('vier_vaste')}</h3>
-          <table class="viering-table">
-            <thead><tr><th>${t('vier_th_kerk')}</th><th>${t('vier_th_dag')}</th><th>${t('vier_th_uur')}</th><th>${t('vier_th_bijz')}</th></tr></thead>
-            <tbody>
-              <tr><td>${t('vier_finis')}</td><td>${t('vier_sat')}</td><td>16.30 u</td><td>—</td></tr>
-              <tr><td>${t('vier_gb')}</td><td>${t('vier_sun')}</td><td>11.00 u</td><td>${t('vier_3e_zon')}</td></tr>
-            </tbody>
-          </table>
+          <table class="viering-table"><thead><tr><th>${t('vier_th_kerk')}</th><th>${t('vier_th_dag')}</th><th>${t('vier_th_uur')}</th><th>${t('vier_th_bijz')}</th></tr></thead>
+          <tbody><tr><td>${t('vier_finis')}</td><td>${t('vier_sat')}</td><td>16.30 u</td><td>—</td></tr><tr><td>${t('vier_gb')}</td><td>${t('vier_sun')}</td><td>11.00 u</td><td>${t('vier_3e_zon')}</td></tr></tbody></table>
           <p style="margin-top:1rem;font-size:0.88rem;color:var(--muted);font-style:italic;">${t('vier_agenda_link')}</p>
           <h3>${t('vier_bijzonder')}</h3>
-          <table class="viering-table">
-            <thead><tr><th>${t('vier_th_kerk')}</th><th>${t('vier_th_dag')}</th><th>${t('vier_th_uur')}</th><th>${t('vier_th_bijz')}</th></tr></thead>
-            <tbody>
-              <tr><td>${t('vier_gb')}</td><td>${t('vier_drempel_dag')}</td><td>11.00 u</td><td>${t('vier_drempel_label')}</td></tr>
-            </tbody>
-          </table>
+          <table class="viering-table"><thead><tr><th>${t('vier_th_kerk')}</th><th>${t('vier_th_dag')}</th><th>${t('vier_th_uur')}</th><th>${t('vier_th_bijz')}</th></tr></thead>
+          <tbody><tr><td>${t('vier_gb')}</td><td>${t('vier_drempel_dag')}</td><td>11.00 u</td><td>${t('vier_drempel_label')}</td></tr></tbody></table>
         </div>
         <div id="vsub-homilies" class="vsub" style="display:none;">
           <p style="font-style:italic;color:var(--muted);margin-bottom:1rem;">${t('vier_homilies_intro')}</p>
           <ul class="archief-lijst">
-           ${[
-            ["Homilies/Homilies_2010-2025/Homilie Kerstmis_ moet ik zwijgen.pdf","Kerstmis: moet ik zwijgen?","25 december 2025"],
-            ["Homilies/Homilies_2010-2025/Homilie tv-mis 22 april 2022.pdf","Homilie tv-mis","24 april 2022"],
-            ["Homilies/Homilies_2010-2025/Homilie tv-mis 16 januari 2022.pdf","Homilie tv-mis","16 januari 2022"],
-            ["Homilies/Homilies_2010-2025/Mijmeringen bij de Afrikadag 2 januari 2022.pdf","Mijmeringen bij de Afrikadag","2 januari 2022"],
-            ["Homilies/Homilies_2010-2025/Paaswake 13 april 2020.pdf","Paaswake","13 april 2020"],
-          ].map(([href, label, datum]) => archiefItem(href, label, datum)).join('')}
-        </ul>
+            ${[["Homilies/Homilies_2010-2025/Homilie Kerstmis_ moet ik zwijgen.pdf","Kerstmis: moet ik zwijgen?","25 december 2025"],["Homilies/Homilies_2010-2025/Paaswake 13 april 2020.pdf","Paaswake","13 april 2020"]].map(([href,label,datum])=>archiefItem(href,label,datum)).join('')}
+          </ul>
         </div>
         <div id="vsub-bezinning" class="vsub" style="display:none;">
           <p style="font-style:italic;color:var(--muted);margin-bottom:1rem;">${t('vier_bezinning_intro')}</p>
           <ul class="archief-lijst">
-           ${[
-            ["Bezinningsteksten_2023-2025/Koud Gepakt Warm Gedragen.pdf","Koud Gepakt, Warm Gedragen","21 september 2025"],
-            ["Bezinningsteksten_2023-2025/DagRita.png","Dag Rita","31 augustus 2025"],
-          ].map(([href, label, datum]) => archiefItem(href, label, datum)).join('')}
-        </ul>
-        </div>
-        <div id="vsub-fotos" class="vsub" style="display:none;">
-          <ul class="archief-lijst">
-            ${[["Vieringen en liturgie/Allerzielen_2024/2.png","Viering Allerzielen","2 november 2024"],["Vieringen en liturgie/Doop Line en Olivia-20 november 2022.png","Doop Line en Olivia","20 november 2022"]].map(([href,label,datum])=>archiefItem(href,label,datum)).join('')}
+            ${[["Bezinningsteksten_2023-2025/Koud Gepakt Warm Gedragen.pdf","Koud Gepakt, Warm Gedragen","21 september 2025"]].map(([href,label,datum])=>archiefItem(href,label,datum)).join('')}
           </ul>
         </div>
+        <div id="vsub-fotos" class="vsub" style="display:none;"><p style="color:var(--muted);font-style:italic;">Foto's komen binnenkort.</p></div>
       </section>`;
 
     case 'activiteiten': return `
       <section>
         ${bc([t('nav_home'),'home'], t('act_title'))}
         <h2>${t('act_title')}</h2>
-        <div class="act-subnav">
-          <a onclick="showActSub('overzicht')" data-asub="overzicht" class="act-actief">${t('act_tab_overzicht')}</a>
-          <a onclick="showActSub('fotos')" data-asub="fotos">${t('act_tab_fotos')}</a>
-        </div>
-        <div id="asub-overzicht">
-          <h3>${t('act_taize_h3')}</h3><p><em>${t('act_taize_sub')}</em></p><p>${t('act_taize_body')}</p>
-          <div class="ornament">&#x2748; &#x2748; &#x2748;</div>
-          <h3>${t('act_night_h3')}</h3><p><em>${t('act_night_sub')}</em></p>
-          <p>${t('act_night_body')} Contact: <a href="mailto:eheesen@hotmail.com">Nieneke</a> / <a href="mailto:danny.decock59@yahoo.com">Danny</a></p>
-          <div class="ornament">&#x2748; &#x2748; &#x2748;</div>
-          <h3>${t('act_masters_h3')}</h3>
-          <a href="https://www.flemishmastersinsitu.com/nl/locaties/onze-lieve-vrouw-van-goede-bijstandkerk-brussel" target="_blank">
-            <img src="${IMG.alt}" alt="${t('act_masters_caption')}" style="width:100%;max-height:260px;object-fit:cover;border-radius:4px;border:3px solid var(--pale-blue);box-shadow:0 4px 18px rgba(15,40,80,0.18);margin:0.8rem 0;display:block;">
-          </a>
-          <p style="font-size:0.82rem;color:var(--muted);font-style:italic;margin-top:-0.5rem;margin-bottom:0.75rem;">${t('act_masters_caption')}</p>
-          <p>${t('act_masters_body')} <a href="https://www.flemishmastersinsitu.com/nl/locaties/onze-lieve-vrouw-van-goede-bijstandkerk-brussel" target="_blank">${t('act_masters_link')}</a></p>
-          <div class="ornament">&#x2748; &#x2748; &#x2748;</div>
-          <h3>${t('act_grond_h3')}</h3>
-          <p>${t('act_grond_body')} <a href="https://evelienleys.github.io/grondbibliotheek/" target="_blank" rel="noopener">${t('act_grond_link')}</a></p>
-        </div>
-        <div id="asub-fotos" style="display:none;"><p style="color:var(--muted);font-style:italic;">Foto's worden geladen…</p></div>
+        <h3>${t('act_taize_h3')}</h3><p><em>${t('act_taize_sub')}</em></p><p>${t('act_taize_body')}</p>
+        <div class="ornament">&#x2748; &#x2748; &#x2748;</div>
+        <h3>${t('act_night_h3')}</h3><p><em>${t('act_night_sub')}</em></p>
+        <p>${t('act_night_body')} Contact: <a href="mailto:eheesen@hotmail.com">Nieneke</a> / <a href="mailto:danny.decock59@yahoo.com">Danny</a></p>
+        <div class="ornament">&#x2748; &#x2748; &#x2748;</div>
+        <h3>${t('act_masters_h3')}</h3>
+        <a href="https://www.flemishmastersinsitu.com/nl/locaties/onze-lieve-vrouw-van-goede-bijstandkerk-brussel" target="_blank">
+          <img src="${IMG.alt}" alt="${t('act_masters_caption')}" style="width:100%;max-height:260px;object-fit:cover;border-radius:4px;border:3px solid var(--pale-blue);margin:0.8rem 0;display:block;">
+        </a>
+        <p style="font-size:0.82rem;color:var(--muted);font-style:italic;margin-top:-0.5rem;margin-bottom:0.75rem;">${t('act_masters_caption')}</p>
+        <p>${t('act_masters_body')} <a href="https://www.flemishmastersinsitu.com/nl/locaties/onze-lieve-vrouw-van-goede-bijstandkerk-brussel" target="_blank">${t('act_masters_link')}</a></p>
+        <div class="ornament">&#x2748; &#x2748; &#x2748;</div>
+        <h3>${t('act_grond_h3')}</h3>
+        <p>${t('act_grond_body')} <a onclick="navigate('zandbank')">${t('act_grond_link')}</a></p>
       </section>`;
 
     case 'zandbank': return `
-      <section>
-        ${bc([t('nav_home'),'home'], t('zandbank_title'))}
-        <h2>${t('zandbank_title')}</h2>
-        <p style="font-size:1.05rem;font-style:italic;color:var(--muted);margin-bottom:1rem;">${t('zandbank_intro')}</p>
-        <img src="${IMG.int}" alt="De Zandbank" class="church-photo" style="height:220px;">
-        <div class="ornament">&#x2748; &#x2748; &#x2748;</div>
-        <p>${t('zandbank_body1')}</p>
-        <p>${t('zandbank_body2')}</p>
-        <h3>${t('zandbank_wanneer_h3')}</h3>
-        <p>${t('zandbank_wanneer_body')}</p>
-        <p style="margin-top:1.2rem;"><a onclick="navigate('contact')">${t('zandbank_contact_link')}</a></p>
-      </section>`;
+      <section style="padding:0;margin:-2.5rem -1.5rem 0;">
+        <div style="padding:0.6rem 1.5rem 0;">${bc([t('nav_home'),'home'], t('zandbank_title'))}</div>
+        <div style="background:var(--blue-navy);color:#cfe2f5;text-align:center;padding:0;border-bottom:4px solid var(--gold);">
+          <div style="font-family:'EB Garamond',serif;font-size:0.72rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--border);padding:14px 24px 8px;display:flex;align-items:center;justify-content:center;gap:12px;">
+            <span style="flex:1;max-width:140px;height:1px;background:var(--gold);opacity:0.5;display:inline-block;"></span>
+            ${t('zb_kicker')}
+            <span style="flex:1;max-width:140px;height:1px;background:var(--gold);opacity:0.5;display:inline-block;"></span>
+          </div>
+          <div style="font-family:'Playfair Display',serif;font-size:clamp(1.4rem,4vw,2.4rem);font-weight:600;letter-spacing:0.04em;color:#fff;padding:2px 24px 4px;">${t('zb_title')}</div>
+          <div style="font-style:italic;font-size:1rem;color:var(--border);padding:0 24px 16px;">${t('zb_subtitle')}</div>
+        </div>
+        <div style="max-width:700px;margin:36px auto 0;padding:0 1.5rem;text-align:center;">
+          <div style="font-size:0.72rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">${t('zb_mission')}</div>
+          <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.3rem,3.5vw,2rem);color:var(--blue-navy);margin-bottom:14px;border:none;display:block;">${t('zb_headline')}</h2>
+          <p style="color:var(--muted);font-size:1rem;max-width:560px;margin:0 auto 10px;">${t('zb_intro')}</p>
+          <hr style="width:60px;height:2px;background:var(--gold);border:none;margin:24px auto;">
+        </div>
+        <div style="display:flex;justify-content:center;flex-wrap:wrap;max-width:700px;margin:0 auto 36px;padding:0 1.5rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+          <div style="flex:1;min-width:110px;padding:16px 10px;text-align:center;border-right:1px solid var(--border);"><span style="display:block;font-family:'Playfair Display',serif;font-size:2rem;color:var(--blue-navy);">155</span><span style="display:block;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-top:3px;">${t('zb_stat_loc')}</span></div>
+          <div style="flex:1;min-width:110px;padding:16px 10px;text-align:center;border-right:1px solid var(--border);"><span style="display:block;font-family:'Playfair Display',serif;font-size:2rem;color:var(--blue-navy);">6</span><span style="display:block;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-top:3px;">${t('zb_stat_cont')}</span></div>
+          <div style="flex:1;min-width:110px;padding:16px 10px;text-align:center;border-right:1px solid var(--border);"><span style="display:block;font-family:'Playfair Display',serif;font-size:2rem;color:var(--blue-navy);">40+</span><span style="display:block;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-top:3px;">${t('zb_stat_land')}</span></div>
+          <div style="flex:1;min-width:110px;padding:16px 10px;text-align:center;"><span style="display:block;font-family:'Playfair Display',serif;font-size:2rem;color:var(--blue-navy);">&#x221e;</span><span style="display:block;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-top:3px;">${t('zb_stat_verh')}</span></div>
+        </div>
+        <div style="padding:0 0 40px;">
+          <div style="text-align:center;font-size:0.72rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">${t('zb_map_title')}</div>
+          <div id="zandbank-map" style="width:100%;height:clamp(300px,50vw,560px);border-top:2px solid var(--border);border-bottom:2px solid var(--border);"></div>
+          <div id="zandbank-legend" style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;padding:12px 24px 0;font-size:0.82rem;"></div>
+          <div style="text-align:center;font-style:italic;font-size:0.82rem;color:var(--muted);padding:8px 24px 0;">${t('zb_map_caption')}</div>
+        </div>
+        <div style="background:var(--pale-blue);border-top:2px solid var(--border);border-bottom:2px solid var(--border);padding:48px 1.5rem;">
+          <div style="max-width:660px;margin:0 auto;">
+            <div style="font-size:0.72rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">${t('zb_article_dateline')}</div>
+            <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.3rem,3.5vw,2rem);color:var(--blue-navy);margin-bottom:6px;border:none;display:block;">${t('zb_article_title')}</h2>
+            <p style="font-style:italic;color:var(--muted);border-left:3px solid var(--gold);padding-left:14px;margin:16px 0 24px;line-height:1.55;">${t('zb_article_deck')}</p>
+            <hr style="border:none;border-top:1px solid var(--border);margin:20px 0;">
+            <p style="margin-bottom:0.9em;">${t('zb_article_p1')}</p>
+            <p style="margin-bottom:0.9em;">${t('zb_article_p2')}</p>
+            <div style="text-align:center;margin-top:28px;"><a href="https://www.nieuwsblad.be/regio/brussel/brussel/de-droom-van-pastoor-johnny-van-elke-plek-op-aarde-een-potje-grond/56381055.html" target="_blank" style="display:inline-block;padding:10px 28px;background:var(--blue-deep);color:#fff;text-decoration:none;font-size:0.9rem;letter-spacing:0.08em;border-radius:3px;">${t('zb_article_btn')} &#8594;</a></div>
+          </div>
+        </div>
+        <div style="padding:40px 1.5rem;text-align:center;">
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--blue-navy);margin-bottom:12px;font-style:normal;">${t('zb_list_title')}</h3>
+          <p style="font-style:italic;color:var(--muted);max-width:440px;margin:0 auto 24px;">${t('zb_list_desc')}</p>
+          <a href="Aarde locaties.html" target="_blank" style="display:inline-block;padding:11px 32px;background:transparent;color:var(--blue-navy);text-decoration:none;font-size:0.9rem;letter-spacing:0.14em;border:1px solid var(--blue-navy);border-radius:3px;">${t('zb_list_btn')}</a>
+        </div>
+      </section>
+      <script>
+      (function() {
+        if (window._zandbankMapInit) return;
+        window._zandbankMapInit = true;
+        function initZandbankMap() {
+          var el = document.getElementById('zandbank-map');
+          if (!el || el._leaflet_id) return;
+          var cColors = {"Afrika":"#1565c0","Azije & M-O":"#0288d1","Azië & M-O":"#0288d1","Europa":"#0097a7","Amerika":"#1976d2"};
+          var locs = [
+            {n:"Benin",c:"Afrika",a:9.3077,g:2.3158},{n:"Ouagadougou, Burkina Faso",c:"Afrika",a:12.3647,g:-1.5332},{n:"Gran Canaria, Spanje",c:"Afrika",a:27.9202,g:-15.5474},{n:"Katako-Kindu, Congo",c:"Afrika",a:-3.4086,g:26.3280},{n:"Wamba, Congo",c:"Afrika",a:2.1480,g:27.9900},{n:"Zuid-Kivu, Congo",c:"Afrika",a:-2.9453,g:28.8658},{n:"Congo",c:"Afrika",a:-4.0383,g:21.7587},{n:"Egypte",c:"Afrika",a:26.8206,g:30.8025},{n:"Praia, Kaapverdije",c:"Afrika",a:14.9305,g:-23.5133},{n:"Nador, Marokko",c:"Afrika",a:35.1688,g:-2.9286},{n:"Marrakesh, Marokko",c:"Afrika",a:31.6295,g:-7.9811},{n:"Ouarzazate, Marokko",c:"Afrika",a:30.9189,g:-6.8934},{n:"Driouch, Marokko",c:"Afrika",a:34.9820,g:-3.3887},{n:"Oeganda",c:"Afrika",a:1.3733,g:32.2903},{n:"Kigali, Rwanda",c:"Afrika",a:-1.9441,g:30.0619},{n:"Seychellen",c:"Afrika",a:-4.6796,g:55.4920},{n:"Togo",c:"Afrika",a:8.6195,g:0.8248},{n:"Witsand, Zuid-Afrika",c:"Afrika",a:-34.3977,g:20.8593},{n:"Willowmore, Zuid-Afrika",c:"Afrika",a:-33.2906,g:23.4881},
+            {n:"Myanmar",c:"Azije & M-O",a:19.7633,g:96.0785},{n:"Nanning, China",c:"Azije & M-O",a:22.8170,g:108.3665},{n:"Troodos, Cyprus",c:"Azije & M-O",a:34.9227,g:32.8794},{n:"Delhi, India",c:"Azije & M-O",a:28.7041,g:77.1025},{n:"Madhya Pradesh, India",c:"Azije & M-O",a:23.4736,g:77.9470},{n:"Prayagraj, India",c:"Azije & M-O",a:25.4358,g:81.8463},{n:"Teheran, Iran",c:"Azije & M-O",a:35.6892,g:51.3890},{n:"Jeruzalem, Israel",c:"Azije & M-O",a:31.7683,g:35.2137},{n:"Dode Zee, Jordanie",c:"Azije & M-O",a:31.5590,g:35.4732},{n:"Libanon",c:"Azije & M-O",a:33.8547,g:35.8623},{n:"Nepal",c:"Azije & M-O",a:28.3949,g:84.1240},{n:"Palestina",c:"Azije & M-O",a:31.9522,g:35.2332},{n:"Colombo, Sri Lanka",c:"Azije & M-O",a:6.9271,g:79.8612},{n:"Thailand",c:"Azije & M-O",a:15.8700,g:100.9925},{n:"Vietnam",c:"Azije & M-O",a:14.0583,g:108.2772},{n:"Istanbul, Turkije",c:"Azije & M-O",a:41.0082,g:28.9784},{n:"Bozjom, Georgie",c:"Azije & M-O",a:42.3154,g:43.3569},
+            {n:"Oostende, Belgie",c:"Europa",a:51.2293,g:2.9164},{n:"Postel, Belgie",c:"Europa",a:51.2780,g:5.0830},{n:"Kopenhagen, Denemarken",c:"Europa",a:55.6761,g:12.5683},{n:"Ribe, Denemarken",c:"Europa",a:55.3246,g:8.7583},{n:"Lindet Skov, Denemarken",c:"Europa",a:55.2360,g:9.1690},{n:"Keulen, Duitsland",c:"Europa",a:50.9333,g:6.9500},{n:"Freiburg, Duitsland",c:"Europa",a:47.9990,g:7.8421},{n:"Colchester, Engeland",c:"Europa",a:51.8959,g:0.8919},{n:"Londen, Engeland",c:"Europa",a:51.5074,g:-0.1278},{n:"Derwent Water, Engeland",c:"Europa",a:54.5725,g:-3.1340},{n:"Kallislaki, Finland",c:"Europa",a:61.0,g:25.5},{n:"Roquetaillade, Frankrijk",c:"Europa",a:44.6500,g:0.0400},{n:"Corsica, Frankrijk",c:"Europa",a:42.0396,g:9.0129},{n:"Colmar, Frankrijk",c:"Europa",a:48.0793,g:7.3586},{n:"Dijon, Frankrijk",c:"Europa",a:47.3220,g:5.0415},{n:"Fontenay, Frankrijk",c:"Europa",a:47.6220,g:4.0470},{n:"Grenoble, Frankrijk",c:"Europa",a:45.1885,g:5.7245},{n:"Lyon, Frankrijk",c:"Europa",a:45.7640,g:4.8357},{n:"Nice, Frankrijk",c:"Europa",a:43.7102,g:7.2620},{n:"Puy de Dome, Frankrijk",c:"Europa",a:45.7724,g:2.9653},{n:"Mulhouse, Frankrijk",c:"Europa",a:47.7508,g:7.3359},{n:"Thessaloniki, Griekenland",c:"Europa",a:40.6401,g:22.9444},{n:"Vergina, Griekenland",c:"Europa",a:40.4874,g:22.3213},{n:"Keszthely, Hongarije",c:"Europa",a:46.7660,g:17.2447},{n:"Dublin, Ierland",c:"Europa",a:53.3498,g:-6.2603},{n:"Rosslare, Ierland",c:"Europa",a:52.2540,g:-6.3380},{n:"Diamond Beach, IJsland",c:"Europa",a:63.8317,g:-16.3796},{n:"Dolomieten, Italie",c:"Europa",a:46.4102,g:11.8440},{n:"Etna, Italie",c:"Europa",a:37.7510,g:14.9934},{n:"San Remo, Italie",c:"Europa",a:43.8159,g:7.7760},{n:"Rome, Italie",c:"Europa",a:41.9028,g:12.4964},{n:"Stelvio, Italie",c:"Europa",a:46.5289,g:10.4544},{n:"Trapani, Italie",c:"Europa",a:38.0177,g:12.5365},{n:"Venetie, Italie",c:"Europa",a:45.4408,g:12.3155},{n:"Vesuvius, Italie",c:"Europa",a:40.8210,g:14.4260},{n:"Zuid-Tirol, Italie",c:"Europa",a:46.7,g:11.3},{n:"Gardameer, Italie",c:"Europa",a:45.5819,g:10.6652},{n:"Assisi, Italie",c:"Europa",a:43.0707,g:12.6196},{n:"Dubrovnik, Kroatie",c:"Europa",a:42.6507,g:18.0944},{n:"Varazdin, Kroatie",c:"Europa",a:46.3044,g:16.3369},{n:"Dalmatia, Kroatie",c:"Europa",a:43.5,g:16.5},{n:"Porec, Kroatie",c:"Europa",a:45.2268,g:13.5960},{n:"Malta",c:"Europa",a:35.9375,g:14.3754},{n:"Monaco",c:"Europa",a:43.7333,g:7.4167},{n:"Rotterdam, Nederland",c:"Europa",a:51.9244,g:4.4777},{n:"Gardnos, Noorwegen",c:"Europa",a:60.4070,g:9.0900},{n:"Ifnefoss, Noorwegen",c:"Europa",a:60.2,g:8.9},{n:"Lillehammer, Noorwegen",c:"Europa",a:61.1153,g:10.4662},{n:"Norefjell, Noorwegen",c:"Europa",a:60.3880,g:9.6540},{n:"Oslo, Noorwegen",c:"Europa",a:59.9139,g:10.7522},{n:"Steindalfoss, Noorwegen",c:"Europa",a:62.1,g:7.2},{n:"Wenen, Oostenrijk",c:"Europa",a:48.2082,g:16.3738},{n:"Krakau, Polen",c:"Europa",a:50.0647,g:19.9450},{n:"Zgorzelec, Polen",c:"Europa",a:51.1517,g:15.0093},{n:"Madeira, Portugal",c:"Europa",a:32.7607,g:-16.9595},{n:"Santiago do Cacem, Portugal",c:"Europa",a:38.0168,g:-8.6968},{n:"Braga, Portugal",c:"Europa",a:41.5454,g:-8.4265},{n:"Ponte de Lima, Portugal",c:"Europa",a:41.7674,g:-8.5836},{n:"Boekarest, Roemenie",c:"Europa",a:44.4268,g:26.1025},{n:"Sint-Petersburg, Rusland",c:"Europa",a:59.9343,g:30.3351},{n:"Ben Nevis, Schotland",c:"Europa",a:56.7969,g:-5.0035},{n:"Isle of Skye, Schotland",c:"Europa",a:57.2736,g:-6.2149},{n:"Loch Ness, Schotland",c:"Europa",a:57.3229,g:-4.4244},{n:"Lockerbie, Schotland",c:"Europa",a:55.1225,g:-3.3555},{n:"Port Achan, Schotland",c:"Europa",a:56.7980,g:-5.1300},{n:"Tighnabruaich, Schotland",c:"Europa",a:55.9240,g:-5.2280},{n:"Barcelona, Spanje",c:"Europa",a:41.3851,g:2.1734},{n:"Gerona, Spanje",c:"Europa",a:41.9794,g:2.8214},{n:"Granada, Spanje",c:"Europa",a:37.1773,g:-3.5986},{n:"Valga, Spanje",c:"Europa",a:42.0030,g:-8.4080},{n:"Zaragoza, Spanje",c:"Europa",a:41.6488,g:-0.8891},{n:"La Rioja, Spanje",c:"Europa",a:42.2871,g:-2.5396},{n:"Praag, Tsjechie",c:"Europa",a:50.0755,g:14.4378},{n:"Karlsbad, Tsjechie",c:"Europa",a:50.2319,g:12.8716},{n:"Brechfa, Wales",c:"Europa",a:51.9260,g:-4.1340},{n:"Brecon Beacons, Wales",c:"Europa",a:51.8836,g:-3.4370},{n:"Viberod, Zweden",c:"Europa",a:55.5860,g:13.4980},
+            {n:"Bayou la Batre, Alabama",c:"Amerika",a:30.4035,g:-88.2487},{n:"Robertsdale, Alabama",c:"Amerika",a:30.5560,g:-87.7114},{n:"Lockesburg, Arkansas",c:"Amerika",a:33.9707,g:-94.1716},{n:"Texarkana, Arkansas",c:"Amerika",a:33.4418,g:-94.0477},{n:"Montreal, Canada",c:"Amerika",a:45.5017,g:-73.5673},{n:"Niagara Falls, Canada",c:"Amerika",a:43.0896,g:-79.0849},{n:"Cayman Eilanden",c:"Amerika",a:19.3133,g:-81.2546},{n:"Cuba",c:"Amerika",a:21.5218,g:-77.7812},{n:"Curacao",c:"Amerika",a:12.1696,g:-68.9900},{n:"Klein Curacao",c:"Amerika",a:11.9830,g:-68.6500},{n:"Dominicaanse Republiek",c:"Amerika",a:18.7357,g:-70.1627},{n:"Lee, Florida",c:"Amerika",a:30.4201,g:-83.2921},{n:"Alto, Georgia",c:"Amerika",a:34.4618,g:-83.5705},{n:"Montego Bay, Jamaica",c:"Amerika",a:18.4762,g:-77.8939},{n:"Ferryday, Louisiana",c:"Amerika",a:31.6285,g:-91.5565},{n:"Gilliam, Louisiana",c:"Amerika",a:32.8243,g:-93.8185},{n:"Biloxi, Mississippi",c:"Amerika",a:30.3960,g:-88.8853},{n:"Natchez, Mississippi",c:"Amerika",a:31.5604,g:-91.4032},{n:"Akumal, Mexico",c:"Amerika",a:20.3955,g:-87.3139},{n:"Albuquerque, New Mexico",c:"Amerika",a:35.0844,g:-106.6504},{n:"Santa Fe, New Mexico",c:"Amerika",a:35.6870,g:-105.9378},{n:"New York City",c:"Amerika",a:40.7128,g:-74.0060},{n:"Smoky Mountains, North Carolina",c:"Amerika",a:35.6532,g:-83.5070},{n:"Waynesville, North Carolina",c:"Amerika",a:35.4885,g:-82.9874},{n:"Elk City, Oklahoma",c:"Amerika",a:35.4118,g:-99.4040},{n:"Oklahoma City, Oklahoma",c:"Amerika",a:35.4676,g:-97.5164},{n:"Panama City",c:"Amerika",a:8.9936,g:-79.5197},{n:"Charleston, South Carolina",c:"Amerika",a:32.7765,g:-79.9311},{n:"Holly Hill, South Carolina",c:"Amerika",a:33.3254,g:-80.4076},{n:"Gatlinburg, Tennessee",c:"Amerika",a:35.7143,g:-83.5129},{n:"Kellerville, Texas",c:"Amerika",a:35.3534,g:-100.3482},{n:"Wildorado, Texas",c:"Amerika",a:35.1793,g:-102.1780},{n:"Brazilie",c:"Amerika",a:-14.2350,g:-51.9253},{n:"Cusco, Peru",c:"Amerika",a:-13.5319,g:-71.9675},{n:"Arequipa, Peru",c:"Amerika",a:-16.4090,g:-71.5375}
+          ];
+          var zbMap = L.map('zandbank-map',{center:[20,10],zoom:2,minZoom:2,maxZoom:12,worldCopyJump:false,maxBounds:[[-90,-180],[90,180]],maxBoundsViscosity:1.0});
+          L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'&copy; OpenStreetMap &copy; CARTO',subdomains:'abcd',maxZoom:20,noWrap:true,bounds:[[-90,-180],[90,180]]}).addTo(zbMap);
+          function mkI(col){var s='<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="5.5" fill="'+col+'" stroke="#fff" stroke-width="1.8" opacity="0.92"/></svg>';return L.divIcon({html:s,className:'',iconSize:[14,14],iconAnchor:[7,7],popupAnchor:[0,-10]});}
+          locs.forEach(function(loc){var col=cColors[loc.c]||'#1565c0';var mk=L.marker([loc.a,loc.g],{icon:mkI(col)});mk.bindPopup('<strong style="display:block;color:#7aaac8;font-size:15px;">'+loc.n+'</strong><span style="font-size:12px;color:#cfe2f5;">'+loc.c+'</span>');mk.addTo(zbMap);mk.on('mouseover',function(){this.openPopup();});});
+          var leg=document.getElementById('zandbank-legend');
+          if(leg){[["Afrika","#1565c0"],["Azie & M-O","#0288d1"],["Europa","#0097a7"],["Amerika","#1976d2"]].forEach(function(e){var d=document.createElement('div');d.style.cssText='display:flex;align-items:center;gap:6px;color:var(--muted);font-size:0.82rem;';d.innerHTML='<span style="width:10px;height:10px;border-radius:50%;background:'+e[1]+';display:inline-block;"></span>'+e[0];leg.appendChild(d);});}
+        }
+        if (typeof L !== 'undefined') {
+          setTimeout(initZandbankMap, 100);
+        } else {
+          var lcss=document.createElement('link');lss.rel='stylesheet';lss.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';document.head.appendChild(lss);
+          var ljs=document.createElement('script');ljs.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';ljs.onload=initZandbankMap;document.head.appendChild(ljs);
+        }
+      })();
+      <\/script>`;
 
     case 'kinderen': return `
       <section>
@@ -1320,7 +1061,6 @@ function pageContent(pageKey){
         <h2>${t('schelp_title')}</h2><p>${t('schelp_body1')}</p>
         <h3>${t('schelp_huren_h3')}</h3><p>${t('schelp_huren_body')}</p>
         <h3>${t('schelp_contact_h3')}</h3>
-        <p>Oliventenhof 8, Brussel Centrum</p>
         <p><a onclick="navigate('contact')">${t('schelp_contact_link')}</a></p>
       </section>`;
 
@@ -1330,9 +1070,7 @@ function pageContent(pageKey){
         <h2>${t('samenwerking_title')}</h2>
         <div class="partners">
           <div class="partner-item"><strong>Kamino</strong><p><a href="https://www.kamino.be" target="_blank">www.kamino.be &#8594;</a></p></div>
-          <div class="partner-item"><strong>Bijstandsnetwerk Brussel</strong></div>
           <div class="partner-item"><strong>Finis Terrae</strong><p>Nieuwstraat 76 — ${t('vier_sat')} 16.30 u</p></div>
-          <div class="partner-item"><strong>Taizé</strong><p><a onclick="navigate('home')">${LANG==='nl'?'Meer info':LANG==='fr'?'Plus d\'info':LANG==='de'?'Mehr Info':LANG==='en'?'More info':'Más info'} &#8594;</a></p></div>
           <div class="partner-item"><strong>Paulusgemeenschappen</strong><p><a href="https://www.paulusgemeenschappen.be/nl" target="_blank">paulusgemeenschappen.be &#8594;</a></p></div>
           <div class="partner-item"><strong>House of Compassion</strong><p><a href="https://www.houseofcompassion.be/" target="_blank">houseofcompassion.be &#8594;</a></p></div>
         </div>
@@ -1395,6 +1133,12 @@ function navigateContent(pageKey){
   document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('active',a.dataset.page===pageKey));
 }
 function navigate(pageKey){navigateContent(pageKey);window.scrollTo({top:0,behavior:'smooth'});}
+
+// Load Leaflet CSS+JS for the map
+(function(){
+  var lc=document.createElement('link');lc.rel='stylesheet';lc.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';document.head.appendChild(lc);
+  var ls=document.createElement('script');ls.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';document.head.appendChild(ls);
+})();
 
 document.documentElement.lang=LANG;
 document.querySelectorAll('.lang-btn').forEach(btn=>btn.classList.toggle('actief',btn.dataset.lang===LANG));
