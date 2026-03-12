@@ -1561,15 +1561,58 @@ function agendaHTML() {
 }
 
 /* ══════════════════════════════════════════
-   OVERLIJDENS
+   OVERLIJDENS — volledig uitgebreide lijst (uit versie 2)
 ══════════════════════════════════════════ */
 const OVERLIJDENS = [
-  { datum:"24 oktober 2025", naam:"Paul Huyskens", tekst:"Paul Huyskens, echtgenoot van Frank Benault, overleed op 24 oktober 2025 op 71-jarige leeftijd. De begrafenis vond plaats in het crematorium van Evere op donderdag 30 oktober 2025 om 14 uur.", links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_PaulHuyskens.pdf"]] },
+  { datum:"24 oktober 2025", naam:"Paul Huyskens", tekst:"Paul Huyskens, echtgenoot van Frank Benault, overleed op 24 oktober 2025 op 71-jarige leeftijd op de dienst palliatieve zorgen in Gasthuisberg. De begrafenis vond plaats in het crematorium van Evere op donderdag 30 oktober 2025 om 14 uur.", links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_PaulHuyskens.pdf"]] },
   { datum:"19 september 2025", naam:"Elizabeth Nijpels", tekst:"Elizabeth Nijpels overleed op vrijdag 19 september 2025. De begrafenis vond plaats in de Sint-Jan Evangelistkerk te Tervuren op donderdag 25 september 2025 om 10 uur.", links:[["Rouwbrief","Overlijden  2025/Nijpels-Elisabeth-rb.indd - Overlijdensbericht_ElizabethNijpels.pdf"]] },
-  { datum:"12 september 2025", naam:"Gino Mattheeuws", tekst:"Pastor Gino Mattheeuws, lid van ons team, overleed op vrijdag 12 september 2025. De begrafenis vond plaats in de Sint-Jozefskerk te Evere op zaterdag 20 september 2025 om 10.30 uur.", links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_GinoMattheeuws.pdf"]] },
-  { datum:"18 augustus 2025", naam:"Rita Lecomte", tekst:"Rita Lecomte overleed op maandag 18 augustus 2025. De begrafenis vond plaats te Liedekerke op maandag 25 augustus 2025 om 11.30 uur.", links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_RitaLecomte.pdf"]] },
+  { datum:"12 september 2025", naam:"Gino Mattheeuws", tekst:"Pastor Gino Mattheeuws, lid van ons team en voorganger van Goede Bijstand en Finis Terrae, overleed op vrijdag 12 september 2025. De begrafenis vond plaats in de Sint-Jozefskerk te Evere op zaterdag 20 september 2025 om 10.30 uur.", links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_GinoMattheeuws.pdf"]] },
+  { datum:"18 augustus 2025", naam:"Rita Lecomte", tekst:"Rita Lecomte overleed op maandag 18 augustus 2025. De begrafenis vond plaats in de kerk van O.L.V. Boodschap Ter Muilen te Liedekerke op maandag 25 augustus 2025 om 11.30 uur.", links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_RitaLecomte.pdf"]] },
+  { datum:"15 augustus 2025", naam:"Pater Hugo Vangeel", tekst:"Pater Hugo Vangeel overleed op vrijdag 15 augustus 2025. De begrafenis vond plaats in de parochiekerk van Sint-Rochus te Brussel op zaterdag 23 augustus 2025 om 11 uur. Op zaterdag 30 augustus 2025 om 10.30 uur was er een dankviering in de kerk van Herk-de-Stad.", links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_HugoVangeel.pdf"]] },
   { datum:"14 augustus 2025", naam:"Jef Durant", tekst:"Jef Durant overleed op donderdag 14 augustus 2025. De begrafenis vond plaats in onze kerk van Goede Bijstand op vrijdag 22 augustus 2025 om 10 uur.", links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_JefDurant.pdf"]] },
   { datum:"12 juli 2025", naam:"Frida De Boeck", tekst:"Frida De Boeck overleed op zaterdag 12 juli 2025. De begrafenis vond plaats in onze kerk van Goede Bijstand op vrijdag 18 juli 2025 om 11 uur.", links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_FridaDeBoeck.pdf"]] },
+  { datum:"3 juni 2025", naam:"Ruf Delcourt", tekst:"Ruf Delcourt overleed op dinsdag 3 juni 2025. De begrafenis vond plaats in de kerk van O.-L.-Vrouw Boodschap te Liedekerke op zaterdag 14 juni 2025 om 11.30 uur.", links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_JefDurant.pdf"]] },
+  { datum:"15 februari 2025", naam:"Jozef Van Rumste", tekst:"Jozef Van Rumste overleed op zaterdag 15 februari 2025. De begrafenis vond plaats in onze kerk van Goede Bijstand op maandag 24 februari 2025 om 13 uur.", links:[["Rouwbrief","Overlijden  2025/Overlijdensbericht_JozefVanRumste.pdf"]] },
+  { datum:"23 oktober 2024", naam:"Hugo Weckx", tekst:"Hugo Weckx, echtgenoot en zielsgenoot van Frida, overleed op woensdag 23 oktober 2024. Het lichaam werd overgebracht naar onze kerk op vrijdag 25 oktober om 18 uur, met onthaalliturgie.", links:[["Rouwbrief","Overlijden  2024/Overlijdensbericht_HugoWeckx.pdf"]] },
+  { datum:"31 juli 2024", naam:"Rachelle Synaeve", tekst:"Rachelle Synaeve, mama van Sabine en Marc, oma van Tine en Wannes, overleed op woensdag 31 juli 2024. De begrafenis vond plaats in onze kerk op dinsdag 6 augustus om 10 uur.", links:[["Rouwbrief","Overlijden  2024/Overlijdensbericht_RachelleSynaeve.pdf"],["Rouwprentje","Overlijden  2024/Overlijdensbericht_RachelleSynaeve_kaart.pdf"]] },
+  { datum:"27 juli 2024", naam:"Mark Van Liedekerke", tekst:"Mark Van Liedekerke, echtgenoot van Eugenie Arijs, overleed op zaterdag 27 juli 2024. De begrafenis vond plaats in de parochiekerk Sint-Jan-Evangelist te Teralfene op vrijdag 2 augustus 2024 om 11 uur.", links:[["Rouwbrief","Overlijden  2024/Overlijdensbericht_RachelleSynaeve.pdf"]] },
+  { datum:"12 juni 2024", naam:"Martine De Mot", tekst:"Martine De Mot, zus van Johnny, overleed op woensdag 12 juni 2024. De begrafenis vond plaats in de Kerk van Goede Bijstand op zaterdag 22 juni om 11 uur.", links:[["Rouwbrief","Overlijden  2024/Overlijdensbericht_MarkVanLiedekerke.pdf"]] },
+  { datum:"14 mei 2024", naam:"Paul Dewallef", tekst:"Paul Dewallef (° 25 juli 1944, Anderlecht) overleed op 14 mei 2024. Leraar Grieks-Latijn, voorganger en voorzitter van de kerkraad in de Goede Bijstand, trouw medewerker van vzw De Overmolen. Hij schonk zijn lichaam aan het UZ Brussel.", links:[["Bericht Johnny","Overlijden  2024/paul dewallef.png"]] },
+  { datum:"9 maart 2024", naam:"Cil Cloet", tekst:"Cil Cloet overleed op zaterdag 9 maart 2024. De begrafenis vond plaats in de Onze-Lieve-Vrouwkerk te Beigem op zaterdag 16 maart om 10 uur.", links:[["Rouwbrief","Overlijden  2024/Overlijdensbericht_CilCloet.pdf"]] },
+  { datum:"15 september 2023", naam:"Luc Vankrunkelsven", tekst:"Luc Vankrunkelsven overleed op 15 september 2023 in Brazilië, tijdens een afscheidsreis naar zijn geliefde projecten aldaar. De begrafenis vond plaats in de abdijkerk van Averbode op vrijdag 6 oktober 2023 om 11 uur.", links:[["Rouwbrief","Overlijden 2014 - 2023/Overlijden 2023/Overlijdensbericht_LucVankrunkelsven.pdf"],["In memoriam op MO","https://www.mo.be/wereldblog/luc-afscheid-van-een-broeder-het-zoeken-naar-verbinding"]] },
+  { datum:"14 februari 2023", naam:"Dries Van Cauter", tekst:"Dries Van Cauter, onze oudste parochiaan en trouwe kerkganger, overleed op dinsdag 14 februari 2023. De begrafenis vond plaats in onze kerk op woensdag 22 februari om 11 uur.", links:[["Rouwbrief","Overlijden 2023/Overlijdensbericht_DriesVanCauter.pdf"]] },
+  { datum:"1 januari 2023", naam:"Johanna Smet", tekst:"Johanna Smet, mama van Rita Van Moorter en Jos Rolies, overleed op 1 januari 2023. De begrafenis vond plaats in de parochiekerk Sint-Martinus van Erpe op zaterdag 7 januari om 11.30 uur.", links:[["Rouwbrief","Overlijden 2023/Overlijdensbericht_JohannaSmet.pdf"]] },
+  { datum:"23 oktober 2022", naam:"Frieda Raes", tekst:"Frieda Raes, heel lang lid van onze gemeenschap, overleed op zondag 23 oktober 2022. De begrafenis vond plaats in de parochiekerk Sint-Petrus en Paulus te Hansbeke op donderdag 3 november om 10.30 uur.", links:[["Rouwbrief","Overlijden 2022/Overlijdensbericht_FriedaRaes.pdf"]] },
+  { datum:"11 september 2022", naam:"Margriet Miserez", tekst:"Margriet Miserez overleed op zondag 11 september 2022. De begrafenis vond plaats in de Sint-Annakapel te Itterbeek op zaterdag 17 september om 10.30 uur.", links:[["Rouwbrief","Overlijden 2022/Overlijdensbericht_MargrietMiserez.pdf"]] },
+  { datum:"11 juli 2022", naam:"Dik Madder", tekst:"Dik Madder overleed op maandag 11 juli 2022. Jarenlang was hij werkzaam in de persdienst van de Kerk in Brussel en verzorgde de aalmoezeniersdienst van het Bracopsziekenhuis. De begrafenis vond plaats in de Finisterrae kerk op maandag 18 juli om 14 uur.", links:[["Rouwbrief","Overlijden 2022/Overlijdensbericht_DikMadder.pdf"],["Bericht Jean Kockerols","Overlijden 2022/Dik Madder bericht.png"]] },
+  { datum:"juli 2022", naam:"Zuster Rita Claus", tekst:"Zuster Rita Claus is overleden. De begrafenis vond plaats in de Finisterrae kerk op zaterdag 16 juli om 10.30 uur.", links:[] },
+  { datum:"juni 2022", naam:"Simonne Meert", tekst:"Simonne Meert, meer dan 90 jaar oud, overleed in juni 2022, rustig thuis omringd door haar kinderen. De uitvaart vond plaats op zaterdag 18 juni om 10 uur in Vlezenbeek.", links:[["Bericht Herman Lodewyckx","Overlijden 2022/SimonneMeert.png"]] },
+  { datum:"24 mei 2022", naam:"Hans Fogli", tekst:"Hans Fogli overleed op dinsdag 24 mei 2022. De begrafenis vond plaats in onze Goede Bijstandkerk op donderdag 2 juni om 11 uur.", links:[["Foto Hans Fogli","Overlijden 2022/HansFogli.png"]] },
+  { datum:"16 november 2021", naam:"Marie-Paule De Pauw", tekst:"Marie-Paule De Pauw, mama van Marc Cooremans en Sabine Maertens, oma van Tine en Wannes, overleed op dinsdag 16 november 2021. De begrafenis vond plaats in de Sint-Bartholomeus kerk te Geraardsbergen op zaterdag 20 november om 10 uur.", links:[["Rouwbrief","Overlijden 2021/Overlijdensbericht_MariePauleDePauw.pdf"]] },
+  { datum:"15 oktober 2021", naam:"Maria-Stella Tuerlinckx", tekst:"Maria-Stella Tuerlinckx overleed op vrijdag 15 oktober 2021. De begrafenis vond plaats in onze Goede Bijstandkerk op donderdag 21 oktober om 12 uur.", links:[] },
+  { datum:"7 juli 2021", naam:"Edith Asselman", tekst:"Edith Asselman, mama van Sonja en Herwig, overleed op woensdag 7 juli 2021. Sterk geëngageerd in het Merchtemse verenigingsleven en de verbindende figuur van haar gezin.", links:[["Rouwbrief","Overlijden 2021/Overlijdensbericht_EdithAsselman.pdf"]] },
+  { datum:"6 april 2021", naam:"Omer Mommaerts", tekst:"Omer Mommaerts, een groot man van hart en ziel en Cardijn-volgeling van het eerste uur, overleed op dinsdag 6 april 2021.", links:[["Rouwbrief","Overlijden 2021/Overlijdensbericht_OmerMommaerts.pdf"],["Bericht Johnny","Overlijden 2021/Omer Mommaerts bericht Johnny.png"]] },
+  { datum:"9 maart 2021", naam:"Helena Verlinden (zuster Marie-Hélène)", tekst:"Zuster Marie-Hélène Verlinden, lid van de gemeenschap Finis Terrae en rechterhand van zuster Leontine bij de oprichting van de palliatieve zorgen in Sint Jan Brussel, overleed op dinsdag 9 maart 2021.", links:[["Rouwbrief","Overlijden 2021/Overlijdensbericht_HelenaVerlinden.pdf"]] },
+  { datum:"1 maart 2021", naam:"Anne Debusschere", tekst:"Anne Debusschere overleed op maandag 1 maart 2021, bijna 68 jaar oud, na een lange strijd. De begrafenis vond plaats op maandag 8 maart om 11 uur in de kerk van Goede Bijstand.", links:[["Bericht Johnny","Overlijden 2021/Anne Debusschere.png"]] },
+  { datum:"10 februari 2021", naam:"Leen Dhaese", tekst:"Leen Dhaese overleed op woensdag 10 februari 2021.", links:[["Rouwbrief","Overlijden 2021/Overlijdensbericht_LeenDhaese.pdf"],["Rouwprentje","Overlijden 2021/Overlijdensbericht_LeenDhaese_bidprentje.pdf"]] },
+  { datum:"23 januari 2021", naam:"Walter Fabri", tekst:"Walter Fabri overleed op zaterdagavond 23 januari 2021, kort na zijn eenentachtigste verjaardag, in Gasthuisberg Leuven. Jarenlang een trouwe zanger in ons koortje en Jezuïet.", links:[["Rouwbrief","Overlijden 2021/Overlijdensbericht_WalterFabri.pdf"]] },
+  { datum:"3 januari 2021", naam:"Elza Van Mulders", tekst:"Elza Van Mulders, mama van Michel De Wolf en Milaine Verborgh, overleed op zondag 3 januari 2021 na een corona-uitbraak in wzc Warlandis in Jette.", links:[["Rouwbrief","Overlijden 2021/Overlijdensbericht_ElzaVanMulders.pdf"]] },
+  { datum:"17 november 2020", naam:"Jean Vandenbrul", tekst:"Jean Vandenbrul, heel graag gezien in onze gemeenschap, overleed op dinsdag 17 november 2020.", links:[["Rouwbrief","Overlijden 2020/Overlijdensbericht_JeanVandenbrul.pdf"]] },
+  { datum:"2 november 2020", naam:"Christiane Van Den Bossche", tekst:"Christiane Van Den Bossche, mama van Hilde De Geeter, overleed op maandag 2 november 2020.", links:[["Rouwbrief","Overlijden 2020/Overlijdensbericht_ChristianeVanDenBossche.pdf"]] },
+  { datum:"23 oktober 2020", naam:"Marc Rosseel", tekst:"Marc Rosseel overleed op vrijdag 23 oktober 2020.", links:[["Rouwbrief","Overlijden 2020/Overlijdensbericht_MarcRosseel.pdf"]] },
+  { datum:"2 mei 2020", naam:"Walter Ceuppens", tekst:"Walter Ceuppens, een grote vriend van de Goede Bijstand, overleed op zaterdag 2 mei 2020.", links:[["Rouwbrief","Overlijden 2020/Overlijdensbericht_CeuppensWalter.pdf"]] },
+  { datum:"21 april 2020", naam:"Flor Cooremans", tekst:"Flor Cooremans overleed op dinsdag 21 april 2020. Een trouwe Bijstander die de kerk innig liefhad.", links:[["Rouwbrief","Overlijden 2020/Overlijdensbericht_FlorCooremans.pdf"]] },
+  { datum:"15 april 2020", naam:"Albert Kestemont", tekst:"Albert Kestemont overleed op woensdag 15 april 2020 na een hospitalisatie en operatie. Hij kwam samen met Fernand en Pater Gerard naar de vieringen in de Goede Bijstand.", links:[["Bericht familie","Overlijden 2020/Albert Kestemont.png"]] },
+  { datum:"13 april 2020", naam:"Marijke Jacobs", tekst:"Marijke Jacobs, dochter van Gusta en René, twee sterkhouders van de Goede Bijstand, overleed op maandag 13 april 2020. Ze kwam graag met haar man Guido naar de vieringen.", links:[["Rouwbrief","Overlijden 2020/Overlijdensbericht_MarijkeJacobs.pdf"]] },
+  { datum:"3 april 2020", naam:"Willy Verbruggen", tekst:"Willy Verbruggen, broeder van de heilige Franciscus, overleed in de nacht van 3 april 2020 in het Sint-Jans ziekenhuis. Een beperkte afscheidsviering vond plaats op 8 april om 11 uur in de Goede Bijstandskerk.", links:[["Bericht Johnny","Overlijden 2020/Willy Verbruggen.png"]] },
+  { datum:"18 maart 2020", naam:"Peter Van Oost", tekst:"Peter Van Oost, broer van Katrien, overleed op woensdag 18 maart 2020, 52 jaar oud. Wegens corona vond de begrafenis in strikte intimiteit plaats.", links:[["Rouwbrief","Overlijden 2020/Overlijdensbericht_PeterVanOost.pdf"]] },
+  { datum:"11 januari 2020", naam:"Jacqueline Schepens", tekst:"Jacqueline Schepens overleed op zaterdag 11 januari 2020. De begrafenis vond plaats in de Goede Bijstand op vrijdag 17 januari om 12 uur.", links:[["Rouwbrief","Overlijden 2020/Overlijdensbericht_JacquelineSchepens.pdf"]] },
+  { datum:"20 oktober 2019", naam:"Dora Dalle", tekst:"Dora Dalle overleed op zondag 20 oktober 2019. De begrafenis vond plaats in de Verrijzeniskerk te Sint-Jans-Molenbeek op zaterdag 26 oktober om 11 uur.", links:[["Rouwbrief","Overlijden 2020/Overlijdensbericht_DoraDalle.pdf"]] },
+  { datum:"8 september 2017", naam:"Lena Demeester", tekst:"Lena Demeester overleed op donderdag 8 september 2017 in de palliatieve eenheid van het UZ Leuven. Als lid van de gemeenschap verzorgde ze jarenlang wetenschappelijke en religieuze uitzendingen bij de VRT. De begrafenis vond plaats in onze kerk op zaterdag 16 september om 11 uur.", links:[["Rouwbrief","Overlijden  2017/Overlijdensbericht_LenaDemeester.pdf"]] },
+  { datum:"13 augustus 2017", naam:"Toke Craeghs", tekst:"Toke Craeghs, mama van Mathieu, overleed op zondag 13 augustus 2017 in het woonzorgcentrum \"De Maaspoorte\" in Maaseik. De begrafenis vond plaats in de Sint Catharinakerk te Maaseik op vrijdag 18 augustus om 10.30 uur.", links:[["Rouwbrief","Overlijden  2017/Overlijdensbericht_TokeCraeghs.pdf"]] },
+  { datum:"9 juli 2016", naam:"Pierre-Alain Wiener", tekst:"Pierre-Alain Wiener, die jarenlang het orgel bespeelde in onze kerk, overleed op zondag 9 juli 2016. De begrafenis vond plaats in onze kerk op zaterdag 16 juli om 10 uur.", links:[["Rouwbrief","Overlijden 2016/Overlijdensbericht_PierreAlainWiener.pdf"]] },
+  { datum:"23 september 2014", naam:"Christ'l Cuypers", tekst:"Christel werd dood aangetroffen op dinsdag 23 september 2014. De begrafenis vond plaats op maandag 6 oktober om 10.30 uur in de Bijstandskerk.", links:[["Rouwbrief","Overlijden 2014/Overlijdensbericht_Christ'lCuypers.pdf"]] },
+  { datum:"25 september 2014", naam:"Jozef (Jef) Bické", tekst:"Jozef (Jef) Bické overleed in de nacht van donderdag 25 september 2014 in zijn slaap in het rusthuis te Meerbeke. De begrafenis vond plaats in onze Bijstandskerk op woensdag om 11 uur.", links:[["Rouwbrief","Overlijden 2014/Overlijdensbericht_JozefBické.pdf"]] },
 ];
 
 /* ══════════════════════════════════════════
@@ -1800,6 +1843,11 @@ function pageHTML(key) {
           <p class="iban">BE27 0910 0107 1473</p>
           <p class="bic">BIC: GKCCBEBBXXX</p>
         </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.5rem;max-width:420px;">
+          <div style="text-align:center;"><img src="Donate_02_qr_sumup.png" alt="QR SumUp" style="width:100%;max-width:160px;border:2px solid var(--gold-pale);border-radius:4px;"><p style="font-size:0.82rem;color:var(--warm-grey);margin-top:0.4rem;font-style:italic;">Scan QR — SumUp</p></div>
+          <div style="text-align:center;"><img src="Donate_02_qr_wero.png" alt="QR Wero" style="width:100%;max-width:160px;border:2px solid var(--gold-pale);border-radius:4px;"><p style="font-size:0.82rem;color:var(--warm-grey);margin-top:0.4rem;font-style:italic;">Scan QR — Wero</p></div>
+        </div>
+        <p style="margin-top:0.6rem;font-size:0.88rem;color:var(--warm-grey);font-style:italic;">Of tik uw bankkaart op het betaalterminal in de kerk.</p>
         <p style="margin-top:1rem;">${t('steunen_q')} <a href="mailto:2096@diomb.be">2096@diomb.be</a></p>
       </div>
     </section>`;
@@ -1840,17 +1888,105 @@ function pageHTML(key) {
         <p style="font-style:italic;color:var(--warm-grey);margin-bottom:1rem;">${t('homilies_intro')}</p>
         <ul class="archive-list">
           ${archiveItem("Homilies/Homilies_2010-2025/Homilie Kerstmis_ moet ik zwijgen.pdf","Kerstmis: moet ik zwijgen?","25 december 2025")}
+          ${archiveItem("Homilies/Homilies_2010-2025/Homilie tv-mis 22 april 2022.pdf","Homilie tv-mis","24 april 2022")}
+          ${archiveItem("Homilies/Homilies_2010-2025/Homilie tv-mis 16 januari 2022.pdf","Homilie tv-mis","16 januari 2022")}
+          ${archiveItem("Homilies/Homilies_2010-2025/Mijmeringen bij de Afrikadag 2 januari 2022.pdf","Mijmeringen bij de Afrikadag","2 januari 2022")}
           ${archiveItem("Homilies/Homilies_2010-2025/Paaswake 13 april 2020.pdf","Paaswake","13 april 2020")}
+          ${archiveItem("Homilies/Homilies_2010-2025/Goedele MiseurHomilie viering, 20 oktober 2019.pdf","Homilie viering","20 oktober 2019")}
+          ${archiveItem("Homilies/Homilies_2010-2025/Homilie viering, 17 december 2017.pdf","Homilie viering","17 december 2017")}
+          ${archiveItem("Homilies/Homilies_2010-2025/Homilie viering, 1e adventszondag B, 3 december 2017.pdf","Homilie viering, 1e adventszondag B","3 december 2017")}
+          ${archiveItem("Homilies/Homilies_2010-2025/Homilie tv-mis 18 december 2016.pdf","Homilie tv-mis","18 december 2016")}
+          ${archiveItem("Homilies/Homilies_2010-2025/Homilie viering 9 november 2014.pdf","Homilie viering","9 november 2014")}
+          ${archiveItem("Homilies/Homilies_2010-2025/Homilie Paus Franciscus 19 maart 2013.pdf","Homilie Paus Franciscus","19 maart 2013")}
+          ${archiveItem("Homilies/Homilies_2010-2025/Homilie tv-mis 12 februari 2012.pdf","Homilie tv-mis","12 februari 2012")}
+          ${archiveItem("Homilies/Homilies_2010-2025/2e Zondag door het jaar.pdf","2e Zondag door het jaar","")}
+          ${archiveItem("Homilies/Homilies_2010-2025/Homilie Kerstmis 25 december 2011.pdf","Homilie Kerstmis","25 december 2011")}
+          ${archiveItem("Homilies/Homilies_2010-2025/Homilie tv-mis 18 december 2011.pdf","Homilie tv-mis","18 december 2011")}
+          ${archiveItem("Homilies/Homilies_2010-2025/Over weinig waart ge trouw, over veel zal ik u aanstellen.pdf","Over weinig waart ge trouw, over veel zal ik u aanstellen","")}
+          ${archiveItem("Homilies/Homilies_2010-2025/Homilie tv-mis 11 september 2011.pdf","Homilie tv-mis","11 september 2011")}
+          ${archiveItem("Homilies/Homilies_KerkelijkJaar/Zie het Lam Gods_2e zondag A.png","Zie het Lam Gods","2e zondag A")}
+          ${archiveItem("Homilies/Homilies_2010-2025/Homilie tv-mis 10 oktober 2010.pdf","Homilie tv-mis","10 oktober 2010")}
+          ${archiveItem("Homilies/Homilies_2010-2025/Homilie tv-mis 18 juli 2010.pdf","Homilie tv-mis","18 juli 2010")}
+          ${archiveItem("Homilies/Homilies_KerkelijkJaar/Bruiloft te Cana_2e zondag C.png","Bruiloft te Cana","2e zondag C")}
+          ${archiveItem("Homilies/Homilies_KerkelijkJaar/Zijn er nog profeten_14e zondag B.png","Zijn er nog profeten?","14e zondag B")}
+          ${archiveItem("Homilies/Homilies_KerkelijkJaar/Filippus en de Ethiopische eunuch_5e zondag van Pasen B.png","Filippus en de Ethiopische eunuch","5e zondag van Pasen B")}
+          ${archiveItem("Homilies/Homilies_KerkelijkJaar/Wie zeggen de mensen dat ik ben_21e zondag A.pdf","Wie zeggen de mensen dat ik ben?","21e zondag A")}
+          ${archiveItem("Homilies/Homilies_KerkelijkJaar/Een duobaan Petrus en Paulus_Feest van Petrus en Paulus jaar A.png","Een duobaan: Petrus en Paulus","")}
+          ${archiveItem("Homilies/Homilies_KerkelijkJaar/De goede herder_4e Paaszondag A.png","De goede herder","4e Paaszondag A")}
+          ${archiveItem("Homilies/Homilies_KerkelijkJaar/Lazarus_5e zondag van de vasten A.png","Lazarus","5e zondag van de vasten A")}
+          ${archiveItem("Homilies/Homilies_KerkelijkJaar/Een droom van gerechtigheid_4e Adventszondag A.pdf","Een droom van gerechtigheid","4e adventszondag A")}
+          ${archiveItem("Homilies/Homilies_KerkelijkJaar/Johannes, de profeet_3e Adventszondag A.png","Johannes, de profeet","3e adventszondag A")}
+          ${archiveItem("Homilies/Homilies_KerkelijkJaar/Een visioen van Jesaja_2e Adventszondag A.png","Een visioen van Jesaja","2e adventszondag A")}
         </ul>
       </div>
       <div id="sub-vier-bezinning" class="subpage-vier" style="display:none;">
         <p style="font-style:italic;color:var(--warm-grey);margin-bottom:1rem;">${t('bezinning_intro')}</p>
         <ul class="archive-list">
           ${archiveItem("Bezinningsteksten_2023-2025/Koud Gepakt Warm Gedragen.pdf","Koud Gepakt, Warm Gedragen","21 september 2025")}
+          ${archiveItem("Bezinningsteksten_2023-2025/DagRita.png","Dag Rita","31 augustus 2025")}
+          ${archiveItem("Bezinningsteksten_2023-2025/Mindfulness.png","Mindfulness in een christelijke sfeer","21 mei 2024")}
+          ${archiveItem("Bezinningsteksten_2023-2025/Pinksterwake.png","Pinksterwake: de Geest zendt de Paulusgemeenschappen","18 mei 2024")}
+          ${archiveItem("Bezinningsteksten_2023-2025/BiddenIsMijNietGegeven.png","Bidden is mij niet gegeven","7 oktober 2023")}
+          ${archiveItem("Bezinningsteksten_2023-2025/Godvergeten.png","Godvergeten: de Vlaamse bisschoppen willen samen nieuwe stappen zetten","29 september 2023")}
+          ${archiveItem("Bezinningsteksten_2023-2025/PausCelibaat.png","Paus in interview: Celibaat is herzienbaar","22 april 2023")}
+          ${archiveItem("Bezinningsteksten_2023-2025/Paasmorgen.png","Paasmorgen","15 april 2023")}
+          ${archiveItem("Bezinningsteksten_2023-2025/Zorgpastor Goedele getuigt 'De eerste 5 minuten zijn cruciaa.pdf","Zorgpastor Goedele getuigt: 'De eerste 5 minuten zijn cruciaal'","25 maart 2023")}
+          ${archiveItem("Bezinningsteksten_2023-2025/sebastien_bellin_artikel.pdf","Ex-basketballer Sébastien Bellin: 'Ik vergeef jullie'","11 maart 2023")}
+          ${archiveItem("Bezinningsteksten_2022/Pannenkoek.png","Een pannenkoek aan de abdij!","5 oktober 2022")}
+          ${archiveItem("Bezinningsteksten_2022/Pinksteren2022.png","Pinksteren","28 mei 2022")}
+          ${archiveItem("Bezinningsteksten_2022/mariabloemen_tuin.pdf","Acht bloemen die naar Maria verwijzen voor in jouw tuin","7 mei 2022")}
+          ${archiveItem("Bezinningsteksten_2022/HoopOmhelzen.png","Hoop Omhelzen","30 april 2022")}
+          ${archiveItem("Bezinningsteksten_2022/Woedend.png","Woedend","23 april 2022")}
+          ${archiveItem("Bezinningsteksten_2022/breken_en_leven_pasen_2022.pdf/","In Het Licht Van Gods Woord","17 april 2022")}
+          ${archiveItem("Bezinningsteksten_2022/Pasen2022.png","Van Woestijn naar Pasen","9 april 2022")}
+          ${archiveItem("Bezinningsteksten_2022/de_verloren_dochter.png","De Verloren Dochter","2 april 2022")}
+          ${archiveItem("Bezinningsteksten_2022/februari2022.png","Februari","12 februari 2022")}
+          ${archiveItem("Bezinningsteksten_2022/lichtmis_5_februari_2022.pdf","Lichtmis","5 februari 2022")}
+          ${archiveItem("Bezinningsteksten_2022/Driekoningen 10 vragen & antwoorden 2 januari 2022.pdf","Driekoningen: 10 vragen & antwoorden","2 januari 2022")}
+          ${archiveItem("Beziningsteksten_2020/zachtheid.png","Zachtheid heet ons kind…","19 december 2020")}
+          ${archiveItem("Beziningsteksten_2020/Hommage straatdode_ Christophe 27 november 2020.pdf","Hommage straatdode: Christophe","27 november 2020")}
+          ${archiveItem("Beziningsteksten_2020/In mijn diepste binnenste.png","In mijn diepste binnenste","21 mei 2020")}
+          ${archiveItem("Beziningsteksten_2020/verbanddoos.png","Verbanddoos","20 mei 2020")}
+          ${archiveItem("Beziningsteksten_2020/weet je dat nog.png","Weet je dat nog…","15 mei 2020")}
+          ${archiveItem("Beziningsteksten_2020/Heilige Corona 14 mei 2020.pdf","Heilige Corona","14 mei 2020")}
+          ${archiveItem("Beziningsteksten_2020/Gaandeweg gingen hun ogen open.png","Gaandeweg gingen hun ogen open","26 april 2020")}
+          ${archiveItem("Beziningsteksten_2020/storm op het meer.png","Storm op het meer","25 april 2020")}
+          ${archiveItem("Beziningsteksten_2020/Wie kan voor ons de steen van het graf wegrollen.pdf","Wie kan voor ons de steen van het graf wegrollen?","15 april 2020")}
+          ${archiveItem("Beziningsteksten_2020/door god gegrepen.png","Door God gegrepen — De stilte van Pasen","12 april 2020")}
+          ${archiveItem("Beziningsteksten_2020/machteloosheid.png","Staande blijven in machteloosheid","10 april 2020")}
+          ${archiveItem("Beziningsteksten_2020/le point noir.png","Le point noir","6 april 2020")}
+          ${archiveItem("Beziningsteksten_2020/Troostwoord voor de pandemie 4 april 2020.pdf","Troostwoord voor de pandemie","4 april 2020")}
+          ${archiveItem("Beziningsteksten_2020/troost.png","Gebeden om troost","27 maart 2020")}
+          ${archiveItem("Beziningsteksten_2020/goede bijstandskerk brussel.png","Goede Bijstandskerk Brussel","25 maart 2020")}
+          ${archiveItem("Beziningsteksten_2020/lockdown.png","Lockdown","22 maart 2020")}
+          ${archiveItem("Beziningsteksten_2020/Maar de lente wist het niet 20 maart 2020.pdf","Maar de lente wist het niet","20 maart 2020")}
+          ${archiveItem("Bezinningsteksten_pre2020/allerheiligen2019.png","Allerheiligen","1 november 2019")}
+          ${archiveItem("Bezinningsteksten_pre2020/klok.png","De gebarsten klok","8 februari 2018")}
+          ${archiveItem("Bezinningsteksten_pre2020/kerkwijding.png","Eerste lezing: Kerkwijding","27 juli 2014")}
+          ${archiveItem("Bezinningsteksten_pre2020/Bezinning_woorddienst.pdf","Bezinning bij de Woorddienst","9 december 2012")}
+          ${archiveItem("Bezinningsteksten_pre2020/marcello_barros.png","Marcelo Barros was in België","")}
+          ${archiveItem("Bezinningsteksten_pre2020/Getuigenis_françoise.pdf","Getuigenis van Françoise","")}
+          ${archiveItem("Bezinningsteksten_pre2020/lente.png","Als de lente uitblijft","")}
+          ${archiveItem("Bezinningsteksten_pre2020/een_ander_profiel.png","Een ander profiel","")}
+          ${archiveItem("Bezinningsteksten_pre2020/bezinning.png","Bezinning","")}
+          ${archiveItem("Bezinningsteksten_pre2020/alle_heiligen.png","Alle Heiligen","")}
+          ${archiveItem("Bezinningsteksten_pre2020/ziekten.png","Zijn er rechtvaardige ziekten?","")}
+          ${archiveItem("Bezinningsteksten_pre2020/roeping.png","Trouw aan onze roeping","")}
+          ${archiveItem("Bezinningsteksten_pre2020/de_mens_weent.pdf","L'homme qui pleure… De mens weent…","")}
+          ${archiveItem("Bezinningsteksten_pre2020/40jaarGB.pdf","40 jaar Vlaamse pastoraal","")}
+          ${archiveItem("Bezinningsteksten_pre2020/overmolen.png","Christelijke spiritualiteit en universele solidariteit","")}
+          ${archiveItem("Bezinningsteksten_pre2020/Geboorte - zeven impressies.pdf","Geboorte — zeven impressies","")}
+          ${archiveItem("Bezinningsteksten_pre2020/jongeren.png","Jongeren leren van wat men hun voorleeft","")}
+          ${archiveItem("Bezinningsteksten_pre2020/zonnelied.png","Het zonnelied van Franciscus","")}
+          ${archiveItem("Bezinningsteksten_pre2020/verdriet.png","Pleidooi voor 'Verdriet'","")}
+          ${archiveItem("Bezinningsteksten_pre2020/schilderijtje.png","Leef je leven als een schilderijtje","")}
         </ul>
       </div>
       <div id="sub-vier-fotos" class="subpage-vier" style="display:none;">
-        <p style="color:var(--warm-grey);font-style:italic;">Foto's komen binnenkort.</p>
+        <ul class="archive-list">
+          ${archiveItem("Vieringen en liturgie/Allerzielen_2024/2.png","Viering Allerzielen","2 november 2024")}
+          ${archiveItem("Vieringen en liturgie/Doop Line en Olivia-20 november 2022.png","Doop Line en Olivia","20 november 2022")}
+        </ul>
       </div>
     </section>`;
   }
@@ -1876,7 +2012,7 @@ function pageHTML(key) {
       <p>${t('act_masters_body')} <a href="https://www.flemishmastersinsitu.com/nl/locaties/onze-lieve-vrouw-van-goede-bijstandkerk-brussel" target="_blank">${t('act_masters_link')}</a></p>
       <div class="ornament">✦ ✦ ✦</div>
       <p class="subsection-title">${t('act_grond_h3')}</p>
-      <p>${t('act_grond_body')} <a onclick="go('zandbank')">${t('act_grond_link')}</a></p>
+      <p>${t('act_grond_body')} <a href="https://evelienleys.github.io/grondbibliotheek/" target="_blank" rel="noopener">${t('act_grond_link')}</a></p>
     </section>`;
 
   /* ── ZANDBANK ── */
@@ -1898,7 +2034,7 @@ function pageHTML(key) {
           <div class="zb-stat"><span class="zb-stat-num">∞</span><span class="zb-stat-lbl">${t('zb_stat_verh')}</span></div>
         </div>
         <div class="zb-map-link-wrap">
-          <a href="Aarde locaties.html" target="_blank" class="zb-map-btn">${t('zb_map_btn')}</a>
+          <a href="https://evelienleys.github.io/grondbibliotheek/" target="_blank" class="zb-map-btn">${t('zb_map_btn')}</a>
         </div>
       </div>
     </section>`;
@@ -1973,6 +2109,7 @@ function pageHTML(key) {
       <p>${t('schelp_body')}</p>
       <p class="subsection-title">${t('schelp_huren_h3')}</p><p>${t('schelp_huren')}</p>
       <p class="subsection-title">${t('schelp_contact_h3')}</p>
+      <p>Bijstandsstraat 5, 1000 Brussel</p>
       <p><a onclick="go('contact')">${t('schelp_contact')}</a></p>
     </section>`;
 
@@ -1982,7 +2119,9 @@ function pageHTML(key) {
       ${bc([[t('nav_home'),'home'], t('samenwerking_title')])}
       <h2 class="section-title">${t('samenwerking_title')}</h2>
       <div class="partner-item"><strong>Kamino</strong><p><a href="https://www.kamino.be" target="_blank">www.kamino.be →</a></p></div>
+      <div class="partner-item"><strong>Bijstandsnetwerk Brussel</strong></div>
       <div class="partner-item"><strong>Finis Terrae</strong><p>Nieuwstraat 76 — ${t('vier_sat')} 16.30 u</p></div>
+      <div class="partner-item"><strong>Taizé</strong><p><a onclick="go('home')">Meer info →</a></p></div>
       <div class="partner-item"><strong>Paulusgemeenschappen</strong><p><a href="https://www.paulusgemeenschappen.be/nl" target="_blank">paulusgemeenschappen.be →</a></p></div>
       <div class="partner-item"><strong>House of Compassion</strong><p><a href="https://www.houseofcompassion.be/" target="_blank">houseofcompassion.be →</a></p></div>
     </section>`;
