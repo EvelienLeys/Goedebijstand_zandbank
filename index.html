@@ -1082,7 +1082,7 @@ const T = {
     kerk_masters_link:"Ontdek de Vlaamse Meesters in Situ →", kerk_maps_link:"Bekijk op Google Maps →",
     // bijstand tabs
     bijstand_title:"De Goede Bijstand",
-    tab_welkom:"Welkom", tab_krachtlijnen:"Krachtlijnen", tab_gemeenschap:"Gemeenschap",
+    tab_welkom:"Welkom", tab_krachtlijnen:"Krachtlijnen", tab_gemeenschap:"Paulusgemeenschap",
     tab_team:"Team", tab_parochieploeg:"Parochieploeg", tab_kerkfabriek:"Kerkfabriek",
     tab_gebed:"Gebed", tab_steunen:"Steunen",
     welkom_title:"Welkom",
@@ -1255,7 +1255,7 @@ T.fr = Object.assign({}, T.nl, {
   kerk_open_body:"Chaque jour : 9h00 – 17h00\nDimanche : 10h00 – 17h00",
   kerk_masters_link:"Découvrir les Maîtres Flamands in Situ →", kerk_maps_link:"Voir sur Google Maps →",
   bijstand_title:"Notre Communauté",
-  tab_welkom:"Bienvenue", tab_krachtlijnen:"Valeurs", tab_gemeenschap:"Communauté",
+  tab_welkom:"Bienvenue", tab_krachtlijnen:"Valeurs", tab_gemeenschap:"Communauté Paul",
   tab_team:"Équipe", tab_parochieploeg:"Conseil pastoral", tab_kerkfabriek:"Fabrique d'église",
   tab_gebed:"Prière", tab_steunen:"Soutenir",
   welkom_title:"Bienvenue", welkom_1:"Bienvenue sur le site de la communauté du Bon Secours.",
@@ -1383,7 +1383,7 @@ T.en = Object.assign({}, T.nl, {
   kerk_open_body:"Every day: 9:00 AM – 5:00 PM\nSunday: 10:00 AM – 5:00 PM",
   kerk_masters_link:"Discover the Flemish Masters in Situ →", kerk_maps_link:"View on Google Maps →",
   bijstand_title:"Our Community",
-  tab_welkom:"Welcome", tab_krachtlijnen:"Our Values", tab_gemeenschap:"Community",
+  tab_welkom:"Welcome", tab_krachtlijnen:"Our Values", tab_gemeenschap:"Paulus Community",
   tab_team:"Team", tab_parochieploeg:"Parish Council", tab_kerkfabriek:"Church Board",
   tab_gebed:"Prayer", tab_steunen:"Support Us",
   welkom_title:"Welcome", welkom_1:"Welcome to the website of Our Lady of Good Help.",
@@ -1864,10 +1864,17 @@ function pageHTML(key) {
         <p><em>${t('krachtlijnen_sub')}</em></p>
         <p>${t('krachtlijnen_1')}</p><p>${t('krachtlijnen_2')}</p><p>${t('krachtlijnen_3')}</p><p>${t('krachtlijnen_4')}</p>
       </div>
-      <div id="sub-bij-gemeenschap" class="subpage-bij" style="display:none;">
+     <div id="sub-bij-gemeenschap" class="subpage-bij" style="display:none;">
         <h2 class="section-title">${t('gemeenschap_title')}</h2>
         <img src="${IMG.int}" class="church-photo" style="height:220px;" alt="Interieur">
         <p>${t('gemeenschap_1')}</p><p>${t('gemeenschap_2')}</p>
+        <h2 class="section-title">${t('home_paulus_title')}</h2>
+        <p>${t('home_paulus_body')}</p>
+        <div class="paulus-box">
+          <h3>${t('home_paulus_box_title')}</h3>
+          <p>${t('home_paulus_box_body')}</p>
+          <a class="btn" href="https://www.paulusgemeenschappen.be/nl" target="_blank" rel="noopener">${t('home_paulus_btn')}</a>
+        </div>
       </div>
       <div id="sub-bij-team" class="subpage-bij" style="display:none;">
         <h2 class="section-title">${t('team_title')}</h2>
