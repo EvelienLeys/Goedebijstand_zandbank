@@ -2271,11 +2271,19 @@ function pageHTML(key) {
       <div class="ornament">✦ ✦ ✦</div>
       <p class="subsection-title">${t('contact_msg_h3')}</p>
       <div class="contact-grid">
-        <div><label class="field-label">${t('contact_name')}</label><input class="field-input" type="text" placeholder="${t('contact_name_ph')}"></div>
-        <div><label class="field-label">${t('contact_email')}</label><input class="field-input" type="email" placeholder="${t('contact_email')}"></div>
-        <div><label class="field-label">${t('contact_subject')}</label><input class="field-input" type="text" placeholder="${t('contact_subject_ph')}"></div>
-        <div><label class="field-label">${t('contact_message')}</label><textarea class="field-textarea" placeholder="${t('contact_message_ph')}"></textarea></div>
-        <div><button class="btn" onclick="alert('${t('contact_sent')}')">${t('contact_send')}</button></div>
+        <div><label class="field-label">${t('contact_name')}</label><input id="cf-naam" class="field-input" type="text" placeholder="${t('contact_name_ph')}"></div>
+<div><label class="field-label">${t('contact_email')}</label><input id="cf-email" class="field-input" type="email" placeholder="${t('contact_email')}"></div>
+<div><label class="field-label">${t('contact_subject')}</label><input id="cf-onderwerp" class="field-input" type="text" placeholder="${t('contact_subject_ph')}"></div>
+<div><label class="field-label">${t('contact_message')}</label><textarea id="cf-bericht" class="field-textarea" placeholder="${t('contact_message_ph')}"></textarea></div>
+<div><button class="btn" onclick="
+  const naam = document.getElementById('cf-naam').value;
+  const email = document.getElementById('cf-email').value;
+  const onderwerp = document.getElementById('cf-onderwerp').value;
+  const bericht = document.getElementById('cf-bericht').value;
+  const body = encodeURIComponent((naam ? 'Naam: ' + naam + '\nE-mail: ' + email + '\n\n' : '') + bericht);
+  const subj = encodeURIComponent(onderwerp || 'Bericht via website');
+  window.location.href = 'mailto:2096@diomb.be?subject=' + subj + '&body=' + body;
+">${t('contact_send')}</button></div>
       </div>
       <div class="ornament">✦ ✦ ✦</div>
       <p class="subsection-title">${t('contact_loc_h3')}</p>
