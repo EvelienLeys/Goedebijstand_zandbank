@@ -1143,7 +1143,7 @@ const T = {
     vier_agenda_note:"Alle vieringen zijn ook zichtbaar in de agenda op de homepage.",
     vier_bijzonder:"Bijzondere vieringen", vier_drempel_label:"Drempelviering",
     vier_drempel_dag:"donderdag  — Onze-Lieve-Heer Hemelvaart",
-    vier_paaswake_dag:"zaterdag 4 april 2026", vier_paaswake_label:"Paaswake in Goede Bijstand — samen met andere Paulusgemeenschappen",
+    vier_paaswake_dag:"zaterdag 4 april 2026", vier_paaswake_label:"Paaswake — samen met andere Paulusgemeenschappen",
     vier_pasen_dag:"zondag 5 april 2026", vier_pasen_label:"Paasviering met receptie",
     homilies_intro:"Homilies van vieringen in de Kerk van Goede Bijstand.",
     bezinning_intro:"Bezinningsteksten, getuigenissen en spirituele reflecties.",
@@ -1240,7 +1240,10 @@ const T = {
     // agenda
     ag_today:"Vandaag", ag_sun:"Zondagsviering — Goede Bijstand", ag_sat:"Mis — Finis Terrae",
     ag_taize:"Gebed in de geest van Taizé", ag_night:"Bijstand by Night (18–22 u)",
-    ag_easter:"Paaswake in Goede Bijstand — samen met andere Paulusgemeenschappen",
+    ag_palmzondag:"Palmzondag — Viering Goede Bijstand",
+    ag_witte_donderdag:"Witte Donderdag — Sedermaaltijd met voetwassing, Finis Terrae (Nieuwstraat) — samen met de vormelingen en andere Paulusgemeenschappen",
+    ag_goede_vrijdag:"Goede Vrijdag — Viering en kruishulde, Sint-Pieterskerk Ukkel centrum",
+    ag_easter:"Paaswake — samen met andere Paulusgemeenschappen",
     ag_pasen:"Paasviering met receptie — Goede Bijstand",
     ag_leg_viering:"Viering", ag_leg_taize:"Taizé", ag_leg_night:"Bijstand by Night", ag_leg_act:"Activiteit",
     ag_empty:"Geen activiteiten gepland in de komende 5 weken.",
@@ -1378,6 +1381,9 @@ T.fr = Object.assign({}, T.nl, {
   sb_steunen:"Soutenir", sb_steunen_body:"Voulez-vous soutenir l'église ?", sb_steunen_link:"Plus d'info →",
   ag_today:"Aujourd'hui", ag_sun:"Célébration dominicale — Bon Secours", ag_sat:"Messe — Finis Terrae",
   ag_taize:"Prière dans l'esprit de Taizé", ag_night:"Bon Secours by Night (18h–22h)",
+  ag_palmzondag:"Dimanche des Rameaux — Célébration Bon Secours",
+  ag_witte_donderdag:"Jeudi Saint — Repas de la Cène avec lavement des pieds, Finis Terrae (Nieuwstraat) — avec les confirmands et d'autres Communautés Paulus",
+  ag_goede_vrijdag:"Vendredi Saint — Célébration et vénération de la Croix, Saint-Pierre d'Uccle centre",
   ag_easter:"Veillée pascale — avec d'autres Communautés Paulus",
   ag_pasen:"Célébration de Pâques avec réception — Bon Secours",
   ag_leg_viering:"Célébration", ag_leg_taize:"Taizé", ag_leg_night:"Bon Secours by Night", ag_leg_act:"Activité",
@@ -1510,6 +1516,9 @@ T.en = Object.assign({}, T.nl, {
   sb_steunen:"Support", sb_steunen_body:"Would you like to support the church?", sb_steunen_link:"More info →",
   ag_today:"Today", ag_sun:"Sunday Service — Our Lady of Good Help", ag_sat:"Mass — Finis Terrae",
   ag_taize:"Prayer in the Spirit of Taizé", ag_night:"Good Help by Night (6–10 PM)",
+  ag_palmzondag:"Palm Sunday — Service Our Lady of Good Help",
+  ag_witte_donderdag:"Holy Thursday — Seder meal with foot washing, Finis Terrae (Nieuwstraat) — with confirmands and other Paulus Communities",
+  ag_goede_vrijdag:"Good Friday — Service and veneration of the Cross, Sint-Pieterskerk Uccle centre",
   ag_easter:"Easter Vigil — with other Paulus Communities",
   ag_pasen:"Easter Service with reception — Our Lady of Good Help",
   ag_leg_viering:"Service", ag_leg_taize:"Taizé", ag_leg_night:"Good Help by Night", ag_leg_act:"Activity",
@@ -1582,6 +1591,9 @@ const dkey = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-
    AGENDA ENGINE
 ══════════════════════════════════════════ */
 const FIXED = [
+  {datum:'2026-03-29', tijd:'11:00', type:'viering', tk:'ag_palmzondag'},
+  {datum:'2026-04-02', tijd:'17:00', type:'viering', tk:'ag_witte_donderdag'},
+  {datum:'2026-04-03', tijd:'19:00', type:'viering', tk:'ag_goede_vrijdag'},
   {datum:'2026-04-04', tijd:'21:00', type:'viering', tk:'ag_easter'},
   {datum:'2026-04-05', tijd:'11:00', type:'viering', tk:'ag_pasen'},
 ];
@@ -1636,8 +1648,8 @@ function agendaHTML() {
     const dw=d.getDay(), mn=d.getMonth(), yr=d.getFullYear(), nr=d.getDate();
     const sk = dkey(d);
     const fixed = [];
-    if (dw===0) fixed.push({tijd:'11:00',type:'viering',tekst:t('ag_sun')});
-    if (dw===6) fixed.push({tijd:'16:30',type:'viering',tekst:t('ag_sat')});
+    if (dw===0 && sk !== '2026-04-05' && sk !== '2026-03-29') fixed.push({tijd:'11:00',type:'viering',tekst:t('ag_sun')});
+    if (dw===6 && sk !== '2026-04-04') fixed.push({tijd:'16:30',type:'viering',tekst:t('ag_sat')});
     const seen = new Set();
     const evs = [...fixed,...(events[sk]||[])].filter(ev=>{
       const k=`${ev.tijd}|${ev.tekst}`; return seen.has(k)?false:(seen.add(k),true);
