@@ -947,6 +947,12 @@ aside {
 .bank-block .iban { font-family: var(--font-disp); font-size: 1.25rem; font-weight: 500; color: var(--text-head); }
 .bank-block .bic { font-size: 0.85rem; color: var(--muted); }
 
+   /* GDPR COOKIE BANNER */
+#gdpr-banner { position: fixed; bottom: 0; ... }
+#gdpr-modal { display: none; position: fixed; inset: 0; ... }
+.gdpr-modal-box { ... }
+  /* 
+
 /* ═══════════════════════════════════════════════
    CONTACT MAILTO BOX
 ═══════════════════════════════════════════════ */
@@ -982,6 +988,12 @@ aside {
 </head>
 <body>
 
+<!-- GDPR COOKIE BANNER -->
+<div id="gdpr-banner" class="hidden"> ... </div>
+
+<!-- GDPR DETAIL MODAL -->
+<div id="gdpr-modal"> ... </div>
+   
 <!-- LANGUAGE BAR -->
 <div class="lang-bar">
   <span class="lang-bar__label" data-i18n="lang_label">Taal</span>
@@ -1039,7 +1051,12 @@ aside {
     <p>Kerkfabriek Onze-Lieve-Vrouw van Goede Bijstand (BR – Brussel)</p>
     <p>Fabrique d'Eglise Notre-Dame du Bon Secours (BR – Bruxelles)</p>
     <p style="margin-top:0.3rem;">Bijstandsstraat 5, 1000 Brussel &nbsp;|&nbsp; 0211.215.223 – RPR Brussel</p>
-  </div>
+<p style="margin-top:0.5rem;">
+  <a href="#" onclick="openGdprModal(event)" style="color:rgba(255,255,255,0.3);font-size:0.75rem;">
+    Privacy &amp; cookies
+  </a>
+</p>
+</div>
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -2199,6 +2216,31 @@ function render(key) {
 function go(key) {
   render(key);
   window.scrollTo({top:0, behavior:'smooth'});
+}
+
+   /* GDPR / PRIVACY BANNER */
+function gdprAccepted() {
+  return localStorage.getItem('gb_gdpr_accepted') === '1';
+}
+function acceptGdpr() {
+  localStorage.setItem('gb_gdpr_accepted', '1');
+  document.getElementById('gdpr-banner').classList.add('hidden');
+  closeGdprModal();
+}
+function openGdprModal(e) {
+  if (e) e.preventDefault();
+  document.getElementById('gdpr-modal').classList.add('open');
+}
+function closeGdprModal() {
+  document.getElementById('gdpr-modal').classList.remove('open');
+}
+document.getElementById('gdpr-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeGdprModal();
+});
+if (!gdprAccepted()) {
+  setTimeout(() => {
+    document.getElementById('gdpr-banner').classList.remove('hidden');
+  }, 800);
 }
 
 /* ══════════════════════════════════════════
