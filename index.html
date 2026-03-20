@@ -1145,6 +1145,10 @@ const T = {
     vier_drempel_dag:"donderdag  — Onze-Lieve-Heer Hemelvaart",
     vier_paaswake_dag:"zaterdag 4 april 2026", vier_paaswake_label:"Paaswake — samen met andere Paulusgemeenschappen",
     vier_pasen_dag:"zondag 5 april 2026", vier_pasen_label:"Paasviering met receptie",
+    vier_palm_dag:"zondag 29 maart 2026", vier_palm_label:"Palmzondag — Viering",
+    vier_witte_dag:"donderdag 2 april 2026", vier_witte_label:"Witte Donderdag — Sedermaaltijd met voetwassing — samen met de vormelingen en andere Paulusgemeenschappen",
+    vier_vrijdag_dag:"vrijdag 3 april 2026", vier_vrijdag_label:"Goede Vrijdag — Viering en kruishulde",
+    vier_sintp:"Sint-Pieterskerk Ukkel",
     homilies_intro:"Homilies van vieringen in de Kerk van Goede Bijstand.",
     bezinning_intro:"Bezinningsteksten, getuigenissen en spirituele reflecties.",
     // activiteiten
@@ -1317,6 +1321,10 @@ T.fr = Object.assign({}, T.nl, {
   vier_drempel_dag:"jeudi 14 mai 2026 — Ascension du Seigneur",
   vier_paaswake_dag:"samedi 4 avril 2026", vier_paaswake_label:"Veillée pascale — avec d'autres Communautés Paulus",
   vier_pasen_dag:"dimanche 5 avril 2026", vier_pasen_label:"Célébration de Pâques avec réception",
+  vier_palm_dag:"dimanche 29 mars 2026", vier_palm_label:"Dimanche des Rameaux — Célébration",
+  vier_witte_dag:"jeudi 2 avril 2026", vier_witte_label:"Jeudi Saint — Repas de la Cène avec lavement des pieds — avec les confirmands et d'autres Communautés Paulus",
+  vier_vrijdag_dag:"vendredi 3 avril 2026", vier_vrijdag_label:"Vendredi Saint — Célébration et vénération de la Croix",
+  vier_sintp:"Saint-Pierre d'Uccle",
   homilies_intro:"Homélies des célébrations à l'église du Bon Secours.",
   bezinning_intro:"Textes de réflexion, témoignages et méditations spirituelles.",
   act_title:"Activités & Événements",
@@ -1452,6 +1460,10 @@ T.en = Object.assign({}, T.nl, {
   vier_drempel_dag:"Thursday 14 May 2026 — Ascension of the Lord",
   vier_paaswake_dag:"Saturday 4 April 2026", vier_paaswake_label:"Easter Vigil — with other Paulus Communities",
   vier_pasen_dag:"Sunday 5 April 2026", vier_pasen_label:"Easter Service with reception",
+  vier_palm_dag:"Sunday 29 March 2026", vier_palm_label:"Palm Sunday — Service",
+  vier_witte_dag:"Thursday 2 April 2026", vier_witte_label:"Holy Thursday — Seder meal with foot washing — with confirmands and other Paulus Communities",
+  vier_vrijdag_dag:"Friday 3 April 2026", vier_vrijdag_label:"Good Friday — Service and veneration of the Cross",
+  vier_sintp:"Sint-Pieterskerk Uccle",
   homilies_intro:"Homilies from services at the Church of Our Lady of Good Help.",
   bezinning_intro:"Reflection texts, testimonies and spiritual meditations.",
   act_title:"Activities & Events",
@@ -2014,6 +2026,9 @@ function pageHTML(key) {
         <table class="data-table">
           <thead><tr><th>${t('vier_th_kerk')}</th><th>${t('vier_th_dag')}</th><th>${t('vier_th_uur')}</th><th>${t('vier_th_bijz')}</th></tr></thead>
           <tbody>
+            <tr><td>${t('vier_gb')}</td><td>${t('vier_palm_dag')}</td><td>11.00</td><td>${t('vier_palm_label')}</td></tr>
+            <tr><td>${t('vier_finis')}</td><td>${t('vier_witte_dag')}</td><td>17.00</td><td>${t('vier_witte_label')}</td></tr>
+            <tr><td>${t('vier_sintp')}</td><td>${t('vier_vrijdag_dag')}</td><td>19.00</td><td>${t('vier_vrijdag_label')}</td></tr>
             <tr><td>${t('vier_gb')}</td><td>${t('vier_paaswake_dag')}</td><td>21.00</td><td>${t('vier_paaswake_label')}</td></tr>
             <tr><td>${t('vier_gb')}</td><td>${t('vier_pasen_dag')}</td><td>11.00</td><td>${t('vier_pasen_label')}</td></tr>
             <tr><td>${t('vier_gb')}</td><td>${t('vier_drempel_dag')}</td><td>11.00</td><td>${t('vier_drempel_label')}</td></tr>
