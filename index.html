@@ -779,7 +779,7 @@ aside {
 }
 
 /* ═══════════════════════════════════════════════
-   ZANDBANK
+   WERELDWIJD
 ═══════════════════════════════════════════════ */
 .zb-hero {
   background: var(--navy-dark);
@@ -1018,7 +1018,7 @@ aside {
   <a onclick="go('bijstand')"     data-page="bijstand"     data-i18n="nav_bijstand">De Goede Bijstand</a>
   <a onclick="go('vieringen')"    data-page="vieringen"    data-i18n="nav_vieringen">Vieringen</a>
   <a onclick="go('activiteiten')" data-page="activiteiten" data-i18n="nav_activiteiten">Activiteiten</a>
-  <a onclick="go('zandbank')"     data-page="zandbank"     data-i18n="nav_zandbank">Zandbank</a>
+  <a onclick="go('wereldwijd')"     data-page="wereldwijdk"     data-i18n="nav_wereldwijd">Wereldwijd</a>
   <a onclick="go('kinderen')"     data-page="kinderen"     data-i18n="nav_kinderen">Kinderen &amp; Jongeren</a>
   <a onclick="go('schelp')"       data-page="schelp"       data-i18n="nav_schelp">De Schelp</a>
   <a onclick="go('samenwerking')" data-page="samenwerking" data-i18n="nav_samenwerking">Samenwerking</a>
@@ -1064,7 +1064,7 @@ const T = {
     lang_label:"Taal", site_title:"Onze-Lieve-Vrouw van Goede Bijstand", site_subtitle:"Kerk — Brussel Centrum",
     site_paulus:"parochiekerk van de paulusgemeenschappen",
     nav_home:"Home", nav_kerk:"Kerk", nav_bijstand:"De Goede Bijstand", nav_vieringen:"Vieringen",
-    nav_activiteiten:"Activiteiten", nav_zandbank:"Zandbank", nav_kinderen:"Kinderen & Jongeren",
+    nav_activiteiten:"Activiteiten", nav_wereldwijd:"Wereldwijd", nav_kinderen:"Kinderen & Jongeren",
     nav_schelp:"De Schelp", nav_samenwerking:"Samenwerking", nav_sacramenten:"Sacramenten",
     nav_overlijden:"Overlijden", nav_contact:"Contact",
     footer_address:"Kerk Goede Bijstand — Kolenmarkt 91, 1000 Brussel",
@@ -1157,8 +1157,8 @@ const T = {
     act_masters_link:"Ontdek de Vlaamse Meesters in Situ →",
     act_grond_h3:"Grondbibliotheek", act_grond_body:"Van elke plek op aarde een stukje grond.",
     act_grond_link:"Bekijk de interactieve kaart →",
-    // zandbank
-    zandbank_title:"De Zandbank",
+    // wereldwijd
+    wereldwijd_title:"Wereldwijd",
     zb_kicker:"Een pelgrimage in aarde",
     zb_title:"De Wereld van de Goede Bijstand",
     zb_subtitle:"Van elke plek op aarde een potje grond",
@@ -1249,7 +1249,7 @@ T.fr = Object.assign({}, T.nl, {
   lang_label:"Langue", site_title:"Notre-Dame du Bon Secours", site_subtitle:"l'Église de — Centre de Bruxelles",
   site_paulus:"église paroissiale des communautés Paulus",
   nav_home:"Accueil", nav_kerk:"l'Église", nav_bijstand:"Notre Communauté", nav_vieringen:"Célébrations",
-  nav_activiteiten:"Activités", nav_zandbank:"Le Banc de Sable", nav_kinderen:"Enfants & Jeunes",
+  nav_activiteiten:"Activités", nav_wereldwijd:"Le Banc de Sable", nav_kinderen:"Enfants & Jeunes",
   nav_schelp:"La Coquille", nav_samenwerking:"Partenariats", nav_sacramenten:"Sacrements",
   nav_overlijden:"Décès", nav_contact:"Contact",
   footer_address:"l'église de Bon Secours — Rue du Marché au Charbon 91, 1000 Bruxelles",
@@ -1321,7 +1321,7 @@ T.fr = Object.assign({}, T.nl, {
   act_masters_link:"Découvrir les Maîtres Flamands in Situ →",
   act_grond_h3:"Bibliothèque de terres", act_grond_body:"Un peu de terre de chaque endroit de la planète.",
   act_grond_link:"Voir la carte interactive →",
-  zandbank_title:"Le Banc de Sable",
+  wereldwijd_title:"Le Banc de Sable mondial",
   zb_kicker:"Un pèlerinage en terre", zb_title:"Le Monde du Bon Secours",
   zb_subtitle:"De chaque endroit de la planète, un pot de terre",
   zb_mission:"Une Mission de Toute une Vie",
@@ -1382,7 +1382,7 @@ T.en = Object.assign({}, T.nl, {
   lang_label:"Language", site_title:"Our Lady of Good Help", site_subtitle:"Church — Brussels Centre",
   site_paulus:"parish church of the Paulus Communities",
   nav_home:"Home", nav_kerk:"Church", nav_bijstand:"Our Community", nav_vieringen:"Services",
-  nav_activiteiten:"Activities", nav_zandbank:"The Sandbank", nav_kinderen:"Children & Youth",
+  nav_activiteiten:"Activities", nav_wereldwijd:"Worldwide", nav_kinderen:"Children & Youth",
   nav_schelp:"The Shell", nav_samenwerking:"Partners", nav_sacramenten:"Sacraments",
   nav_overlijden:"Bereavement", nav_contact:"Contact",
   footer_address:"Church Our Lady of Good Help — Kolenmarkt 91, 1000 Brussels",
@@ -1450,7 +1450,7 @@ T.en = Object.assign({}, T.nl, {
   act_masters_link:"Discover the Flemish Masters in Situ →",
   act_grond_h3:"Earth Library", act_grond_body:"A piece of earth from every place on the planet.",
   act_grond_link:"View the interactive map →",
-  zandbank_title:"The Sandbank",
+  wereldwijd_title:"Worldwide",
   zb_kicker:"A pilgrimage in earth", zb_title:"The World of Good Help",
   zb_subtitle:"From every place on earth, a jar of soil",
   zb_mission:"A Lifelong Mission",
@@ -1511,7 +1511,7 @@ T.de = Object.assign({}, T.nl, {
   lang_label:"Sprache", site_title:"Unsere Liebe Frau von der Guten Beistand", site_subtitle:"Kirche — Brüssel Zentrum",
   site_paulus:"Pfarrkirche der Paulus-Gemeinschaften",
   nav_home:"Startseite", nav_kerk:"Kirche", nav_bijstand:"Unsere Gemeinschaft", nav_vieringen:"Gottesdienste",
-  nav_activiteiten:"Aktivitäten", nav_zandbank:"Die Sandbank", nav_kinderen:"Kinder & Jugend",
+  nav_activiteiten:"Aktivitäten", nav_wereldwijd:"weltweit", nav_kinderen:"Kinder & Jugend",
   nav_schelp:"Die Muschel", nav_samenwerking:"Zusammenarbeit", nav_sacramenten:"Sakramente",
   nav_overlijden:"Trauer", nav_contact:"Kontakt", footer_address:"Kirche — Kolenmarkt 91, 1000 Brüssel",
   zb_kicker:"Eine Pilgerreise in Erde", zb_title:"Die Welt der Guten Beistand",
@@ -1525,7 +1525,7 @@ T.es = Object.assign({}, T.nl, {
   lang_label:"Idioma", site_title:"Nuestra Señora del Buen Socorro", site_subtitle:"Iglesia — Centro de Bruselas",
   site_paulus:"iglesia parroquial de las comunidades Paulus",
   nav_home:"Inicio", nav_kerk:"La Iglesia", nav_bijstand:"Nuestra Comunidad", nav_vieringen:"Celebraciones",
-  nav_activiteiten:"Actividades", nav_zandbank:"El Banco de Arena", nav_kinderen:"Niños & Jóvenes",
+  nav_activiteiten:"Actividades", nav_wereldwijd:"Mundial", nav_kinderen:"Niños & Jóvenes",
   nav_schelp:"La Concha", nav_samenwerking:"Colaboraciones", nav_sacramenten:"Sacramentos",
   nav_overlijden:"Fallecimientos", nav_contact:"Contacto", footer_address:"Iglesia — Kolenmarkt 91, 1000 Bruselas",
   zb_kicker:"Una peregrinación en tierra", zb_title:"El Mundo del Buen Socorro",
@@ -2120,10 +2120,10 @@ function pageHTML(key) {
       <p>${t('act_grond_body')} <a href="https://evelienleys.github.io/grondbibliotheek/" target="_blank" rel="noopener">${t('act_grond_link')}</a></p>
     </section>`;
 
-  /* ── ZANDBANK ── */
-  case 'zandbank': return `
+  /* ── WERELDWIJD ── */
+  case 'wereldwijd': return `
     <section class="content-section">
-      ${bc([[t('nav_home'),'home'], t('zandbank_title')])}
+      ${bc([[t('nav_home'),'home'], t('wereldwijd_title')])}
       <div class="zb-hero">
         <div class="zb-kicker-row"><span></span>${t('zb_kicker')}<span></span></div>
         <div class="zb-title-main">${t('zb_title')}</div>
